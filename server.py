@@ -64,6 +64,7 @@ class UserLoginRequest(BaseModel):
 
 
 @app.post("/api/auth/register")
+@app.post("/auth/register")
 async def register_user_endpoint(req: UserRegisterRequest):
     """Registers a new faculty or staff member into MongoDB Atlas."""
     if len(req.password.strip()) < 4:
@@ -82,6 +83,7 @@ async def register_user_endpoint(req: UserRegisterRequest):
 
 
 @app.post("/api/auth/login")
+@app.post("/auth/login")
 async def login_user_endpoint(req: UserLoginRequest):
     """Authenticates faculty credentials against MongoDB Atlas."""
     res = db.authenticate_user(
@@ -94,6 +96,7 @@ async def login_user_endpoint(req: UserLoginRequest):
 
 
 @app.post("/api/auth/session")
+@app.post("/auth/session")
 async def save_session_endpoint(req: Dict[str, Any]):
     """Saves user session profile into MongoDB Atlas."""
     db.save_user_session(req)
@@ -101,6 +104,7 @@ async def save_session_endpoint(req: Dict[str, Any]):
 
 
 @app.get("/api/health")
+@app.get("/health")
 async def health_check():
     return {
         "status": "online",
@@ -112,6 +116,7 @@ async def health_check():
 
 
 @app.get("/api/status")
+@app.get("/status")
 async def get_system_status():
     """Returns real-time status of Groq keys, MongoDB connection, and registered agents."""
     return {
@@ -124,6 +129,7 @@ async def get_system_status():
 
 
 @app.get("/api/agents")
+@app.get("/agents")
 async def get_agents():
     """Returns the full 40-agent registry categorized by the 4 official groups."""
     return {
@@ -133,6 +139,7 @@ async def get_agents():
 
 
 @app.post("/api/chat")
+@app.post("/chat")
 async def chat_endpoint(req: ChatRequest):
     """
     Main Master Agent execution endpoint:
@@ -158,6 +165,7 @@ class EndpointUpdateRequest(BaseModel):
 
 
 @app.post("/api/agents/{agent_id}/endpoint")
+@app.post("/agents/{agent_id}/endpoint")
 async def update_agent_endpoint(agent_id: str, req: EndpointUpdateRequest):
     """Saves custom deployed URL for an agent into MongoDB Atlas."""
     if not req.endpoint_url.strip():
@@ -172,12 +180,14 @@ async def update_agent_endpoint(agent_id: str, req: EndpointUpdateRequest):
 
 
 @app.get("/api/analytics")
+@app.get("/analytics")
 async def get_analytics():
     """Provides high-level institutional metrics and top queried agents from MongoDB."""
     return db.get_analytics_summary()
 
 
 @app.get("/api/logs")
+@app.get("/logs")
 async def get_audit_logs(limit: int = 20):
     """Returns recent query traces from MongoDB query_logs for live demonstration."""
     return {
