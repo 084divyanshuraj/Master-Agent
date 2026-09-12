@@ -13,7 +13,7 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -40,6 +40,39 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def vercel_path_resolver(request: Request, call_next):
+    """
+    Normalizes request paths across Vercel Serverless Functions, proxy rewrites, and direct calls.
+    Ensures that routes like /api/auth/login, /api/health, and /api/chat always match
+    regardless of how Vercel or any proxy rewrote the path.
+    """
+    path = request.scope.get("path", "")
+
+    # 1. Query parameter __path from vercel.json rewrite
+    if "__path" in request.query_params and request.query_params["__path"]:
+        target = request.query_params["__path"].lstrip("/")
+        request.scope["path"] = f"/api/{target}"
+        request._url = None
+    # 2. Check if path was rewritten to index.py
+    elif path in ("/api/index.py", "/index.py", "/api", "/api/"):
+        invoke_path = request.headers.get("x-invoke-path") or request.headers.get("x-forwarded-uri")
+        if invoke_path and not invoke_path.endswith("index.py"):
+            request.scope["path"] = invoke_path
+            request._url = None
+        else:
+            matched = request.headers.get("x-matched-path", "")
+            if matched and not matched.endswith("index.py"):
+                request.scope["path"] = matched
+                request._url = None
+
+    # 3. Always reset root_path to avoid Starlette stripping /api prefix
+    request.scope["root_path"] = ""
+
+    response = await call_next(request)
+    return response
 
 
 class ChatRequest(BaseModel):
