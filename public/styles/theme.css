@@ -1,0 +1,252 @@
+/* ==========================================================================
+   Vignan's University — Agentic AI Day 2026 Design Tokens & Theme
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap');
+
+:root {
+  /* Brand Palette */
+  --vignan-red: #C81E1E;
+  --vignan-red-light: #FEE2E2;
+  --vignan-navy: #0F2C59;
+  --vignan-navy-light: #1E3A8A;
+  --vignan-navy-dark: #081B38;
+  
+  /* Primary Action Blues */
+  --primary-blue: #2563EB;
+  --primary-blue-hover: #1D4ED8;
+  --primary-blue-light: #EFF6FF;
+  --primary-blue-glow: rgba(37, 99, 235, 0.25);
+
+  /* Backgrounds & Surfaces */
+  --bg-gradient-top: #EBF3FE;
+  --bg-gradient-mid: #DBEAFE;
+  --bg-gradient-bottom: #CDE2FE;
+  --card-bg: #FFFFFF;
+  --card-bg-glass: rgba(255, 255, 255, 0.92);
+  
+  /* Text Colors */
+  --text-title: #0F2C59;
+  --text-body: #1E293B;
+  --text-muted: #64748B;
+  --text-light: #94A3B8;
+
+  /* Borders & Shadows */
+  --border-subtle: #E2E8F0;
+  --border-active: #93C5FD;
+  --border-card: rgba(191, 219, 254, 0.6);
+  
+  --shadow-sm: 0 2px 4px rgba(15, 44, 89, 0.04);
+  --shadow-card: 0 16px 36px -8px rgba(15, 44, 89, 0.08), 0 4px 12px rgba(15, 44, 89, 0.03);
+  --shadow-card-hover: 0 24px 48px -10px rgba(15, 44, 89, 0.12), 0 8px 16px rgba(15, 44, 89, 0.05);
+  --shadow-button: 0 8px 20px -4px rgba(37, 99, 235, 0.35);
+
+  /* Status */
+  --status-green: #10B981;
+  --status-green-glow: rgba(16, 185, 129, 0.3);
+
+  /* Fonts */
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Transitions */
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Global Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-body);
+  background: linear-gradient(180deg, var(--bg-gradient-top) 0%, var(--bg-gradient-mid) 45%, var(--bg-gradient-bottom) 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background Constellation / Neural Network Canvas */
+#networkCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+}
+
+/* Top Institutional Header */
+.vignan-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 2.8rem;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(219, 234, 254, 0.9);
+  box-shadow: 0 4px 24px -8px rgba(15, 44, 89, 0.07);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.university-brand-img, .university-brand-svg {
+  height: 88px;
+  width: auto;
+  max-width: 500px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(15, 44, 89, 0.1));
+  transition: transform var(--transition-fast);
+}
+
+.university-brand-img:hover {
+  transform: scale(1.02);
+}
+
+.card-university-logo {
+  display: block;
+  height: 72px;
+  max-height: 78px;
+  max-width: 360px;
+  width: auto;
+  object-fit: contain;
+  margin: 0 auto 1.1rem auto;
+  filter: drop-shadow(0 2px 6px rgba(15, 44, 89, 0.08));
+}
+
+.chamber-university-logo {
+  display: block;
+  height: 85px;
+  max-height: 92px;
+  max-width: 420px;
+  width: auto;
+  object-fit: contain;
+  margin: 0 auto 1.3rem auto;
+  filter: drop-shadow(0 2px 6px rgba(15, 44, 89, 0.08));
+}
+
+.footer-mini-logo {
+  height: 28px;
+  max-width: 150px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.95;
+  margin-right: 0.5rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.cse-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #64748B;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.event-main-title {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--vignan-navy);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.event-main-title span {
+  color: var(--primary-blue);
+}
+
+.master-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.master-badge-tag .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--status-green);
+  box-shadow: 0 0 8px var(--status-green);
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* Floating Buji Robot Animation */
+@keyframes floatRobot {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes shadowPulse {
+  0% { transform: scale(1); opacity: 0.25; }
+  50% { transform: scale(0.85); opacity: 0.15; }
+  100% { transform: scale(1); opacity: 0.25; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .vignan-header {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+    text-align: center;
+  }
+  .header-right {
+    align-items: center;
+    text-align: center;
+  }
+  .university-brand-svg {
+    max-width: 360px;
+    height: 52px;
+  }
+}

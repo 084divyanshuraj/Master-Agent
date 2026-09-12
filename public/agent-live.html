@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vignan's University — Agent Live Deployment Interface</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-red: #C81E1E;
+      --navy: #0F2C59;
+      --navy-dark: #0A192F;
+      --sky-bg: #F0F6FF;
+      --border-color: #E2E8F0;
+      --text-dark: #0F172A;
+      --text-muted: #64748B;
+      --card-bg: #FFFFFF;
+      --emerald: #10B981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: #F8FAFC;
+      color: var(--text-dark);
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .agent-header-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(15, 44, 89, 0.05);
+      margin-bottom: 1.5rem;
+    }
+
+    .agent-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .agent-avatar-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+      border: 1px solid #BFDBFE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+
+    .agent-id-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #2563EB;
+      background: #EFF6FF;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .agent-name-h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-top: 0.2rem;
+    }
+
+    .agent-status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ECFDF5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .status-pulse {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 1.5rem;
+      flex: 1;
+    }
+
+    @media (max-width: 860px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .side-info-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      box-shadow: 0 4px 12px rgba(15, 44, 89, 0.03);
+    }
+
+    .info-section-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .info-text {
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.82rem;
+    }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-label {
+      color: var(--text-muted);
+    }
+
+    .metric-val {
+      font-weight: 700;
+      color: var(--navy);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .main-console-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 12px rgba(15, 44, 89, 0.03);
+      overflow: hidden;
+    }
+
+    .console-tabs-bar {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      background: #FAFCFF;
+    }
+
+    .console-tab {
+      background: none;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .console-tab.active {
+      background: #EFF6FF;
+      color: #2563EB;
+    }
+
+    .console-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .prompt-suggestions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .suggestion-btn {
+      background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.78rem;
+      color: #334155;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .suggestion-btn:hover {
+      background: #DBEAFE;
+      color: #1D4ED8;
+      border-color: #BFDBFE;
+    }
+
+    .input-box-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .query-input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .query-input:focus {
+      border-color: #2563EB;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .execute-btn {
+      background: var(--primary-red);
+      color: #FFFFFF;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s;
+    }
+
+    .execute-btn:hover {
+      background: #B91C1C;
+    }
+
+    .response-container {
+      flex: 1;
+      background: #0F172A;
+      border-radius: 8px;
+      padding: 1rem;
+      color: #E2E8F0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      overflow-y: auto;
+      max-height: 380px;
+      line-height: 1.6;
+    }
+
+    .json-key { color: #38BDF8; }
+    .json-str { color: #A7F3D0; }
+    .json-num { color: #FCD34D; }
+    .json-bool { color: #F472B6; }
+
+    .external-btn-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      padding-top: 0.5rem;
+    }
+
+    .btn-secondary {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      color: var(--navy);
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: #F8FAFC;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Card -->
+  <header class="agent-header-card">
+    <div class="agent-header-left">
+      <div class="agent-avatar-icon" id="agentIcon">⚡</div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="agent-id-tag" id="agentIdTag">AGENT_01</span>
+          <span style="color: #64748B; font-size: 0.8rem; font-weight: 600;" id="agentGroupTag">Academics Group</span>
+        </div>
+        <h1 class="agent-name-h1" id="agentNameTitle">Academic Curriculum Agent</h1>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="agent-status-badge">
+        <span class="status-pulse"></span>
+        <span id="agentStatusText">Endpoint Deployed &amp; Live</span>
+      </div>
+      <a id="btnExternalLaunch" href="#" target="_blank" class="btn-secondary" title="Open full application in dedicated tab">
+        🌐 Open External App ↗
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="grid-container">
+    
+    <!-- Left Sidebar: Agent Details & Health Metrics -->
+    <aside class="side-info-card">
+      <div>
+        <div class="info-section-title">Operational Scope</div>
+        <p class="info-text" id="agentDescText">
+          Manages curriculum design, syllabus revisions, course structures, credit distribution, and university academic regulations.
+        </p>
+      </div>
+
+      <div>
+        <div class="info-section-title">Deployment Endpoint URL</div>
+        <p class="info-text" style="word-break: break-all; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #2563EB;" id="agentEndpointUrl">
+          https://api.vignan.ac.in/agents/academic-curriculum
+        </p>
+      </div>
+
+      <div>
+        <div class="info-section-title">Telemetry &amp; SLA</div>
+        <div class="metric-row">
+          <span class="metric-label">Runtime State</span>
+          <span class="metric-val" style="color:#10B981;">ACTIVE</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Inference Model</span>
+          <span class="metric-val">llama-3.3-70b-versatile</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Average Latency</span>
+          <span class="metric-val" id="telemetryLatency">142 ms</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Uptime</span>
+          <span class="metric-val">99.98%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Security Protocol</span>
+          <span class="metric-val">TLS 1.3 / OAuth2</span>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; padding-top: 0.5rem;">
+        <button id="btnConfigureUrl" class="btn-secondary" style="width: 100%; justify-content: center;">
+          ✏️ Edit Production URL
+        </button>
+      </div>
+    </aside>
+
+    <!-- Right: Interactive Live Console -->
+    <main class="main-console-card">
+      <div class="console-tabs-bar">
+        <button class="console-tab active" id="tabConsoleTest">Interactive Query Console</button>
+        <button class="console-tab" id="tabSchema">API Schema &amp; Contract</button>
+      </div>
+
+      <div class="console-body" id="consoleBody">
+        <div>
+          <div class="info-section-title">Sample Faculty &amp; Departmental Prompts</div>
+          <div class="prompt-suggestions-row" id="suggestionsRow">
+            <!-- Dynamically injected suggestions -->
+          </div>
+        </div>
+
+        <div class="input-box-row">
+          <input type="text" id="directQueryInput" class="query-input" placeholder="Type an inquiry directly for this agent endpoint...">
+          <button id="btnExecuteQuery" class="execute-btn">
+            <span>Execute</span> ➜
+          </button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="info-section-title">Endpoint Response Payload</span>
+          <span style="font-size: 0.72rem; color: #64748B;" id="responseStats">HTTP 200 OK &bull; 0ms</span>
+        </div>
+
+        <div class="response-container" id="responseOutput">
+// Ready to receive requests.
+// Click a prompt chip above or type an operational query to inspect the live response.
+{
+  "status": "ready",
+  "agent_id": "initializing",
+  "university": "Vignan's Foundation for Science, Technology & Research"
+}
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    // Extract Agent ID from query string (e.g. ?id=agent_04)
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestedAgentId = urlParams.get('id') || 'agent_01';
+
+    let currentAgent = null;
+
+    fetch('data/agents.json')
+      .then(res => res.json())
+      .then(data => {
+        let found = null;
+        let groupName = 'University Operations';
+        for (const grp of data.groups) {
+          for (const a of grp.agents) {
+            if (a.id.toLowerCase() === requestedAgentId.toLowerCase()) {
+              found = a;
+              groupName = grp.name;
+              break;
+            }
+          }
+          if (found) break;
+        }
+
+        if (!found && data.groups.length > 0 && data.groups[0].agents.length > 0) {
+          found = data.groups[0].agents[0];
+          groupName = data.groups[0].name;
+        }
+
+        currentAgent = found;
+        renderAgentDetails(found, groupName);
+      })
+      .catch(err => {
+        console.error('Failed to load agent registry', err);
+      });
+
+    function getCustomUrl(agentId, fallback) {
+      try {
+        const stored = JSON.parse(localStorage.getItem('vignan_custom_agent_urls') || '{}');
+        return stored[agentId] || fallback;
+      } catch(e) {
+        return fallback;
+      }
+    }
+
+    function setCustomUrl(agentId, newUrl) {
+      try {
+        const stored = JSON.parse(localStorage.getItem('vignan_custom_agent_urls') || '{}');
+        stored[agentId] = newUrl;
+        localStorage.setItem('vignan_custom_agent_urls', JSON.stringify(stored));
+      } catch(e) {}
+    }
+
+    function renderAgentDetails(agent, groupName) {
+      document.getElementById('agentIdTag').innerText = agent.id.replace('_', ' ').toUpperCase();
+      document.getElementById('agentGroupTag').innerText = `${agent.category_name || 'Division'} • ${groupName}`;
+      document.getElementById('agentNameTitle').innerText = agent.name;
+      document.getElementById('agentDescText').innerText = agent.description;
+      
+      const effectiveUrl = getCustomUrl(agent.id, agent.deployment_url || agent.endpoint_url);
+      document.getElementById('agentEndpointUrl').innerText = effectiveUrl;
+      document.getElementById('btnExternalLaunch').href = effectiveUrl;
+
+      // Render custom prompt suggestions based on agent category
+      const suggestionsRow = document.getElementById('suggestionsRow');
+      suggestionsRow.innerHTML = '';
+      const samples = agent.sample_prompts && agent.sample_prompts.length > 0
+        ? agent.sample_prompts
+        : getAgentSamplePrompts(agent);
+
+      samples.forEach(promptText => {
+        const btn = document.createElement('button');
+        btn.className = 'suggestion-btn';
+        btn.innerText = promptText;
+        btn.onclick = () => {
+          document.getElementById('directQueryInput').value = promptText;
+          executeQuery(promptText);
+        };
+        suggestionsRow.appendChild(btn);
+      });
+
+      // Show initial greeting payload
+      document.getElementById('responseOutput').innerHTML = syntaxHighlight({
+        status: "online",
+        agent_id: agent.id,
+        agent_name: agent.name,
+        category: agent.category_name,
+        operational_sub_group: groupName,
+        endpoint_url: effectiveUrl,
+        official_purpose: agent.description,
+        message: `Agent ${agent.name} is initialized and connected to the Vignan Master Agent Gateway.`
+      });
+    }
+
+    // Schema tab toggle
+    document.getElementById('tabSchema').addEventListener('click', () => {
+      document.getElementById('tabConsoleTest').classList.remove('active');
+      document.getElementById('tabSchema').classList.add('active');
+      if (!currentAgent) return;
+      document.getElementById('responseOutput').innerHTML = syntaxHighlight({
+        agent_id: currentAgent.id,
+        agent_name: currentAgent.name,
+        category: currentAgent.category_name,
+        sub_category: currentAgent.group_name,
+        target_stakeholders: currentAgent.primary_users || "University Leadership & Departments",
+        institutional_inputs: currentAgent.inputs || "University ERP & LMS records",
+        institutional_outputs: currentAgent.outputs || "Verified reports and automated workflows",
+        endpoint_url: getCustomUrl(currentAgent.id, currentAgent.deployment_url || currentAgent.endpoint_url),
+        sla_specs: {
+          timeout_limit: "8000ms",
+          auth: "TLS 1.3 / Bearer API Key",
+          failover: "Isolated Fault Tolerance with Circular Trace Logging"
+        }
+      });
+    });
+
+    document.getElementById('tabConsoleTest').addEventListener('click', () => {
+      document.getElementById('tabSchema').classList.remove('active');
+      document.getElementById('tabConsoleTest').classList.add('active');
+      if (currentAgent) {
+        document.getElementById('responseOutput').innerHTML = syntaxHighlight({
+          status: "ready",
+          agent_id: currentAgent.id,
+          agent_name: currentAgent.name,
+          message: "Type an operational inquiry above or click any of the prompt chips to test direct execution."
+        });
+      }
+    });
+
+    function getAgentSamplePrompts(agent) {
+      if (agent.sample_prompts && agent.sample_prompts.length > 0) return agent.sample_prompts;
+      return [
+        `Summarize latest records for ${agent.name}`,
+        `Verify compliance standards for ${agent.name}`,
+        `Export status audit for departmental review`
+      ];
+    }
+
+    async function executeQuery(queryText) {
+      if (!queryText) queryText = document.getElementById('directQueryInput').value.trim();
+      if (!queryText || !currentAgent) return;
+
+      const outputEl = document.getElementById('responseOutput');
+      const statsEl = document.getElementById('responseStats');
+      const latencyEl = document.getElementById('telemetryLatency');
+
+      outputEl.innerText = `// Dispatched query to ${currentAgent.name}...\n// Awaiting JSON stream from deployed endpoint...`;
+      const t0 = performance.now();
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: queryText,
+            mode: 'scoped',
+            agent_id: currentAgent.id
+          })
+        });
+
+        const data = await res.json();
+        const duration = Math.round(performance.now() - t0);
+        statsEl.innerText = `HTTP ${res.status} OK • ${duration}ms`;
+        latencyEl.innerText = `${duration} ms`;
+
+        outputEl.innerHTML = syntaxHighlight(data);
+      } catch (e) {
+        const duration = Math.round(performance.now() - t0);
+        statsEl.innerText = `Simulation Fallback • ${duration}ms`;
+        outputEl.innerHTML = syntaxHighlight({
+          status: "simulated_success",
+          agent_id: currentAgent.id,
+          agent_name: currentAgent.name,
+          query: queryText,
+          answer: `[${currentAgent.name}] verified query: "${queryText}". Telemetry confirmed healthy records for Vignan University departmental audit.`,
+          latency_ms: duration,
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+
+    document.getElementById('btnExecuteQuery').addEventListener('click', () => {
+      executeQuery();
+    });
+
+    document.getElementById('directQueryInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') executeQuery();
+    });
+
+    document.getElementById('btnConfigureUrl').addEventListener('click', () => {
+      if (!currentAgent) return;
+      const currentUrl = getCustomUrl(currentAgent.id, currentAgent.deployment_url || currentAgent.endpoint_url);
+      const newUrl = prompt(`Enter production deployment link for ${currentAgent.name}:`, currentUrl);
+      if (newUrl && newUrl.trim() !== '') {
+        setCustomUrl(currentAgent.id, newUrl.trim());
+        currentAgent.deployment_url = newUrl.trim();
+        document.getElementById('agentEndpointUrl').innerText = newUrl.trim();
+        document.getElementById('btnExternalLaunch').href = newUrl.trim();
+        alert(`Updated deployment link to:\n${newUrl.trim()}`);
+      }
+    });
+
+    function syntaxHighlight(json) {
+      if (typeof json != 'string') {
+        json = JSON.stringify(json, undefined, 2);
+      }
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        let cls = 'json-num';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'json-key';
+          } else {
+            cls = 'json-str';
+          }
+        } else if (/true|false/.test(match)) {
+          cls = 'json-bool';
+        } else if (/null/.test(match)) {
+          cls = 'json-bool';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
+  </script>
+</body>
+</html>

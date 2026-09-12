@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vignan's University — Master Agent Enterprise Portal</title>
+  <meta name="description" content="Official Master Agent Orchestration Portal for Vignan's Foundation for Science, Technology & Research — Unified Intelligence & Departmental Data Access.">
+  
+  <link rel="stylesheet" href="styles/theme.css?v=9">
+  <link rel="stylesheet" href="styles/login.css?v=9">
+  <link rel="stylesheet" href="styles/chat.css?v=9">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/vignan university logo.jiff">
+</head>
+<body>
+
+  <!-- Interactive Constellation Network Canvas (Symbolizing 40 Connected Departmental Agents) -->
+  <canvas id="networkCanvas"></canvas>
+
+  <!-- Top University Branding Header -->
+  <header class="vignan-header">
+    <div class="header-left">
+      <img src="assets/vignan university logo.jiff" alt="Vignan's University Logo" class="university-brand-img">
+    </div>
+    
+    <div class="header-right">
+      <div class="cse-subtitle">CENTRALIZED INTELLIGENCE &amp; DATA NETWORK</div>
+      <h1 class="event-main-title">MASTER AGENT <span>PORTAL</span></h1>
+      <div class="master-badge-tag">
+        <span class="pulse-dot"></span>
+        72 Departmental Endpoints Connected
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Portal Body -->
+  <main class="portal-main">
+
+    <!-- =======================================================================
+         VIEW 1: FACULTY & STAFF AUTHENTICATION (Initial View)
+         ======================================================================= -->
+    <section id="loginSection" class="portal-container">
+      
+      <!-- Buji 3D Mascot Hero -->
+      <div class="mascot-hero-section">
+        <div class="mascot-avatar-wrapper">
+          <img src="assets/buji.jpg" alt="Buji - University Agentic Assistant" class="mascot-avatar-img" id="bujiAvatar">
+          <div class="mascot-shadow"></div>
+        </div>
+
+        <div class="buji-speech-bubble" id="bujiSpeechBubble">
+          <span class="buji-tag">Assistant Buji</span>
+          <p class="buji-message" id="bujiGreetingText">
+            "Welcome to <strong>Vignan University's Master Agent Portal</strong>! Please verify your faculty or department credentials below to query unified institutional records and 72 specialized departmental endpoints."
+          </p>
+        </div>
+      </div>
+
+      <!-- Auth Card -->
+      <div class="auth-card">
+        <div class="auth-card-header">
+          <h2 class="auth-title">Faculty &amp; Staff Portal</h2>
+          <p class="auth-desc">Authorized access for University Deans, HoDs, Faculty, and Departmental Administration.</p>
+        </div>
+
+        <!-- Mode Toggle Tabs (Sign In vs Register) -->
+        <div class="auth-mode-tabs">
+          <button type="button" class="auth-tab-btn active" id="tabBtnSignIn">Staff Sign In</button>
+          <button type="button" class="auth-tab-btn" id="tabBtnRegister">Register New Staff</button>
+        </div>
+
+        <!-- Live Status / Feedback Alert Banner -->
+        <div id="authAlert" class="auth-alert-banner" style="display: none;"></div>
+
+        <!-- 1. Staff Sign In Form -->
+        <form id="signInForm" class="auth-form" autocomplete="off">
+          <!-- Employee ID / Faculty ID or Email -->
+          <div class="form-group">
+            <label for="loginEmployeeCode" class="form-label">
+              Faculty / Employee Code or Email <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+              </svg>
+              <input type="text" id="loginEmployeeCode" class="form-input" placeholder="e.g., VFSTR-HOD-CSE-01 or kvrao@vignan.ac.in" required>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="loginPassword" class="form-label">
+              Portal Password <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required>
+              <button type="button" class="btn-toggle-pwd" id="toggleLoginPwd" title="Show / Hide Password">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit CTA -->
+          <button type="submit" class="btn-submit-portal" id="submitLoginBtn">
+            <span>Access University Intelligence</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+
+          <div class="auth-switch-text">
+            <span>New faculty or department staff?</span>
+            <button type="button" class="auth-switch-link" id="linkToRegister">Register New Account</button>
+          </div>
+        </form>
+
+        <!-- 2. Register New Staff Form (Initially Hidden) -->
+        <form id="registerForm" class="auth-form" autocomplete="off" style="display: none;">
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="regFullName" class="form-label">
+              Faculty / Staff Name <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <input type="text" id="regFullName" class="form-input" placeholder="e.g., Dr. A. Sudhakar" required>
+            </div>
+          </div>
+
+          <!-- Employee ID / Code -->
+          <div class="form-group">
+            <label for="regEmployeeCode" class="form-label">
+              Faculty / Employee Code <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+              </svg>
+              <input type="text" id="regEmployeeCode" class="form-input" placeholder="e.g., VFSTR-FAC-2041" required>
+            </div>
+          </div>
+
+          <!-- University Email -->
+          <div class="form-group">
+            <label for="regEmail" class="form-label">
+              Official University Email <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <input type="email" id="regEmail" class="form-input" placeholder="e.g., asudhakar@vignan.ac.in" required>
+            </div>
+          </div>
+
+          <!-- Role & Department Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="regUserRole" class="form-label">Designation / Role</label>
+              <div class="input-wrapper">
+                <select id="regUserRole" class="form-select">
+                  <option value="faculty" selected>Professor / Faculty Member</option>
+                  <option value="hod">Head of Department (HoD)</option>
+                  <option value="dean">Dean / Directorate</option>
+                  <option value="admin">Administrative &amp; Operations Staff</option>
+                  <option value="exam">Examination &amp; Academic Cell</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regDepartment" class="form-label">Department</label>
+              <div class="input-wrapper">
+                <select id="regDepartment" class="form-select">
+                  <option value="CSE">CSE Dept</option>
+                  <option value="AIML">AIML Dept</option>
+                  <option value="IT">IT Dept</option>
+                  <option value="ECE">ECE Dept</option>
+                  <option value="MECH">MECH Dept</option>
+                  <option value="BIOTECH">BIOTECH Dept</option>
+                  <option value="ACADEMICS">Dean Academics</option>
+                  <option value="RESEARCH">Dean R&amp;D</option>
+                  <option value="COE">Exam Cell (CoE)</option>
+                  <option value="CENTRAL">Central Admin</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="regPassword" class="form-label">
+              Create Password (min 4 chars) <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <input type="password" id="regPassword" class="form-input" placeholder="Create a secure password" minlength="4" required>
+              <button type="button" class="btn-toggle-pwd" id="toggleRegPwd" title="Show / Hide Password">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit CTA -->
+          <button type="submit" class="btn-submit-portal" id="submitRegisterBtn">
+            <span>Register Faculty Account</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+
+          <div class="auth-switch-text">
+            <span>Already have an account?</span>
+            <button type="button" class="auth-switch-link" id="linkToSignIn">Sign In with Credentials</button>
+          </div>
+        </form>
+
+        <!-- Quick Demo Chips for Faculty & Staff -->
+        <div class="quick-demo-section" id="quickDemoSection">
+          <span class="quick-demo-label">Quick Profile:</span>
+          <button type="button" class="demo-chip-btn" id="quickHodBtn">HoD: Dr. K. V. Rao (CSE)</button>
+          <button type="button" class="demo-chip-btn" id="quickDeanBtn">Dean: Dr. M. S. Naidu (Academics)</button>
+          <button type="button" class="demo-chip-btn" id="quickExamBtn">Officer: Examination Cell</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         VIEW 2: UNIVERSITY INTELLIGENCE CHAMBERS (4 Official Groups)
+         ======================================================================= -->
+    <section id="chamberSection" class="chamber-view">
+      <div class="chamber-header">
+        <div class="buji-tag" id="userWelcomeBadge">Welcome to Vignan Agent Network</div>
+        <h2 class="chamber-title">Select an Agent Chamber</h2>
+        <p class="chamber-subtitle">Choose a category to enter a scoped chatbot or use the Master Agent for composite multi-agent queries.</p>
+      </div>
+
+      <div class="chamber-grid">
+        <!-- Omnipresent Global Master Agent Card -->
+        <div class="chamber-card global-master-card" id="cardGlobalMaster" data-scope="global">
+          <span class="chamber-badge">✦ Recommended for University Staff &amp; Leadership</span>
+          <h3 class="chamber-card-title">Unified Master Agent (All 72 Agents Hub)</h3>
+          <p class="chamber-card-desc">
+            Autonomous multi-agent coordinator. Decomposes cross-cutting university queries, dispatches in parallel across the Groq Key Pool (round-robin), and synthesizes consolidated institutional intelligence from all 72 endpoints.
+          </p>
+          <div class="chamber-subparts-list">
+            <span class="subpart-pill">Cross-Category Synthesis</span>
+            <span class="subpart-pill">Parallel Groq Key Dispatch</span>
+            <span class="subpart-pill">All 72 Specialized Agents</span>
+            <span class="subpart-pill">14 Sub-Categories</span>
+          </div>
+          <div class="chamber-enter-btn">
+            <span>Launch Master Orchestrator Chatbot</span> ➜
+          </div>
+        </div>
+
+        <!-- Category 1: Academic Lifecycle & Faculty Governance -->
+        <div class="chamber-card" data-category="1" data-title="Academic Lifecycle & Faculty Governance">
+          <span class="chamber-badge">Category 1 &bull; 20 Agents</span>
+          <h3 class="chamber-card-title">Academic Lifecycle &amp; Faculty Governance</h3>
+          <p class="chamber-card-desc">Curriculum standards, syllabus audits, course repositories, timetable optimization, examination management, question paper generation, grading, and faculty workload governance.</p>
+          <div class="chamber-subparts-list">
+            <span class="subpart-pill">Group 1: Academics (10 Agents)</span>
+            <span class="subpart-pill">Group 5: Examinations (6 Agents)</span>
+            <span class="subpart-pill">Group 11: Faculty Management (4 Agents)</span>
+          </div>
+          <div class="chamber-enter-btn">
+            <span>Explore Category 1 (20 Endpoints)</span> ➜
+          </div>
+        </div>
+
+        <!-- Category 2: Student Success, Admissions & Support Services -->
+        <div class="chamber-card" data-category="2" data-title="Student Success, Admissions & Support Services">
+          <span class="chamber-badge">Category 2 &bull; 23 Agents</span>
+          <h3 class="chamber-card-title">Student Success, Admissions &amp; Support Services</h3>
+          <p class="chamber-card-desc">The complete student journey: enquiry admissions, biometric attendance monitoring, academic risk forecasting, fee management, scholarships, student affairs, and 24/7 helpdesk.</p>
+          <div class="chamber-subparts-list">
+            <span class="subpart-pill">Group 2: Attendance &amp; Performance (6)</span>
+            <span class="subpart-pill">Group 6: Admissions (4)</span>
+            <span class="subpart-pill">Group 7: Fee &amp; Finance (4)</span>
+            <span class="subpart-pill">Group 8: Student Affairs (5)</span>
+            <span class="subpart-pill">Group 13: Student Support (4)</span>
+          </div>
+          <div class="chamber-enter-btn">
+            <span>Explore Category 2 (23 Endpoints)</span> ➜
+          </div>
+        </div>
+
+        <!-- Category 3: Research, Industry Partnerships & Career Placements -->
+        <div class="chamber-card" data-category="3" data-title="Research, Industry Partnerships & Career Placements">
+          <span class="chamber-badge">Category 3 &bull; 17 Agents</span>
+          <h3 class="chamber-card-title">Research, Industry &amp; Career Placements</h3>
+          <p class="chamber-card-desc">University innovation ecosystem: Scopus/WoS publication monitoring, journal quartile verification (Q1-Q4), grant funding calls, patents, corporate MoUs, internships, and campus placements.</p>
+          <div class="chamber-subparts-list">
+            <span class="subpart-pill">Group 3: Research Agents (9)</span>
+            <span class="subpart-pill">Group 4: Extension &amp; Outreach (4)</span>
+            <span class="subpart-pill">Group 9: Placement &amp; Careers (4)</span>
+          </div>
+          <div class="chamber-enter-btn">
+            <span>Explore Category 3 (17 Endpoints)</span> ➜
+          </div>
+        </div>
+
+        <!-- Category 4: Institutional Strategy, IQAC & Analytics Intelligence -->
+        <div class="chamber-card" data-category="4" data-title="Institutional Strategy, IQAC & Analytics Intelligence">
+          <span class="chamber-badge">Category 4 &bull; 12 Agents</span>
+          <h3 class="chamber-card-title">Institutional Strategy, IQAC &amp; Analytics</h3>
+          <p class="chamber-card-desc">Executive decision support: statutory university policies, regulatory compliance, circulars, IQAC quality criteria, automated accreditation reporting, and institutional KPI dashboards.</p>
+          <div class="chamber-subparts-list">
+            <span class="subpart-pill">Group 10: Policies &amp; Governance (5)</span>
+            <span class="subpart-pill">Group 12: Documentation &amp; Reporting (3)</span>
+            <span class="subpart-pill">Group 14: Advanced &amp; Composite (4)</span>
+          </div>
+          <div class="chamber-enter-btn">
+            <span>Explore Category 4 (12 Endpoints)</span> ➜
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button id="btnBackToLogin" class="demo-chip-btn" style="padding: 0.5rem 1.4rem; font-size: 0.88rem;">
+          ← Return to Login / Switch User
+        </button>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         VIEW 3: CHATBOT INTERFACE (Matching Reference Image)
+         ======================================================================= -->
+    <section id="chatSection" class="chat-view-container">
+      
+      <!-- Top Chat Navigation & Scope Bar -->
+      <div class="chat-nav-bar">
+        <div class="chat-nav-left">
+          <button id="btnBackToChambers" class="btn-back-nav">
+            ← Back to Chambers
+          </button>
+          <div class="chat-scope-badge">
+            <div class="chat-scope-icon" id="chatScopeIcon">⚡</div>
+            <div class="chat-scope-info">
+              <span class="chat-scope-title" id="chatScopeTitle">Unified Master Agent</span>
+              <span class="chat-scope-desc" id="chatScopeDesc">All 72 University Hackathon Agents Connected</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="chat-nav-right">
+          <button id="btnOpenTraceLogs" class="btn-trace-modal-trigger" title="Inspect Live MongoDB Query Traces & Pipeline Decomposition">
+            🔬 Pipeline Audit Trace
+          </button>
+          <a id="btnOpenDeployment" href="#" target="_blank" class="btn-open-deployment" style="display: none;">
+            🌐 Open Deployed App ↗
+          </a>
+          <div class="chat-tab-toggle" id="chatTabToggle" style="display: none;">
+            <button id="tabBtnChat" class="tab-toggle-btn active">💬 Master Chat</button>
+            <button id="tabBtnLive" class="tab-toggle-btn">🖥️ Live Webview</button>
+          </div>
+          <span class="mode-pill global" id="chatModePill">Global Master</span>
+        </div>
+      </div>
+
+      <!-- Main Chat Card -->
+      <div class="chat-main-card" id="chatMainCard">
+        
+        <!-- Assistant Hero in Chat Header -->
+        <div class="chat-buji-hero">
+          <img src="assets/buji.jpg" alt="Buji Assistant" class="chat-buji-avatar">
+          <div class="chat-buji-meta">
+            <h3>Buji &bull; Master Intelligence Orchestrator</h3>
+            <p id="chatHeroSubtitle">Ask any university operational query. The orchestrator decomposes complex requests, fans out to relevant agents via Groq keys, and synthesizes one verified answer.</p>
+          </div>
+        </div>
+
+        <!-- Live Agent Execution Trace Ticker -->
+        <div class="agent-trace-ticker" id="agentTraceTicker">
+          <span>⚡ Orchestration Pipeline:</span>
+          <div class="trace-steps" id="traceStepsContainer">
+            <span class="trace-step-chip">● System Ready</span>
+            <span class="trace-step-chip">Groq Key Pool: Active (4 Keys)</span>
+          </div>
+        </div>
+
+        <!-- Messages Area (matching reference screenshot layout) -->
+        <div class="chat-messages-scroll" id="chatMessagesScroll">
+          <!-- Initial Assistant Message 1 -->
+          <div class="message-row assistant">
+            <div class="message-header">
+              <span class="message-sender">ASSISTANT BUJI</span>
+              <span class="message-timestamp">10:30 AM</span>
+            </div>
+            <div class="message-body">
+              <p>Hi, I'm <strong>Buji</strong>, your Vignan University Master Agent assistant. I am connected to all 40 specialized agents across <strong>Academics</strong>, <strong>Attendance &amp; Student Performance</strong>, <strong>Research</strong>, and <strong>Extension &amp; Outreach</strong>.</p>
+              <p>How may I assist your department or administrative inquiries today?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Query Suggestion Chips -->
+        <div class="quick-prompt-chips" id="quickPromptChips">
+          <span style="font-size: 0.74rem; font-weight: 700; color: #94A3B8; text-transform: uppercase;">Suggestions:</span>
+          <button class="chip-suggestion-btn" data-query="What is the faculty course allocation and timetable conflict status for 3rd year CSE?">CSE 3rd Year Timetable &amp; Allocation</button>
+          <button class="chip-suggestion-btn" data-query="Identify students with attendance below 75% who are flagged as academic risk in AIML.">Attendance &lt; 75% Academic Risk</button>
+          <button class="chip-suggestion-btn" data-query="Verify Scopus Q1 journal publications published by CSE department faculty in 2026.">Scopus Q1 Publications (2026)</button>
+          <button class="chip-suggestion-btn" data-query="What active funding opportunities and DST grants are open for proposal submissions?">Open DST / AICTE Research Grants</button>
+        </div>
+
+        <!-- Chat Prompt Input Bar (matching screenshot) -->
+        <div class="chat-input-area">
+          <div class="chat-input-wrapper">
+            <input type="text" id="chatPromptInput" class="chat-prompt-input" placeholder="Ask a question for the university agents (e.g., timetable, research grants, attendance analysis)...">
+          </div>
+          <button id="btnSendChat" class="btn-send-chat" title="Send Query">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+          </button>
+      </div>
+
+      <!-- Embedded Live App Webview (Toggled via Live Webview button) -->
+      <div id="liveAppIframeContainer" class="live-app-iframe-container" style="display: none;">
+        <div class="iframe-top-bar">
+          <div>
+            <span style="color:#64748B;font-size:0.75rem;font-weight:700;">LIVE DEPLOYED AGENT:</span>
+            <span class="iframe-url-display" id="iframeUrlDisplay">https://api.vignan.ac.in/...</span>
+          </div>
+          <div class="iframe-actions">
+            <button id="btnSetCustomLink" class="btn-iframe-tool" title="Update or override the deployment URL">✏️ Edit URL</button>
+            <a id="btnIframePopout" href="#" target="_blank" class="btn-iframe-tool">↗ Open in New Tab</a>
+            <button id="btnIframeClose" class="btn-iframe-tool">✕ Back to Chat</button>
+          </div>
+        </div>
+        <div class="iframe-wrapper">
+          <iframe id="liveAppIframe" src="" frameborder="0" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         INTERACTIVE AGENT DRAWER MODAL (For Sub-Agent Exploration)
+         ======================================================================= -->
+    <div id="agentDrawerModal" class="agent-drawer-modal">
+      <div class="agent-drawer-card">
+        <div class="drawer-header">
+          <div class="drawer-title-group">
+            <h3 id="drawerGroupTitle">Category 1: Academic Lifecycle &amp; Faculty Governance</h3>
+            <p id="drawerGroupDesc">Select a specialized hackathon agent to chat directly with its dedicated endpoint, or launch external web application.</p>
+          </div>
+          <button id="btnCloseDrawer" class="btn-close-drawer">&times;</button>
+        </div>
+
+        <!-- Sub-Category Filter Tabs & Search Bar -->
+        <div class="drawer-subcat-bar" id="drawerSubcatBar">
+          <!-- Dynamically populated with Sub-Category tabs -->
+        </div>
+
+        <div class="drawer-search-container">
+          <input type="text" id="drawerAgentSearch" placeholder="🔍 Search among sub-agents (e.g., Question Paper, Attendance, Agent 31)..." class="drawer-search-input">
+          <span id="drawerAgentCountBadge" class="drawer-count-badge">72 Agents</span>
+        </div>
+
+        <div class="drawer-agents-grid" id="drawerAgentsGrid">
+          <!-- Populated dynamically via JS from agents.json -->
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         PIPELINE AUDIT TRACE MODAL (Live MongoDB Traces & Groq Pool Stats)
+         ======================================================================= -->
+    <div id="traceModal" class="agent-drawer-modal" style="display: none;">
+      <div class="agent-drawer-card trace-modal-card">
+        <div class="drawer-header">
+          <div class="drawer-title-group">
+            <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+              <span>🔬</span> Master Agent Pipeline Audit Trail
+            </h3>
+            <p>Live execution traces recorded in MongoDB (<code>query_logs</code> collection), Groq key pool rotation, and sub-agent dispatch latencies.</p>
+          </div>
+          <button id="btnCloseTraceModal" class="btn-close-drawer">&times;</button>
+        </div>
+        
+        <div class="trace-pool-stats" id="tracePoolStats">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="trace-logs-list" id="traceLogsList">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom System Status Bar (matching reference screenshot) -->
+  <footer class="portal-footer-bar">
+    <div class="footer-left">
+      <span class="status-dot"></span>
+      <span id="footerStatusText">Standby &bull; Master Orchestrator Active</span>
+    </div>
+    
+    <div class="footer-right">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+      </svg>
+      <span>Voice + transcript (assistant &amp; your speech) &bull; 72 Agents Online</span>
+    </div>
+  </footer>
+
+  <script src="js/app.js?v=9"></script>
+</body>
+</html>
