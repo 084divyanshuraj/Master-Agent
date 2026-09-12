@@ -1,0 +1,18 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/$1"
+    }
+  ],
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "includeFiles": "public/data/agents.json"
+    }
+  }
+}
