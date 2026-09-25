@@ -2103,14 +2103,15 @@
           "primary_users": "Principal, Deans, Heads of Department, Internal Quality Assurance Cell, management.",
           "inputs": "Semester results, internal assessment marks, course-wise and section-wise mark data, faculty allocation records, historical result data across batches.",
           "outputs": "Institutional and departmental result dashboards, course-wise performance reports, trend analyses, comparative rankings, exception alerts. Integrations. Consumes Agents 1, 3, 34. Feeds Agents 9, 59, 70, 71, 72. Guardrail. Faculty-wise performance reporting is legitimate for support and development but becomes corrosive if used as a crude ranking. Present faculty metrics alongside contextual factors such as the difficulty of the course, the entry-level ability of the section, and the historical pass rate of that subject. Restrict visibility to the faculty member and their Head of Department by default.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/academic-performance-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/academic-performance-agent",
+          "endpoint_url": "https://bodhsight.vercel.app/",
+          "deployment_url": "https://bodhsight.vercel.app/",
           "sample_prompts": [
             "Generate latest status report for Academic Performance Agent",
             "Query institutional records via Academic Performance Agent",
             "Audit compliance metrics for Academic Performance Agent"
           ],
-          "status": "online"
+          "status": "online",
+          "live_status": "deployed"
         }
       ]
     },
