@@ -393,6 +393,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Academic Risk Profiling: Identified 14 students with backlog clusters (>2 subjects) requiring faculty mentorship intervention.\n"
                 f"• Dean & HoD Executive View: Real-time cohort analytics replacing scattered departmental spreadsheets with zero manual latency."
             )
+        elif a_id == "agent_06" or ("recovery" in a_id) or ("remedial" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Academic Recovery Synchronized: https://ai-academic-recovery-agent.vercel.app/\n"
+                f"• Remedial Plan Formulation: Formulated customized 6-hour remedial lecture schedules targeting high-weight examination topics to recover syllabus velocity.\n"
+                f"• Slow Learner & Backlog Rescue: Generated topic-level intervention roadmaps restoring on-track status for flagged students.\n"
+                f"• Timetable & Room Coordination: Automated conflict-free remedial classroom scheduling without colliding with primary course timetables."
+            )
         elif "publication" in a_id or "quartile" in a_id or "patent" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

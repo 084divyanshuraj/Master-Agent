@@ -2000,25 +2000,26 @@
         {
           "id": "agent_06",
           "number": 6,
-          "name": "Outputs. Session-wise lesson plans in the institutional format, course delivery plans, CO-to-session mapping, plan-versus-actual variance reports.",
+          "name": "AI Academic Recovery & Course Progress Agent",
           "group_id": "group_1",
           "group_number": 1,
           "group_name": "Academics Agents",
           "category_id": "category_1",
           "category_number": 1,
           "category_name": "Academic Lifecycle & Faculty Governance",
-          "description": "Answers a question that Heads of Department usually cannot answer until it is too late: is the syllabus actually being covered on schedule, in every section, by every faculty member. It detects slippage early enough to correct it.",
+          "description": "Calculates remedial lecture hours, formulates academic recovery plans, selects high-weight examination topics to recover syllabus velocity, and schedules targeted intervention sessions.",
           "primary_users": "Heads of Department, Deans, faculty, Internal Quality Assurance Cell.",
           "inputs": "Approved lesson plans from Agent 5, faculty weekly topic completion entries, attendance and class conduct records, and the academic calendar.",
           "outputs": "Coverage dashboards, faculty-wise and section-wise progress reports, pending syllabus lists, recovery plan recommendations, syllabus completion certificates. Integrations. Consumes Agents 4 and 5. Feeds Agents 9, 59, 70. Adoption note. This agent lives or dies on the quality of faculty data entry. Make the entry step take under ten seconds and integrate it with attendance marking, so completing one action completes both.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/outputs-session-wise-lesson-plans-in-the-institutional-format-course-delivery-plans-co-to-session-mapping-plan-versus-actual-variance-reports",
-          "deployment_url": "https://api.vignan.ac.in/agents/outputs-session-wise-lesson-plans-in-the-institutional-format-course-delivery-plans-co-to-session-mapping-plan-versus-actual-variance-reports",
+          "endpoint_url": "https://ai-academic-recovery-agent.vercel.app/",
+          "deployment_url": "https://ai-academic-recovery-agent.vercel.app/",
           "sample_prompts": [
             "Generate latest status report for Outputs. Session-wise lesson plans in the institutional format, course delivery plans, CO-to-session mapping, plan-versus-actual variance reports.",
             "Query institutional records via Outputs. Session-wise lesson plans in the institutional format, course delivery plans, CO-to-session mapping, plan-versus-actual variance reports.",
             "Audit compliance metrics for Outputs. Session-wise lesson plans in the institutional format, course delivery plans, CO-to-session mapping, plan-versus-actual variance reports."
           ],
-          "status": "online"
+          "status": "online",
+          "live_status": "deployed"
         },
         {
           "id": "agent_07",
