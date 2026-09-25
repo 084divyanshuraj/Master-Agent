@@ -3480,14 +3480,15 @@
           "primary_users": "All agents as a service, administration, admission office, examination section.",
           "inputs": "PDFs including scanned documents, Word documents, Excel and CSV files, images of documents, emails, and handwritten forms.",
           "outputs": "Structured data extracts with confidence scores, verification queues, source document links, extraction quality reports. Integrations. Serves Agents 11, 17, 39, 46, 48, 55, and others. Guardrail. Never allow extracted data below the confidence threshold to enter an academic or financial record without human confirmation. Optical character recognition errors in marks and roll numbers are both common and consequential, and a single transposed digit can attach one student\u2019s result to another.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/document-intelligence-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/document-intelligence-agent",
+          "endpoint_url": "https://frontend-ten-puce-47.vercel.app/",
+          "deployment_url": "https://frontend-ten-puce-47.vercel.app/",
           "sample_prompts": [
             "Generate latest status report for Document Intelligence Agent",
             "Query institutional records via Document Intelligence Agent",
             "Audit compliance metrics for Document Intelligence Agent"
           ],
-          "status": "online"
+          "status": "online",
+          "live_status": "deployed"
         }
       ]
     },

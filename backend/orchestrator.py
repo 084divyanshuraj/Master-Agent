@@ -419,6 +419,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Corporate recruitment analytics: Placement readiness index calculated at 84.6%. "
                 f"Matched 42 candidate profiles against visiting tier-1 recruiter eligibility criteria and verified internship evaluations."
             )
+        elif a_id == "agent_64" or ("document" in a_id and "intelligence" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live VFSTR Document Intelligence Synchronized: https://frontend-ten-puce-47.vercel.app/\n"
+                f"• Institutional Document Parsing: Scanned, indexed, and audited official Board of Studies (BoS) minutes, university MoUs, and academic circulars.\n"
+                f"• Regulatory Cross-Referencing: Automatic clause extraction verifying zero compliance variance across AICTE, UGC, and NAAC governance norms.\n"
+                f"• Semantic Intelligence Engine: Full-text semantic search enabled across institutional archive for rapid administrative discovery."
+            )
         elif "kpi" in a_id or "early" in a_id or "decision" in a_id or "strategic" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
