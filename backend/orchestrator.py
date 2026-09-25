@@ -377,11 +377,13 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Operational schedule synchronized across departmental lecture halls and laboratory complexes. "
                 f"Zero faculty double-booking conflicts and zero room collision flags detected."
             )
-        elif "attendance" in a_id or "risk" in a_id or "learner" in a_id:
+        elif a_id == "agent_11" or "attendance" in a_id or "detention" in a_id or "condonation" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
-                f"Real-time attendance analysis: 12 students flagged with aggregate attendance below 75% condonation threshold. "
-                f"Academic risk status: Moderate. Automated mentor alerts and 3 remedial tutorial sessions scheduled."
+                f"Live Attendance Monitoring Synchronized: https://attendance-analysis-agent.vercel.app/\n"
+                f"• Strict 75% Threshold Evaluation: Cohort-wise attendance tracking across sections, computing exact mandatory classes required to clear condonation limits.\n"
+                f"• Detention Risk Classification: Flagged 18 students at severe detention risk (<65%) and 24 students eligible for medical condonation (65%–74%).\n"
+                f"• Automated Advisory Workflow: Dispatched HoD detention warning memos and automated alerts to parents and faculty mentors."
             )
         elif a_id == "agent_10" or ("performance" in a_id and "academic" in a_id):
             return (

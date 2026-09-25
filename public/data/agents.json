@@ -2139,14 +2139,15 @@
           "primary_users": "Faculty, mentors, Heads of Department, Deans, examination section, students and parents.",
           "inputs": "Period-wise attendance records or uploaded attendance spreadsheets, timetable and class conduct records from Agent 4, student master data, approved leave and on-duty records, medical certificates, and institutional attendance regulations including the condonation policy.",
           "outputs": "Verified analytical reports and automated service actions.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/attendance-analysis-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/attendance-analysis-agent",
+          "endpoint_url": "https://attendance-analysis-agent.vercel.app/",
+          "deployment_url": "https://attendance-analysis-agent.vercel.app/",
           "sample_prompts": [
             "Generate latest status report for Attendance Analysis Agent",
             "Query institutional records via Attendance Analysis Agent",
             "Audit compliance metrics for Attendance Analysis Agent"
           ],
-          "status": "online"
+          "status": "online",
+          "live_status": "deployed"
         },
         {
           "id": "agent_12",
