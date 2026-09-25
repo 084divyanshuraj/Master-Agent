@@ -1941,14 +1941,15 @@
           "primary_users": "Heads of Department, Deans, faculty.",
           "inputs": "Course list for the coming semester from Agent 1, section and student strength data, faculty master with qualifications and specialisations, past teaching history, faculty preferences, current administrative load, sabbatical and leave plans, and university or AICTE workload norms.",
           "outputs": "Draft and final allocation sheets, faculty-wise load statements, expertise match reports, gap analysis showing courses with no suitably qualified faculty. Integrations. Consumes Agents 1 and 59. Feeds Agents 4, 5, 58. Guardrail. The optimiser proposes; a human decides. Allocation carries career implications and departmental politics that no model can see. Always present the recommendation with its reasoning and make override easy and low friction.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/faculty-course-allocation-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/faculty-course-allocation-agent",
+          "endpoint_url": "https://faculty-course-allocation-agent.vercel.app/",
+          "deployment_url": "https://faculty-course-allocation-agent.vercel.app/",
           "sample_prompts": [
             "Generate latest status report for Faculty Course Allocation Agent",
             "Query institutional records via Faculty Course Allocation Agent",
             "Audit compliance metrics for Faculty Course Allocation Agent"
           ],
-          "status": "online"
+          "status": "online",
+          "live_status": "deployed"
         },
         {
           "id": "agent_04",
