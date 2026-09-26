@@ -469,6 +469,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Automated 1-Click CommiAI Minutes: Formal meeting minutes generation with automated Action Taken Report (ATR) tracking directly feeding NBA Tier-1 Criterion 10 & Criterion 1 audits.\n"
                 f"• Meeting Velocity & Tenure Alert Engine: Automated convener notifications, tenure tracking, and agenda papers distribution eliminating governance vacuums."
             )
+        elif a_id == "agent_58" or ("faculty" in a_id and "workload" in a_id) or "fma" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Faculty Workload System Synchronized: https://agent-58-tawny.vercel.app/\n"
+                f"• NBA Criterion 5 Cadre & Teaching Load Governance: Verified departmental cadre ratio (1:2:6 Prof:Assoc:Asst) and Student-to-Faculty Ratio (SFR 1:15) across CSE and core branches.\n"
+                f"• Weekly Workload Cap Audit: Contact hours balanced within university limits (Professors 12 hrs/wk, Associate Professors 14 hrs/wk, Assistant Professors max 18 hrs/wk) across lecture, lab, and tutorial sessions.\n"
+                f"• Overload & Underload Analytics: Real-time department distribution analysis integrating course allocations (Agent 3) and committee duties (Agent 56) with zero allocation bias."
+            )
         elif "placement" in a_id or "job" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

@@ -429,12 +429,12 @@
               "primary_users": "Heads of Department, Deans, Principal, faculty, Human Resources.",
               "inputs": "Course allocation from Agent 3, timetable from Agent 4, laboratory and project supervision assignments, doctoral supervision from Agent 25, administrative role assignments, committee membership from Agent 56, research project commitments, and the institutional workload norm with its weightings.",
               "outputs": "Individual workload statements, departmental distribution analyses, overload and underload reports, what-if simulations, regulatory workload compliance reports. Integrations. Consumes Agents 3, 4, 25, 56. Feeds Agents 3, 54, 59, 60.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/faculty-workload-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/faculty-workload-agent",
+              "endpoint_url": "https://agent-58-tawny.vercel.app/",
+              "deployment_url": "https://agent-58-tawny.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Faculty Workload Agent",
-                "Query institutional records via Faculty Workload Agent",
-                "Audit compliance metrics for Faculty Workload Agent"
+                "Audit faculty teaching contact hours against institutional cap (max 18 hrs/week) for NBA Criterion 5",
+                "Calculate departmental cadre ratio (1:2:6) and Student-to-Faculty Ratio (SFR 1:15) compliance",
+                "Analyze overload/underload variance across CSE, ECE, and core engineering faculty allocations"
               ],
               "status": "online"
             },
@@ -3331,12 +3331,12 @@
           "primary_users": "Heads of Department, Deans, Principal, faculty, Human Resources.",
           "inputs": "Course allocation from Agent 3, timetable from Agent 4, laboratory and project supervision assignments, doctoral supervision from Agent 25, administrative role assignments, committee membership from Agent 56, research project commitments, and the institutional workload norm with its weightings.",
           "outputs": "Individual workload statements, departmental distribution analyses, overload and underload reports, what-if simulations, regulatory workload compliance reports. Integrations. Consumes Agents 3, 4, 25, 56. Feeds Agents 3, 54, 59, 60.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/faculty-workload-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/faculty-workload-agent",
+          "endpoint_url": "https://agent-58-tawny.vercel.app/",
+          "deployment_url": "https://agent-58-tawny.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Faculty Workload Agent",
-            "Query institutional records via Faculty Workload Agent",
-            "Audit compliance metrics for Faculty Workload Agent"
+            "Audit faculty teaching contact hours against institutional cap (max 18 hrs/week) for NBA Criterion 5",
+            "Calculate departmental cadre ratio (1:2:6) and Student-to-Faculty Ratio (SFR 1:15) compliance",
+            "Analyze overload/underload variance across CSE, ECE, and core engineering faculty allocations"
           ],
           "status": "online"
         },
