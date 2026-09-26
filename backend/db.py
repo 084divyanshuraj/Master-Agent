@@ -127,6 +127,7 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_03": "https://faculty-course-allocation-agent.vercel.app/",
     "agent_06": "https://ai-academic-recovery-agent.vercel.app/",
     "agent_08": "https://courseoutcome.onrender.com/",
+    "agent_09": "https://vignan-accreditation-agent-rmibobgo5lojrogjovrz7z.streamlit.app/",
     "agent_10": "https://bodhsight.vercel.app/",
     "agent_11": "https://attendance-analysis-agent.vercel.app/",
     "agent_52": "https://alumini-finder.netlify.app/",

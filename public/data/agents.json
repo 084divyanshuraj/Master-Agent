@@ -221,12 +221,12 @@
               "primary_users": "Internal Quality Assurance Cell, accreditation coordinators, Heads of Department, Principal and Deans.",
               "inputs": "Accreditation manuals and criteria for the National Board of Accreditation, National Assessment and Accreditation Council, National Institutional Ranking Framework, and where relevant ABET-style criteria; the institutional evidence store; and outputs from Agents 1, 6, 8, 10, 17, 34, 49, 57, and 71.",
               "outputs": "Readiness dashboards, criterion-wise gap reports, populated Self Assessment Report drafts, evidence annexure packs, data validation reports, task trackers. Integrations. Consumes most academic and research agents. Feeds Agents 57, 62, 71. Guardrail. The agent assembles and drafts. It never certifies. Every figure entering an accreditation submission must be verified and signed off by a named human, and the audit trail must record who signed off on what.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/accreditation-academic-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/accreditation-academic-agent",
+              "endpoint_url": "https://vignan-accreditation-agent-rmibobgo5lojrogjovrz7z.streamlit.app/",
+              "deployment_url": "https://vignan-accreditation-agent-rmibobgo5lojrogjovrz7z.streamlit.app/",
               "sample_prompts": [
-                "Generate latest status report for Accreditation Academic Agent",
-                "Query institutional records via Accreditation Academic Agent",
-                "Audit compliance metrics for Accreditation Academic Agent"
+                "Generate NBA Tier-1 Self Assessment Report (SAR) Criterion 1 to 10 compliance checklist",
+                "Audit departmental evidence store against NBA and NAAC accreditation manuals",
+                "Identify criterion-wise gaps and prepare accreditation annexure packs for peer review"
               ],
               "status": "online"
             },
