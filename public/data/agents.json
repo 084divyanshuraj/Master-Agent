@@ -1028,12 +1028,12 @@
               "primary_users": "Students, and by extension the administrative staff whose routine query load it absorbs.",
               "inputs": "The student\u2019s own profile from Agent 44, attendance from Agent 11, marks from Agents 33 and 34, timetable from Agent 4, examination schedule from Agent 30, fee status from Agent 40, curriculum from Agent 1, policies from Agent 53, circulars from Agent 55, and the academic calendar.",
               "outputs": "Conversational answers, actionable context, service request routings, escalation handovers, query pattern analytics. Integrations. Consumes Agents 1, 4, 11, 30, 33, 34, 40, 44, 53, 55. Fe",
-              "endpoint_url": "https://api.vignan.ac.in/agents/student-helpdesk-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/student-helpdesk-agent",
+              "endpoint_url": "https://student-helpdesk-agent-two.vercel.app/",
+              "deployment_url": "https://student-helpdesk-agent-two.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Student Helpdesk Agent",
-                "Query institutional records via Student Helpdesk Agent",
-                "Audit compliance metrics for Student Helpdesk Agent"
+                "Check my semester attendance, 75% safety margin, and consecutive lectures required",
+                "Verify End-Semester hall ticket clearance against fee dues and condonation holds",
+                "Request Bonafide Certificate or book counselor advisory session"
               ],
               "status": "online"
             },

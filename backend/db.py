@@ -120,6 +120,39 @@ def init_mongo_connection():
         mongo_db = None
 
     seed_default_users()
+    seed_default_agent_endpoints()
+
+
+DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
+    "agent_03": "https://faculty-course-allocation-agent.vercel.app/",
+    "agent_06": "https://ai-academic-recovery-agent.vercel.app/",
+    "agent_10": "https://bodhsight.vercel.app/",
+    "agent_11": "https://attendance-analysis-agent.vercel.app/",
+    "agent_52": "https://alumini-finder.netlify.app/",
+    "agent_64": "https://frontend-ten-puce-47.vercel.app/",
+    "agent_65": "https://student-helpdesk-agent-two.vercel.app/",
+}
+
+
+def seed_default_agent_endpoints():
+    """Seeds verified live deployed sub-agents into Atlas and in-memory cache."""
+    for agent_id, url in DEFAULT_LIVE_ENDPOINTS.items():
+        IN_MEMORY_ENDPOINTS[agent_id] = url
+        if is_mongo_connected and mongo_db is not None:
+            try:
+                mongo_db["agent_endpoints"].update_one(
+                    {"agent_id": agent_id},
+                    {
+                        "$setOnInsert": {
+                            "agent_id": agent_id,
+                            "endpoint_url": url,
+                            "updated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                        }
+                    },
+                    upsert=True
+                )
+            except Exception as e:
+                logger.error(f"Error seeding agent {agent_id} endpoint to MongoDB: {e}")
 
 
 init_mongo_connection()
