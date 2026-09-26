@@ -198,12 +198,12 @@
               "primary_users": "Faculty, Heads of Department, National Board of Accreditation coordinators, Internal Quality Assurance Cell.",
               "inputs": "Course Outcome statements from Agent 1, CO-PO and CO-PSO mapping matrices, question-wise mark data from internal and external examinations, question-to-CO tagging from Agent 31, assignment and quiz scores, and the institutional attainment rubric with its threshold levels.",
               "outputs": "CO attainment sheets, PO and PSO attainment matrices, gap analysis reports, Action Taken Reports, accreditation-ready attainment evidence with audit trail. Integrations. Consumes Agents 1, 2, 31, 33, 34. Feeds Agents 9, 57, 62. Design note. The attainment formula must be configurable, not hard-coded. Institutions revise their rubric between accreditation cycles, and different programmes within one institution sometimes use different thresholds.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/course-outcome-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/course-outcome-agent",
+              "endpoint_url": "https://courseoutcome.onrender.com/",
+              "deployment_url": "https://courseoutcome.onrender.com/",
               "sample_prompts": [
-                "Generate latest status report for Course Outcome Agent",
-                "Query institutional records via Course Outcome Agent",
-                "Audit compliance metrics for Course Outcome Agent"
+                "Compute CO-PO and CO-PSO attainment matrix for R22 Computer Science courses",
+                "Generate NBA Criterion 3 attainment gap analysis and Action Taken Report (ATR)",
+                "Audit Direct vs Indirect Course Outcome attainment percentages across examinations"
               ],
               "status": "online"
             },
