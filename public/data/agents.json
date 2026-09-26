@@ -325,12 +325,12 @@
               "primary_users": "Moderation committees, Controller of Examinations, Heads of Department, question paper setters.",
               "inputs": "The draft question paper, syllabus and unit structure, Course Outcome and Bloom\u2019s tagging, the blueprint, past papers for the same course, and the evaluation scheme.",
               "outputs": "Quality review reports, blueprint compliance matrices, repetition analyses, difficulty assessments, issue lists by severity. Integrations. Consumes Agents 2, 31. Feeds Agent 30.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/question-paper-quality-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/question-paper-quality-agent",
+              "endpoint_url": "https://question-paper-quality-agent.onrender.com/",
+              "deployment_url": "https://question-paper-quality-agent.onrender.com/",
               "sample_prompts": [
-                "Generate latest status report for Question Paper Quality Agent",
-                "Query institutional records via Question Paper Quality Agent",
-                "Audit compliance metrics for Question Paper Quality Agent"
+                "Audit draft question paper for NBA Criterion 3 Bloom's taxonomy balance and CO distribution",
+                "Run quality check for marks-to-time ratio, compulsory question balance, and construction ambiguities",
+                "Generate Examination Moderation Committee compliance ledger and blueprint validation report"
               ],
               "status": "online"
             },
@@ -2660,12 +2660,12 @@
           "primary_users": "Moderation committees, Controller of Examinations, Heads of Department, question paper setters.",
           "inputs": "The draft question paper, syllabus and unit structure, Course Outcome and Bloom\u2019s tagging, the blueprint, past papers for the same course, and the evaluation scheme.",
           "outputs": "Quality review reports, blueprint compliance matrices, repetition analyses, difficulty assessments, issue lists by severity. Integrations. Consumes Agents 2, 31. Feeds Agent 30.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/question-paper-quality-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/question-paper-quality-agent",
+          "endpoint_url": "https://question-paper-quality-agent.onrender.com/",
+          "deployment_url": "https://question-paper-quality-agent.onrender.com/",
           "sample_prompts": [
-            "Generate latest status report for Question Paper Quality Agent",
-            "Query institutional records via Question Paper Quality Agent",
-            "Audit compliance metrics for Question Paper Quality Agent"
+            "Audit draft question paper for NBA Criterion 3 Bloom's taxonomy balance and CO distribution",
+            "Run quality check for marks-to-time ratio, compulsory question balance, and construction ambiguities",
+            "Generate Examination Moderation Committee compliance ledger and blueprint validation report"
           ],
           "status": "online"
         },
