@@ -1511,12 +1511,12 @@
               "primary_users": "Internship coordinators, faculty mentors, students, industry partners, Heads of Department.",
               "inputs": "Internship opportunities from industry partners via Agent 28, student applications and allocations, offer letters and joining records, faculty mentor assignments, periodic progress reports, industry supervisor feedback, final reports, and the internship credit and evaluation policy.",
               "outputs": "Opportunity registers, allocation records, progress logs, evaluation records, credit transmissions, organisation ratings, conversion analyses. Integrations. Consumes Agents 28, 50. Feeds Agents 28, 44, 48, 49.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/internship-monitoring-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/internship-monitoring-agent",
+              "endpoint_url": "https://internship-liard-sigma.vercel.app/",
+              "deployment_url": "https://internship-liard-sigma.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Internship Monitoring Agent",
-                "Query institutional records via Internship Monitoring Agent",
-                "Audit compliance metrics for Internship Monitoring Agent"
+                "Audit Vignan University corporate internship completion rates and PPO conversion analytics",
+                "Check branch-wise placement KPIs across CSE, ECE, EEE, ME, and CE",
+                "Run ATS Resume Score Calculator and track student corporate evaluation ratings"
               ],
               "status": "online"
             },
