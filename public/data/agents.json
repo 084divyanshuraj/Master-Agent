@@ -1384,12 +1384,12 @@
               "primary_users": "Faculty development coordinators, Heads of Department, faculty, Internal Quality Assurance Cell.",
               "inputs": "Event proposals, resource person profiles, participant registrations, attendance records, feedback forms, budget and expenditure records, and faculty development requirement norms.",
               "outputs": "Event announcements, registration and attendance records, certificates, event reports, expenditure statements, feedback analyses, faculty development compliance reports. Integrations. Feeds Agents 9, 57, 58, 59, 60, 62.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/faculty-development-programme-and-workshop-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/faculty-development-programme-and-workshop-agent",
+              "endpoint_url": "https://fdpluse.onrender.com/",
+              "deployment_url": "https://fdpluse.onrender.com/",
               "sample_prompts": [
-                "Generate latest status report for Faculty Development Programme and Workshop Agent",
-                "Query institutional records via Faculty Development Programme and Workshop Agent",
-                "Audit compliance metrics for Faculty Development Programme and Workshop Agent"
+                "Audit departmental FDP participation and workshop completion for NBA Criterion 5.7 compliance",
+                "Forecast institutional faculty training needs and identify emerging technology skills gaps with AI",
+                "Generate FDP attendance risk register, certification records, and budget expenditure report"
               ],
               "status": "online"
             },
@@ -2533,12 +2533,12 @@
           "primary_users": "Faculty development coordinators, Heads of Department, faculty, Internal Quality Assurance Cell.",
           "inputs": "Event proposals, resource person profiles, participant registrations, attendance records, feedback forms, budget and expenditure records, and faculty development requirement norms.",
           "outputs": "Event announcements, registration and attendance records, certificates, event reports, expenditure statements, feedback analyses, faculty development compliance reports. Integrations. Feeds Agents 9, 57, 58, 59, 60, 62.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/faculty-development-programme-and-workshop-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/faculty-development-programme-and-workshop-agent",
+          "endpoint_url": "https://fdpluse.onrender.com/",
+          "deployment_url": "https://fdpluse.onrender.com/",
           "sample_prompts": [
-            "Generate latest status report for Faculty Development Programme and Workshop Agent",
-            "Query institutional records via Faculty Development Programme and Workshop Agent",
-            "Audit compliance metrics for Faculty Development Programme and Workshop Agent"
+            "Audit departmental FDP participation and workshop completion for NBA Criterion 5.7 compliance",
+            "Forecast institutional faculty training needs and identify emerging technology skills gaps with AI",
+            "Generate FDP attendance risk register, certification records, and budget expenditure report"
           ],
           "status": "online"
         },

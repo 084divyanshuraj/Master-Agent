@@ -437,6 +437,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Finance & scholarship audit: Verified fee payment schedule and fee due reminders issued. "
                 f"Merit-cum-means scholarship eligibility criteria verified for 28 eligible students."
             )
+        elif a_id == "agent_27" or ("faculty" in a_id and "development" in a_id) or "fdp" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live FDP Pulse System Synchronized: https://fdpluse.onrender.com/\n"
+                f"• NBA Criterion 5.7 Faculty Development Compliance: Audited faculty participation in certified 1-week and 2-week FDPs, NPTEL/SWAYAM, and AICTE ATAL short-term training programmes.\n"
+                f"• AI Training Needs Forecast: Analyzed departmental skill gaps across emerging technologies (AI/ML, Cloud Computing, Quantum, Cybersecurity), scheduling custom university development tracks.\n"
+                f"• Participation & Budget Tracking: Monitored registration velocity, attendance risk registers, seed grant expenditures, and auto-generated verifiable certificates for accreditation portfolios."
+            )
         elif "alumni" in a_id or a_id == "agent_52":
             return (
                 f"**[{name} — {group_name}]**\n"
