@@ -445,6 +445,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Branch Breakdown: CSE (94%), IT (90%), ECE (86%), ME (79%), EEE (78%), CE (74%) placement and credited internship completion.\n"
                 f"• ATS Resume & Evaluation Analytics: Automated ATS Resume scoring, verified supervisor work-log attendance (93% avg), and zero unmonitored internship credits."
             )
+        elif a_id == "agent_53" or ("policy" in a_id and "university" in a_id) or "unipolicy" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live UniPolicy AI Portal Synchronized: https://vision-y.vercel.app/\n"
+                f"• Statutory Regulation & Ordinance Retrieval: Retrieved clause-level policy citations across VFSTR Academic Regulations (R22/R24), Academic Ordinances, and AICTE/UGC statutory frameworks.\n"
+                f"• Examination & Governance Standards: Clause extracts verified for Ordinance 14 (Examination Conduct & Malpractice Rules), Grade Moderation, Revaluation, and Detained Candidate Re-admission.\n"
+                f"• Administrative Guardrails: Verified policy citations with automated escalation to competent authorities (Registrar / Dean Academics) for statutory interpretation and zero rule ambiguity."
+            )
         elif "placement" in a_id or "job" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

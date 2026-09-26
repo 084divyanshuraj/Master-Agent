@@ -1579,12 +1579,12 @@
               "primary_users": "All staff, faculty, students, administration.",
               "inputs": "University regulations and academic ordinances, institutional policy documents, standard operating procedures, circulars from Agent 55, statutory body guidelines, and prior authoritative interpretations.",
               "outputs": "Cited policy answers, applicable clause extracts, procedure summaries, ambiguity escalations, query pattern reports, contradiction registers. Integrations. Consumes Agent 55. Feeds Agents 54, 65. Guardrail. The agent provides information, not authoritative interpretation. Every answer must carry a citation and a statement that the competent authority governs in case of conflict. Never allow it to answer from model general knowledge about what universities typically do; if the institutional documents do not cover the question, it must say so.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/university-policy-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/university-policy-agent",
+              "endpoint_url": "https://vision-y.vercel.app/",
+              "deployment_url": "https://vision-y.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for University Policy Agent",
-                "Query institutional records via University Policy Agent",
-                "Audit compliance metrics for University Policy Agent"
+                "Retrieve exact clause citations for R22 Academic Regulations on attendance condonation and detention",
+                "Audit university examination malpractice penalties and Ordinance 14 disciplinary guidelines",
+                "Check fee refund schedules and AICTE/UGC statutory guidelines for institutional compliance"
               ],
               "status": "online"
             },
@@ -3204,12 +3204,12 @@
           "primary_users": "All staff, faculty, students, administration.",
           "inputs": "University regulations and academic ordinances, institutional policy documents, standard operating procedures, circulars from Agent 55, statutory body guidelines, and prior authoritative interpretations.",
           "outputs": "Cited policy answers, applicable clause extracts, procedure summaries, ambiguity escalations, query pattern reports, contradiction registers. Integrations. Consumes Agent 55. Feeds Agents 54, 65. Guardrail. The agent provides information, not authoritative interpretation. Every answer must carry a citation and a statement that the competent authority governs in case of conflict. Never allow it to answer from model general knowledge about what universities typically do; if the institutional documents do not cover the question, it must say so.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/university-policy-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/university-policy-agent",
+          "endpoint_url": "https://vision-y.vercel.app/",
+          "deployment_url": "https://vision-y.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for University Policy Agent",
-            "Query institutional records via University Policy Agent",
-            "Audit compliance metrics for University Policy Agent"
+            "Retrieve exact clause citations for R22 Academic Regulations on attendance condonation and detention",
+            "Audit university examination malpractice penalties and Ordinance 14 disciplinary guidelines",
+            "Check fee refund schedules and AICTE/UGC statutory guidelines for institutional compliance"
           ],
           "status": "online"
         },
