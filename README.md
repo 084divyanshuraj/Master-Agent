@@ -64,9 +64,10 @@ PORT=8000
 HOST=0.0.0.0
 ```
 
-### 4. Run the Server
+### 4. Run the Server Locally
 ```bash
-python server.py
+python main.py
+# or: python server.py
 ```
 
 Open your browser at `http://localhost:8000` to launch the Master Agent Portal.
