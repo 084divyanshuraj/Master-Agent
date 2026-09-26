@@ -453,6 +453,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Examination & Governance Standards: Clause extracts verified for Ordinance 14 (Examination Conduct & Malpractice Rules), Grade Moderation, Revaluation, and Detained Candidate Re-admission.\n"
                 f"• Administrative Guardrails: Verified policy citations with automated escalation to competent authorities (Registrar / Dean Academics) for statutory interpretation and zero rule ambiguity."
             )
+        elif a_id == "agent_56" or ("committee" in a_id and "management" in a_id) or "commiai" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Vignan CommiAI Governance Portal Synchronized: https://vignan-commiai-frontend.vercel.app/\n"
+                f"• Statutory Body Compliance & Quorum Audit: Real-time composition compliance and quorum verification across Board of Studies (BoS), Academic Council, IQAC, and Anti-Ragging Committees.\n"
+                f"• Automated 1-Click CommiAI Minutes: Formal meeting minutes generation with automated Action Taken Report (ATR) tracking directly feeding NBA Tier-1 Criterion 10 & Criterion 1 audits.\n"
+                f"• Meeting Velocity & Tenure Alert Engine: Automated convener notifications, tenure tracking, and agenda papers distribution eliminating governance vacuums."
+            )
         elif "placement" in a_id or "job" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

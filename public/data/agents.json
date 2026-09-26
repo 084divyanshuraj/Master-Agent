@@ -1648,12 +1648,12 @@
               "primary_users": "Registrar, committee conveners and members, Principal, Internal Quality Assurance Cell.",
               "inputs": "Committee constitution requirements from statutes and regulations, member records with roles and tenure, meeting frequency requirements, agenda and minutes archives, and action item history.",
               "outputs": "Committee registers, composition compliance reports, tenure and meeting alerts, agendas, attendance and quorum records, minutes, action item trackers, evidence archives. Integrations. Consumes Agent 55. Feeds Agents 9, 54, 57.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/committee-management-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/committee-management-agent",
+              "endpoint_url": "https://vignan-commiai-frontend.vercel.app/",
+              "deployment_url": "https://vignan-commiai-frontend.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Committee Management Agent",
-                "Query institutional records via Committee Management Agent",
-                "Audit compliance metrics for Committee Management Agent"
+                "Audit statutory composition compliance and quorum records across BoS, Academic Council, and IQAC",
+                "Generate 1-Click CommiAI meeting minutes and Action Taken Report (ATR) for NBA Criterion 10 audit",
+                "Check committee meeting schedules, convener alerts, and pending governance resolutions"
               ],
               "status": "online"
             },
@@ -3273,12 +3273,12 @@
           "primary_users": "Registrar, committee conveners and members, Principal, Internal Quality Assurance Cell.",
           "inputs": "Committee constitution requirements from statutes and regulations, member records with roles and tenure, meeting frequency requirements, agenda and minutes archives, and action item history.",
           "outputs": "Committee registers, composition compliance reports, tenure and meeting alerts, agendas, attendance and quorum records, minutes, action item trackers, evidence archives. Integrations. Consumes Agent 55. Feeds Agents 9, 54, 57.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/committee-management-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/committee-management-agent",
+          "endpoint_url": "https://vignan-commiai-frontend.vercel.app/",
+          "deployment_url": "https://vignan-commiai-frontend.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Committee Management Agent",
-            "Query institutional records via Committee Management Agent",
-            "Audit compliance metrics for Committee Management Agent"
+            "Audit statutory composition compliance and quorum records across BoS, Academic Council, and IQAC",
+            "Generate 1-Click CommiAI meeting minutes and Action Taken Report (ATR) for NBA Criterion 10 audit",
+            "Check committee meeting schedules, convener alerts, and pending governance resolutions"
           ],
           "status": "online"
         },
