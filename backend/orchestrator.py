@@ -505,7 +505,15 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Live Student Helpdesk Synchronized: https://student-helpdesk-agent-two.vercel.app/\n"
                 f"• Verified Student Telemetry: Authenticated student profile #251FA04E13 (Aman Kumar, B.Tech CSE Sec-7, CGPA 8.09) with Row-Level Security (RLS) guardrails.\n"
                 f"• Attendance & Condonation Gate: Real-time consecutive lecture calculations (16 classes needed in Data Structures for 75% cutoff; R22 Clause 4.3 medical condonation window 65%–74.9%).\n"
-                f"• Institutional Gatekeeper: Automated hold audit (Clause 8.2 dual-clearance for End-Semester hall tickets requiring finance clearance and approved medical board sign-off)."
+                f"• Institutional Gatekeeper: Automated hold audit (Clause 8.2 dual-clearance for End-Semester hall tickets requiring finance clearance and approved medical board sign-off).\n"
+            )
+        elif a_id == "agent_67" or ("learning" in a_id and "resource" in a_id) or "gap2grow" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Gap2Grow Learning Resource System Synchronized: https://gap2growvignan.netlify.app/\n"
+                f"• NBA Criterion 7 Remedial Learning Gap Diagnostics: Diagnosed topic-level conceptual deficiencies mapped from CIA/SEE marks, formulating individualized step-by-step recovery sequences.\n"
+                f"• Curated Open & Institutional Courseware: Connected students to verified NPTEL lectures, SWAYAM modules, interactive algorithm visualizers (VisuAlgo), and Vignan central library digital reserves.\n"
+                f"• Continuous Remediation Tracking: Auto-tracks student remediation progress, prerequisite concept mastery, and practice test completions with zero reliance on generic, unread syllabus bibliographies."
             )
         elif "kpi" in a_id or "early" in a_id or "decision" in a_id or "strategic" in a_id:
             return (

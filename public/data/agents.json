@@ -1074,12 +1074,12 @@
               "primary_users": "Students, faculty, remedial coordinators, library.",
               "inputs": "Course content and topic structure from Agent 2, prescribed textbooks and references, library holdings and digital subscriptions, curated open resource catalogues, massive open online course catalogues from platforms including NPTEL, SWAYAM, and Coursera, student performance and identified weak topics from Agents 12 and 33, and student learning preferences.",
               "outputs": "Topic-level resource recommendations, sequenced learning paths, practice material, faculty-curated collections, engagement and effectiveness reports, library acquisition requests. Integrations. Consumes Agents 2, 12, 33. Feeds Agents 16, 49, 68. Guardrail. Recommend only resources the institution has verified as legitimate and accessible. Do not link to pirated textbook copies, which is a common outcome of unfiltered internet resource recommendation and exposes the institution to liability.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/learning-resource-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/learning-resource-agent",
+              "endpoint_url": "https://gap2growvignan.netlify.app/",
+              "deployment_url": "https://gap2growvignan.netlify.app/",
               "sample_prompts": [
-                "Generate latest status report for Learning Resource Agent",
-                "Query institutional records via Learning Resource Agent",
-                "Audit compliance metrics for Learning Resource Agent"
+                "Diagnose student topic-level learning gaps and synthesize personalized remediation paths for NBA Criterion 7",
+                "Recommend faculty-endorsed NPTEL courses, library holdings, and algorithm visualizers for weak areas",
+                "Generate remedial learning progression reports and verify student mastery of prerequisite concepts"
               ],
               "status": "online"
             },
@@ -3563,12 +3563,12 @@
           "primary_users": "Students, faculty, remedial coordinators, library.",
           "inputs": "Course content and topic structure from Agent 2, prescribed textbooks and references, library holdings and digital subscriptions, curated open resource catalogues, massive open online course catalogues from platforms including NPTEL, SWAYAM, and Coursera, student performance and identified weak topics from Agents 12 and 33, and student learning preferences.",
           "outputs": "Topic-level resource recommendations, sequenced learning paths, practice material, faculty-curated collections, engagement and effectiveness reports, library acquisition requests. Integrations. Consumes Agents 2, 12, 33. Feeds Agents 16, 49, 68. Guardrail. Recommend only resources the institution has verified as legitimate and accessible. Do not link to pirated textbook copies, which is a common outcome of unfiltered internet resource recommendation and exposes the institution to liability.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/learning-resource-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/learning-resource-agent",
+          "endpoint_url": "https://gap2growvignan.netlify.app/",
+          "deployment_url": "https://gap2growvignan.netlify.app/",
           "sample_prompts": [
-            "Generate latest status report for Learning Resource Agent",
-            "Query institutional records via Learning Resource Agent",
-            "Audit compliance metrics for Learning Resource Agent"
+            "Diagnose student topic-level learning gaps and synthesize personalized remediation paths for NBA Criterion 7",
+            "Recommend faculty-endorsed NPTEL courses, library holdings, and algorithm visualizers for weak areas",
+            "Generate remedial learning progression reports and verify student mastery of prerequisite concepts"
           ],
           "status": "online"
         },
