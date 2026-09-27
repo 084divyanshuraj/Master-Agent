@@ -1856,12 +1856,12 @@
               "primary_users": "Management, governing body, Principal, Deans, Internal Quality Assurance Cell, planning committees.",
               "inputs": "Historical institutional performance across every domain, current indicator status from Agent 71, admission and market trends from Agent 38, placement and employer demand data from Agents 49 and 50, research trajectory from Agent 20, faculty capability from Agents 59 and 60, infrastructure and financial data, peer and competitor information, regulatory direction, and the existing strategic plan with its commitments.",
               "outputs": "Position and trajectory an",
-              "endpoint_url": "https://api.vignan.ac.in/agents/strategic-planning-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/strategic-planning-agent",
+              "endpoint_url": "https://agent-72-zeta.vercel.app/",
+              "deployment_url": "https://agent-72-zeta.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Strategic Planning Agent",
-                "Query institutional records via Strategic Planning Agent",
-                "Audit compliance metrics for Strategic Planning Agent"
+                "Evaluate multi-year institutional strategic trajectory and scenario models for NBA Criterion 10 governance",
+                "Analyze resource allocation, faculty expansion feasibility, and research milestone frameworks",
+                "Generate Board of Management strategic option briefs and strategic initiative roadmaps"
               ],
               "status": "online"
             }
@@ -3690,12 +3690,12 @@
           "primary_users": "Management, governing body, Principal, Deans, Internal Quality Assurance Cell, planning committees.",
           "inputs": "Historical institutional performance across every domain, current indicator status from Agent 71, admission and market trends from Agent 38, placement and employer demand data from Agents 49 and 50, research trajectory from Agent 20, faculty capability from Agents 59 and 60, infrastructure and financial data, peer and competitor information, regulatory direction, and the existing strategic plan with its commitments.",
           "outputs": "Position and trajectory an",
-          "endpoint_url": "https://api.vignan.ac.in/agents/strategic-planning-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/strategic-planning-agent",
+          "endpoint_url": "https://agent-72-zeta.vercel.app/",
+          "deployment_url": "https://agent-72-zeta.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Strategic Planning Agent",
-            "Query institutional records via Strategic Planning Agent",
-            "Audit compliance metrics for Strategic Planning Agent"
+            "Evaluate multi-year institutional strategic trajectory and scenario models for NBA Criterion 10 governance",
+            "Analyze resource allocation, faculty expansion feasibility, and research milestone frameworks",
+            "Generate Board of Management strategic option briefs and strategic initiative roadmaps"
           ],
           "status": "online"
         }

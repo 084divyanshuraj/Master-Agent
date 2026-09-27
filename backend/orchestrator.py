@@ -515,6 +515,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Curated Open & Institutional Courseware: Connected students to verified NPTEL lectures, SWAYAM modules, interactive algorithm visualizers (VisuAlgo), and Vignan central library digital reserves.\n"
                 f"• Continuous Remediation Tracking: Auto-tracks student remediation progress, prerequisite concept mastery, and practice test completions with zero reliance on generic, unread syllabus bibliographies."
             )
+        elif a_id == "agent_72" or ("strategic" in a_id and "planning" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Strategic Planning & Decision Support System Synchronized: https://agent-72-zeta.vercel.app/\n"
+                f"• NBA Criterion 10 Strategic Governance & Resource Allocation: Simulated multi-year institutional trajectory models, evaluating faculty expansion, capital expenditure, and academic growth scenarios.\n"
+                f"• Strategic Targets & Milestone Tracking: Monitored KPI milestone frameworks across NIRF/NAAC/NBA target benchmarks, research seed grants, and infrastructure commitments.\n"
+                f"• Executive Decision Briefs: Auto-generated evidence-backed strategic option briefs and risk registers for the Board of Management, Academic Council, and Planning Committees."
+            )
         elif "kpi" in a_id or "early" in a_id or "decision" in a_id or "strategic" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
