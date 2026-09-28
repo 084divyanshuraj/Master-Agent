@@ -971,3 +971,417 @@
   color: #1E293B;
 }
 
+/* ==========================================================================
+   Report Export & Download Styles (Executive Audit Dossier Feature)
+   ========================================================================== */
+
+/* Top Navigation Bar Export Button */
+.btn-report-export-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: linear-gradient(135deg, #0F2C59 0%, #1E40AF 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.42rem 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 4px rgba(15, 44, 89, 0.15);
+}
+
+.btn-report-export-nav:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(15, 44, 89, 0.25);
+  background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
+}
+
+/* Inline Report Action Bar in Assistant Message Bubbles */
+.report-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #E2E8F0;
+}
+
+.report-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0369A1;
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+
+.report-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #0284C7;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.25);
+}
+
+.report-actions-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  position: relative;
+}
+
+.btn-report-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #1E293B;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-report-action:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  color: #0F172A;
+  transform: translateY(-1px);
+}
+
+.btn-download-report {
+  background: linear-gradient(135deg, #0F2C59 0%, #1E40AF 100%);
+  color: #FFFFFF;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(15, 44, 89, 0.15);
+}
+
+.btn-download-report:hover {
+  background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+/* Dropdown Menu for Download Formats */
+.report-download-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.report-dropdown-menu {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px -4px rgba(15, 44, 89, 0.18), 0 4px 10px -2px rgba(0, 0, 0, 0.08);
+  padding: 0.4rem;
+  min-width: 260px;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  gap: 0.25rem;
+  animation: dropdownFadeIn 0.15s ease-out;
+}
+
+.report-download-dropdown.open .report-dropdown-menu {
+  display: flex;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: #1E293B;
+  font-family: var(--font-body);
+}
+
+.dropdown-item:hover {
+  background: #F1F5F9;
+  color: #0F2C59;
+}
+
+.dropdown-icon {
+  font-size: 1.15rem;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F8FAFC;
+  border-radius: 6px;
+  border: 1px solid #E2E8F0;
+  flex-shrink: 0;
+}
+
+.dropdown-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-text strong {
+  font-size: 0.78rem;
+  color: #0F172A;
+  font-weight: 700;
+}
+
+.dropdown-text small {
+  font-size: 0.68rem;
+  color: #64748B;
+  margin-top: 1px;
+}
+
+/* Report Export Modal */
+.report-modal-card {
+  max-width: 680px;
+  width: 90%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-modal-body {
+  padding: 1.25rem 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.report-modal-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.report-scope-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .report-scope-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.report-scope-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.report-scope-option input[type="radio"] {
+  margin-top: 0.2rem;
+  accent-color: #2563EB;
+}
+
+.report-scope-option.active {
+  background: #EFF6FF;
+  border-color: #3B82F6;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.12);
+}
+
+.report-scope-option .option-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.report-scope-option .option-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0F2C59;
+}
+
+.report-scope-option .option-desc {
+  font-size: 0.72rem;
+  color: #64748B;
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+.export-format-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .export-format-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.format-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.6rem;
+  transition: all var(--transition-fast);
+}
+
+.format-card:hover {
+  border-color: #93C5FD;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+  transform: translateY(-2px);
+}
+
+.format-card-icon {
+  font-size: 1.4rem;
+}
+
+.format-card-info strong {
+  display: block;
+  font-size: 0.84rem;
+  color: #0F172A;
+  margin-bottom: 0.2rem;
+}
+
+.format-card-info p {
+  font-size: 0.72rem;
+  color: #64748B;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.btn-format-download {
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #0F2C59;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 0.3rem;
+  width: 100%;
+}
+
+.format-card:hover .btn-format-download {
+  background: #2563EB;
+  border-color: #2563EB;
+  color: #FFFFFF;
+}
+
+.report-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 16px 16px;
+}
+
+.modal-footer-notice {
+  font-size: 0.72rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+/* Vignan Toast Notifications */
+.vignan-toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.vignan-toast {
+  pointer-events: auto;
+  background: #0F2C59;
+  color: #FFFFFF;
+  padding: 0.75rem 1.15rem;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px -5px rgba(15, 44, 89, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-left: 4px solid #38BDF8;
+  animation: toastSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
+}
+
+.vignan-toast.success {
+  border-left-color: #10B981;
+}
+
+.vignan-toast.info {
+  border-left-color: #38BDF8;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.vignan-toast.fade-out {
+  opacity: 0;
+  transform: translateY(8px);
+}
+

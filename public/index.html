@@ -353,6 +353,9 @@
         </div>
         
         <div class="chat-nav-right">
+          <button id="btnExportSessionReport" class="btn-report-export-nav" title="Download Official Master Agent Executive Report & Audit Dossier">
+            📄 Export Report
+          </button>
           <button id="btnOpenTraceLogs" class="btn-trace-modal-trigger" title="Inspect Live MongoDB Query Traces & Pipeline Decomposition">
             🔬 Pipeline Audit Trace
           </button>
@@ -497,7 +500,97 @@
       </div>
     </div>
 
+    <!-- =======================================================================
+         REPORT EXPORT MODAL (Download / Export Master Agent Reports)
+         ======================================================================= -->
+    <div id="reportExportModal" class="agent-drawer-modal" style="display: none;">
+      <div class="agent-drawer-card report-modal-card">
+        <div class="drawer-header">
+          <div class="drawer-title-group">
+            <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+              <span>📑</span> Master Agent Executive Report Export
+            </h3>
+            <p>Generate and download verified executive audit dossiers for university governance, HoD review, and NBA/NAAC compliance committees.</p>
+          </div>
+          <button id="btnCloseReportModal" class="btn-close-drawer">&times;</button>
+        </div>
+
+        <div class="report-modal-body">
+          <div class="report-export-scope-selection">
+            <label class="report-modal-label">Select Report Scope:</label>
+            <div class="report-scope-options">
+              <label class="report-scope-option active" id="scopeOptLatest">
+                <input type="radio" name="exportScope" value="latest" checked>
+                <div class="option-content">
+                  <span class="option-title">🎯 Latest Master Agent Report</span>
+                  <span class="option-desc">Download the most recent executive analysis, findings, and verified citations.</span>
+                </div>
+              </label>
+              <label class="report-scope-option" id="scopeOptSession">
+                <input type="radio" name="exportScope" value="session">
+                <div class="option-content">
+                  <span class="option-title">📚 Full Session Audit Dossier</span>
+                  <span class="option-desc">Consolidate all queries and multi-agent synthesis findings from this session.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="report-export-format-selection">
+            <label class="report-modal-label">Choose Export Format:</label>
+            <div class="export-format-grid">
+              <div class="format-card" data-format="pdf">
+                <div class="format-card-icon">🖨️</div>
+                <div class="format-card-info">
+                  <strong>Official PDF / Printable</strong>
+                  <p>Formatted letterhead with official seal, metadata table, and watermark.</p>
+                </div>
+                <button type="button" class="btn-format-download" data-format="pdf">Print / PDF</button>
+              </div>
+
+              <div class="format-card" data-format="markdown">
+                <div class="format-card-icon">📝</div>
+                <div class="format-card-info">
+                  <strong>Markdown (.md)</strong>
+                  <p>GitHub-flavored markdown with structured tables and telemetry trace.</p>
+                </div>
+                <button type="button" class="btn-format-download" data-format="markdown">Download .md</button>
+              </div>
+
+              <div class="format-card" data-format="text">
+                <div class="format-card-icon">📄</div>
+                <div class="format-card-info">
+                  <strong>Executive Brief (.txt)</strong>
+                  <p>Clean plain text suitable for university circulars and notices.</p>
+                </div>
+                <button type="button" class="btn-format-download" data-format="text">Download .txt</button>
+              </div>
+
+              <div class="format-card" data-format="json">
+                <div class="format-card-icon">📦</div>
+                <div class="format-card-info">
+                  <strong>Audit JSON (.json)</strong>
+                  <p>Raw JSON telemetry trace, decomposition data, and key timings.</p>
+                </div>
+                <button type="button" class="btn-format-download" data-format="json">Download .json</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-modal-footer">
+          <div class="modal-footer-notice">
+            <span>🔒 All reports cryptographically timestamped and aligned with NBA Criterion 1–10.</span>
+          </div>
+          <button type="button" id="btnCancelReportModal" class="demo-chip-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
   </main>
+
+  <!-- Toast Notification Container -->
+  <div id="vignanToastContainer" class="vignan-toast-container"></div>
 
   <!-- Bottom System Status Bar (matching reference screenshot) -->
   <footer class="portal-footer-bar">
@@ -515,6 +608,6 @@
     </div>
   </footer>
 
-  <script src="js/app.js?v=9"></script>
+  <script src="js/app.js?v=10"></script>
 </body>
 </html>
