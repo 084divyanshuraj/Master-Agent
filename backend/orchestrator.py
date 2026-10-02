@@ -445,6 +445,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• AI Training Needs Forecast: Analyzed departmental skill gaps across emerging technologies (AI/ML, Cloud Computing, Quantum, Cybersecurity), scheduling custom university development tracks.\n"
                 f"• Participation & Budget Tracking: Monitored registration velocity, attendance risk registers, seed grant expenditures, and auto-generated verifiable certificates for accreditation portfolios."
             )
+        elif a_id == "agent_45" or ("student" in a_id and "mentoring" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Student Mentoring System Synchronized: https://agent-hackathon.onrender.com/login\n"
+                f"• NBA Criterion 9 Mentoring Ecosystem & Role Adaptation: Role-based mentoring governance active across Student, Faculty Mentor, HoD, and Professional Counsellor tiers with strict confidential disclosure boundaries.\n"
+                f"• Mentor-Mentee Allocation & Action Tracking: Real-time tracking of 1:20 faculty-to-student mentor ratio, pre-meeting briefs, structured session notes, and closed-loop academic recovery follow-ups.\n"
+                f"• Early Risk Flagging & Escalation Protocol: Integrated telemetry from attendance and marks analytics (Agents 11 & 12) automatically triggers mentor advisory workflows before semester cutoff thresholds."
+            )
         elif "alumni" in a_id or a_id == "agent_52":
             return (
                 f"**[{name} — {group_name}]**\n"

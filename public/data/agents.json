@@ -924,12 +924,12 @@
               "primary_users": "Faculty mentors, mentees, Heads of Department, counselling cell.",
               "inputs": "Mentor-mentee allocation, student profiles from Agent 44, risk and intervention flags from Agents 12, 14, 16, meeting records and notes, action item history, and the institutional mentoring policy.",
               "outputs": "Allocation registers, pre-meeting briefs, meeting records, action item trackers, escalation routings, compliance and health reports. Integrations. Consumes Agents 11, 12, 14, 16, 44. Feeds Agents 46, 66. Guardrail. Mentoring notes frequently contain personal disclosures. Restrict access to the mentor, the student, and named escalation roles. Give the student visibility into what is recorded about them, and provide a clear boundary in the interface about what should be recorded in the mentoring system versus what belongs in confidential counselling records.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/student-mentoring-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/student-mentoring-agent",
+              "endpoint_url": "https://agent-hackathon.onrender.com/login",
+              "deployment_url": "https://agent-hackathon.onrender.com/login",
               "sample_prompts": [
-                "Generate latest status report for Student Mentoring Agent",
-                "Query institutional records via Student Mentoring Agent",
-                "Audit compliance metrics for Student Mentoring Agent"
+                "Audit mentor-mentee allocation ratio, pending meeting schedules, and follow-up action items",
+                "Identify at-risk mentees with attendance or CGPA dips requiring counselling intervention",
+                "Generate HoD department-level mentoring compliance ledger and confidential escalation briefs"
               ],
               "status": "online"
             },
@@ -2995,12 +2995,12 @@
           "primary_users": "Faculty mentors, mentees, Heads of Department, counselling cell.",
           "inputs": "Mentor-mentee allocation, student profiles from Agent 44, risk and intervention flags from Agents 12, 14, 16, meeting records and notes, action item history, and the institutional mentoring policy.",
           "outputs": "Allocation registers, pre-meeting briefs, meeting records, action item trackers, escalation routings, compliance and health reports. Integrations. Consumes Agents 11, 12, 14, 16, 44. Feeds Agents 46, 66. Guardrail. Mentoring notes frequently contain personal disclosures. Restrict access to the mentor, the student, and named escalation roles. Give the student visibility into what is recorded about them, and provide a clear boundary in the interface about what should be recorded in the mentoring system versus what belongs in confidential counselling records.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/student-mentoring-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/student-mentoring-agent",
+          "endpoint_url": "https://agent-hackathon.onrender.com/login",
+          "deployment_url": "https://agent-hackathon.onrender.com/login",
           "sample_prompts": [
-            "Generate latest status report for Student Mentoring Agent",
-            "Query institutional records via Student Mentoring Agent",
-            "Audit compliance metrics for Student Mentoring Agent"
+            "Audit mentor-mentee allocation ratio, pending meeting schedules, and follow-up action items",
+            "Identify at-risk mentees with attendance or CGPA dips requiring counselling intervention",
+            "Generate HoD department-level mentoring compliance ledger and confidential escalation briefs"
           ],
           "status": "online"
         },
