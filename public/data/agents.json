@@ -1729,12 +1729,12 @@
               "primary_users": "Management, Principal, Deans, Heads of Department, Internal Quality Assurance Cell.",
               "inputs": "The unified data warehouse, the canonical data model with metric definitions, role-based access rules, and dashboard specifications.",
               "outputs": "Conversational analytics responses, charts and visualisations, role-based dashboards, anomaly alerts, exportable data sets. Integrations. Consumes the data warehouse. Feeds Agents 62, 70, 71, 72. Guardrail. Natural language to query translation makes mistakes that produce plausible but wrong numbers. Always display the interpretation, meaning the metric, filters, and period applied, alongside the result, so the user can see whether the question was understood as asked. For any figure entering an official submission, require verification against a defined report rather than an ad hoc query.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/data-analytics-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/data-analytics-agent",
+              "endpoint_url": "https://agent63-frontend.onrender.com",
+              "deployment_url": "https://agent63-frontend.onrender.com",
               "sample_prompts": [
-                "Generate latest status report for Data Analytics Agent",
-                "Query institutional records via Data Analytics Agent",
-                "Audit compliance metrics for Data Analytics Agent"
+                "Query cross-departmental academic and research KPI metrics via Data Analytics Agent",
+                "Analyze historical multi-cohort student performance trends and institutional data warehouse anomalies",
+                "Generate executive self-service analytics dashboard and IQAC accreditation data tables"
               ],
               "status": "online"
             },
@@ -3458,12 +3458,12 @@
           "primary_users": "Management, Principal, Deans, Heads of Department, Internal Quality Assurance Cell.",
           "inputs": "The unified data warehouse, the canonical data model with metric definitions, role-based access rules, and dashboard specifications.",
           "outputs": "Conversational analytics responses, charts and visualisations, role-based dashboards, anomaly alerts, exportable data sets. Integrations. Consumes the data warehouse. Feeds Agents 62, 70, 71, 72. Guardrail. Natural language to query translation makes mistakes that produce plausible but wrong numbers. Always display the interpretation, meaning the metric, filters, and period applied, alongside the result, so the user can see whether the question was understood as asked. For any figure entering an official submission, require verification against a defined report rather than an ad hoc query.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/data-analytics-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/data-analytics-agent",
+          "endpoint_url": "https://agent63-frontend.onrender.com",
+          "deployment_url": "https://agent63-frontend.onrender.com",
           "sample_prompts": [
-            "Generate latest status report for Data Analytics Agent",
-            "Query institutional records via Data Analytics Agent",
-            "Audit compliance metrics for Data Analytics Agent"
+            "Query cross-departmental academic and research KPI metrics via Data Analytics Agent",
+            "Analyze historical multi-cohort student performance trends and institutional data warehouse anomalies",
+            "Generate executive self-service analytics dashboard and IQAC accreditation data tables"
           ],
           "status": "online"
         },

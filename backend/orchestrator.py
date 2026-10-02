@@ -499,6 +499,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Corporate recruitment analytics: Placement readiness index calculated at 84.6%. "
                 f"Matched candidate profiles against visiting tier-1 recruiter eligibility criteria and verified internship evaluations."
             )
+        elif a_id == "agent_63" or ("data" in a_id and "analytics" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Data Analytics Engine Synchronized: https://agent63-frontend.onrender.com\n"
+                f"• Institutional Data Warehouse & Self-Service BI: Unified analytical queries across academic, research, financial, and placement data with metric verification and canonical schema adherence.\n"
+                f"• IQAC & Accreditation Data Analytics: Automated multi-cohort trend calculations, student retention indicators, and faculty research productivity curves mapped to NAAC/NBA benchmark criteria.\n"
+                f"• Anomaly Detection & Executive Dashboards: Real-time telemetry monitoring identifying statistical outliers in student marks distributions, attendance patterns, and departmental resource utilization."
+            )
         elif a_id == "agent_64" or ("document" in a_id and "intelligence" in a_id):
             return (
                 f"**[{name} — {group_name}]**\n"
