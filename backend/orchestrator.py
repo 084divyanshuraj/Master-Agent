@@ -433,6 +433,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Detention Risk Classification: Flagged 18 students at severe detention risk (<65%) and 24 students eligible for medical condonation (65%–74%).\n"
                 f"• Automated Advisory Workflow: Dispatched HoD detention warning memos and automated alerts to parents and faculty mentors."
             )
+        elif a_id == "agent_13" or ("advanced" in a_id and "learner" in a_id) or "fast" in a_id or "placement-ops" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Placement Ops AI (Fast & Advanced Learner Engine) Synchronized: https://placement-ops-ai.vercel.app/\n"
+                f"• High-Achiever Identification & Talent Profiling: Automated screening of top-decile students across CGPA velocity, competitive coding percentiles (LeetCode/CodeChef), hackathon podiums, and GitHub portfolios.\n"
+                f"• Fast-Track Placement & Elite Opportunity Pairing: Intelligent routing into high-CTC product engineering recruitment tracks, elite dream company slots, and faculty research fellowship pairings (Agent 17).\n"
+                f"• Honors Curriculum & Advanced Trajectory Management: Generated personalized advanced elective tracks, industry mentor matchmaking, and national innovation challenge pipelines."
+            )
         elif a_id == "agent_10" or ("performance" in a_id and "academic" in a_id):
             return (
                 f"**[{name} — {group_name}]**\n"

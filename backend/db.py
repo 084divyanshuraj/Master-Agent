@@ -133,6 +133,7 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_09": "https://vignan-accreditation-agent-rmibobgo5lojrogjovrz7z.streamlit.app/",
     "agent_10": "https://bodhsight.vercel.app/",
     "agent_11": "https://attendance-analysis-agent.vercel.app/",
+    "agent_13": "https://placement-ops-ai.vercel.app/",
     "agent_22": "https://foma-agent.vercel.app/",
     "agent_23": "https://patent-monitoring-agent.vercel.app/",
     "agent_25": "https://hospitals-accessible-upon-morris.trycloudflare.com/",

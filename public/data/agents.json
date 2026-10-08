@@ -589,12 +589,12 @@
               "primary_users": "Heads of Department, faculty mentors, research coordinators, training and placement cell, students.",
               "inputs": "Academic performance and Grade Point Average trends, subject-wise strength profiles, certification records from Agent 68, competitive programming and hackathon history, project work quality, faculty nominations, and student-declared interests.",
               "outputs": "Advanced learner lists, individual strength profiles, opportunity match recommendations, faculty-student research pairing suggestions, participation and outcome trackers. Integrations. Consumes Agents 10, 48, 68. Feeds Agents 17, 24, 49, 50.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/fast-learner-and-advanced-learner-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/fast-learner-and-advanced-learner-agent",
+              "endpoint_url": "https://placement-ops-ai.vercel.app/",
+              "deployment_url": "https://placement-ops-ai.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Fast Learner and Advanced Learner Agent",
-                "Query institutional records via Fast Learner and Advanced Learner Agent",
-                "Audit compliance metrics for Fast Learner and Advanced Learner Agent"
+                "Identify high-performing advanced learners across GPA percentiles, competitive programming, and hackathon scores",
+                "Match fast learners with tier-1 placement opportunities, research fellowships, and faculty research pairing",
+                "Generate personalized advanced learning pathways, honors track nominations, and corporate placement operational pipelines"
               ],
               "status": "online"
             },
@@ -2187,12 +2187,12 @@
           "primary_users": "Heads of Department, faculty mentors, research coordinators, training and placement cell, students.",
           "inputs": "Academic performance and Grade Point Average trends, subject-wise strength profiles, certification records from Agent 68, competitive programming and hackathon history, project work quality, faculty nominations, and student-declared interests.",
           "outputs": "Advanced learner lists, individual strength profiles, opportunity match recommendations, faculty-student research pairing suggestions, participation and outcome trackers. Integrations. Consumes Agents 10, 48, 68. Feeds Agents 17, 24, 49, 50.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/fast-learner-and-advanced-learner-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/fast-learner-and-advanced-learner-agent",
+          "endpoint_url": "https://placement-ops-ai.vercel.app/",
+          "deployment_url": "https://placement-ops-ai.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Fast Learner and Advanced Learner Agent",
-            "Query institutional records via Fast Learner and Advanced Learner Agent",
-            "Audit compliance metrics for Fast Learner and Advanced Learner Agent"
+            "Identify high-performing advanced learners across GPA percentiles, competitive programming, and hackathon scores",
+            "Match fast learners with tier-1 placement opportunities, research fellowships, and faculty research pairing",
+            "Generate personalized advanced learning pathways, honors track nominations, and corporate placement operational pipelines"
           ],
           "status": "online"
         },
