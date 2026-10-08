@@ -589,6 +589,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Weekly Workload Cap Audit: Contact hours balanced within university limits (Professors 12 hrs/wk, Associate Professors 14 hrs/wk, Assistant Professors max 18 hrs/wk) across lecture, lab, and tutorial sessions.\n"
                 f"• Overload & Underload Analytics: Real-time department distribution analysis integrating course allocations (Agent 3) and committee duties (Agent 56) with zero allocation bias."
             )
+        elif a_id == "agent_59" or ("faculty" in a_id and "performance" in a_id) or "appraisal" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Faculty Performance & Appraisal System Synchronized: https://agent59-demo.streamlit.app/\n"
+                f"• Multi-Dimensional Appraisal Engine: Consolidated 360-degree faculty contribution scorecards integrating teaching results (Agent 10 & 34), syllabus coverage (Agent 6), student feedback percentiles, and administrative duties.\n"
+                f"• Research & Extension Productivity: Automated verification of Scopus/SCI publications (Agent 17), funded research grants (Agent 22), patent disclosures (Agent 23), and doctoral scholar completions (Agent 25).\n"
+                f"• PBAS & API Promotion Analytics: Real-time calculation of Performance Based Appraisal System (PBAS) and UGC/AICTE Academic Performance Indicators (API) for HoD review and promotion committee scrutiny."
+            )
         elif a_id == "agent_61" or ("faculty" in a_id and "attendance" in a_id) or ("faculty" in a_id and "leave" in a_id):
             return (
                 f"**[{name} — {group_name}]**\n"

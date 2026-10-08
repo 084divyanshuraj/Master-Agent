@@ -452,12 +452,12 @@
               "primary_users": "Heads of Department, Deans, Principal, Human Resources, faculty, promotion committees.",
               "inputs": "Teaching load and course results from Agents 10, 34, 58; student feedback; syllabus coverage from Agent 6; publications from Agent 17; funded projects from Agent 22; patents from Agent 23; doctoral supervision from Agent 25; faculty development participation from Agent 27; consultancy records; administrative contributions; and the institutional appraisal rubric.",
               "outputs": "Pre-populated appraisal records, dimension scorecards with context, trend analyses, development area identification, appraisal briefs and outcome records, aggregate faculty quality reports. Integrations. Consumes Agents 6, 10, 17, 22, 23, 25, 27, 34, 58. Feeds Agents 3, 60, 71. Guardrail. Automated appraisal scoring affects careers and must be treated accordingly. Three requirements. The rubric and weights must be published to faculty in advance. Every computed score must be traceable to its underlying records and contestable by the faculty member. The score informs a human decision and does not constitute one, an",
-              "endpoint_url": "https://api.vignan.ac.in/agents/faculty-performance-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/faculty-performance-agent",
+              "endpoint_url": "https://agent59-demo.streamlit.app/",
+              "deployment_url": "https://agent59-demo.streamlit.app/",
               "sample_prompts": [
-                "Generate latest status report for Faculty Performance Agent",
-                "Query institutional records via Faculty Performance Agent",
-                "Audit compliance metrics for Faculty Performance Agent"
+                "Generate multi-dimensional faculty appraisal scorecards integrating teaching results, research papers, and funded grants",
+                "Analyze departmental faculty performance trends, publication velocity, and student feedback percentiles",
+                "Audit promotion eligibility and PBAS / API scores for Academic Staff College and HoD review"
               ],
               "status": "online"
             },
@@ -3354,12 +3354,12 @@
           "primary_users": "Heads of Department, Deans, Principal, Human Resources, faculty, promotion committees.",
           "inputs": "Teaching load and course results from Agents 10, 34, 58; student feedback; syllabus coverage from Agent 6; publications from Agent 17; funded projects from Agent 22; patents from Agent 23; doctoral supervision from Agent 25; faculty development participation from Agent 27; consultancy records; administrative contributions; and the institutional appraisal rubric.",
           "outputs": "Pre-populated appraisal records, dimension scorecards with context, trend analyses, development area identification, appraisal briefs and outcome records, aggregate faculty quality reports. Integrations. Consumes Agents 6, 10, 17, 22, 23, 25, 27, 34, 58. Feeds Agents 3, 60, 71. Guardrail. Automated appraisal scoring affects careers and must be treated accordingly. Three requirements. The rubric and weights must be published to faculty in advance. Every computed score must be traceable to its underlying records and contestable by the faculty member. The score informs a human decision and does not constitute one, an",
-          "endpoint_url": "https://api.vignan.ac.in/agents/faculty-performance-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/faculty-performance-agent",
+          "endpoint_url": "https://agent59-demo.streamlit.app/",
+          "deployment_url": "https://agent59-demo.streamlit.app/",
           "sample_prompts": [
-            "Generate latest status report for Faculty Performance Agent",
-            "Query institutional records via Faculty Performance Agent",
-            "Audit compliance metrics for Faculty Performance Agent"
+            "Generate multi-dimensional faculty appraisal scorecards integrating teaching results, research papers, and funded grants",
+            "Analyze departmental faculty performance trends, publication velocity, and student feedback percentiles",
+            "Audit promotion eligibility and PBAS / API scores for Academic Staff College and HoD review"
           ],
           "status": "online"
         },
