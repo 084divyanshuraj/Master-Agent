@@ -433,6 +433,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Academic Risk Profiling: Identified 14 students with backlog clusters (>2 subjects) requiring faculty mentorship intervention.\n"
                 f"• Dean & HoD Executive View: Real-time cohort analytics replacing scattered departmental spreadsheets with zero manual latency."
             )
+        elif a_id == "agent_05" or ("lesson" in a_id and "plan" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Lesson Plan Intelligence System Synchronized: https://lesson-plan-agent-gamma.vercel.app/\n"
+                f"• Session-Wise Teaching Plan Generation: Structured session-by-session delivery schedules aligned to university academic calendar, contact hours, and examination milestones.\n"
+                f"• CO & Bloom's Taxonomy Articulation: Automated mapping of lecture sessions to specific Course Outcomes (CO1–CO5) and Bloom's cognitive taxonomy levels (L1–L6).\n"
+                f"• Plan-vs-Actual Variance Tracking: Continuous tracking of faculty syllabus delivery velocity, logging topic completion variance and feeding remedial recovery alerts (Agent 06).\n"
+            )
         elif a_id == "agent_06" or ("recovery" in a_id) or ("remedial" in a_id):
             return (
                 f"**[{name} — {group_name}]**\n"
@@ -447,11 +455,19 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Research metrics synchronized: 8 Scopus Q1/Q2 indexed journal articles registered for current assessment quarter. "
                 f"2 patent applications audited through University IPR Cell and assigned institutional filing numbers."
             )
-        elif "fee" in a_id or "scholarship" in a_id or "loan" in a_id:
+        elif a_id == "agent_42" or "scholarship" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
-                f"Finance & scholarship audit: Verified fee payment schedule and fee due reminders issued. "
-                f"Merit-cum-means scholarship eligibility criteria verified for 28 eligible students."
+                f"Live Scholarship Support System Synchronized: https://scholarship-agent-42-1031611339150.asia-south1.run.app/\n"
+                f"• Multi-Scheme Eligibility Engine: Automated cross-matching of student profiles against National Scholarship Portal (NSP), state welfare (JVD), AICTE Pragati/Saksham, and institutional merit-cum-means funds.\n"
+                f"• Procedural & Document Audit: Real-time verification of income certificates, category declarations, and academic renewal thresholds (minimum 75% attendance and 7.0 CGPA) with zero missed application deadlines.\n"
+                f"• Application Tracking & Reconciliation: End-to-end lifecycle tracking across submission, departmental verification, and direct bank disbursement reconciliations.\n"
+            )
+        elif "fee" in a_id or "loan" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Finance & fee audit: Verified fee payment schedule and fee due reminders issued. "
+                f"Fee concession and installment arrangements verified."
             )
         elif a_id == "agent_22" or ("funding" in a_id and "opportunity" in a_id) or "foma" in a_id:
             return (

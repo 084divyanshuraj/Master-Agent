@@ -129,12 +129,12 @@
               "primary_users": "Faculty, Heads of Department, accreditation coordinators.",
               "inputs": "Course content from Agent 2, allotted contact hours, academic calendar with holidays and examination weeks, the section timetable from Agent 4, and past lesson plans for the same course.",
               "outputs": "Session-wise lesson plans in the institutional format, course delivery plans, CO-to-session mapping, plan-versus-actual variance reports. Integrations. Consumes Agents 1, 2, 4. Feeds Agents 6 and 9.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/lesson-plan-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/lesson-plan-agent",
+              "endpoint_url": "https://lesson-plan-agent-gamma.vercel.app/",
+              "deployment_url": "https://lesson-plan-agent-gamma.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Lesson Plan Agent",
-                "Query institutional records via Lesson Plan Agent",
-                "Audit compliance metrics for Lesson Plan Agent"
+                "Generate session-by-session lesson delivery plan aligned with R23 academic calendar",
+                "Map Course Outcomes (CO1-CO5) and Bloom's levels to weekly lecture sessions",
+                "Track planned versus actual syllabus delivery velocity and identify topic coverage variances"
               ],
               "status": "online"
             },
@@ -843,12 +843,12 @@
               "primary_users": "Scholarship section, students and parents, accounts section, Heads of Department.",
               "inputs": "Scheme catalogues covering central and state government, institutional, and private and corporate scholarships; eligibility criteria including category, income, marks, and attendance; student master with category and income data; academic performance records; application and disbursement status; and renewal conditions.",
               "outputs": "Per-student eligibility lists, application trackers, renewal risk alerts, disbursement reconciliations, coverage and rejection analyses. Integrations. Consumes Agents 10, 11. Feeds Agents 40, 41, 43.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/scholarship-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/scholarship-agent",
+              "endpoint_url": "https://scholarship-agent-42-1031611339150.asia-south1.run.app/",
+              "deployment_url": "https://scholarship-agent-42-1031611339150.asia-south1.run.app/",
               "sample_prompts": [
-                "Generate latest status report for Scholarship Agent",
-                "Query institutional records via Scholarship Agent",
-                "Audit compliance metrics for Scholarship Agent"
+                "Check student scholarship eligibility across National Scholarship Portal and state welfare schemes",
+                "Audit merit-cum-means scholarship renewal compliance and CGPA/attendance criteria",
+                "Generate scholarship application status tracking and disbursement reconciliation report"
               ],
               "status": "online"
             },
@@ -1988,12 +1988,12 @@
           "primary_users": "Faculty, Heads of Department, accreditation coordinators.",
           "inputs": "Course content from Agent 2, allotted contact hours, academic calendar with holidays and examination weeks, the section timetable from Agent 4, and past lesson plans for the same course.",
           "outputs": "Session-wise lesson plans in the institutional format, course delivery plans, CO-to-session mapping, plan-versus-actual variance reports. Integrations. Consumes Agents 1, 2, 4. Feeds Agents 6 and 9.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/lesson-plan-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/lesson-plan-agent",
+          "endpoint_url": "https://lesson-plan-agent-gamma.vercel.app/",
+          "deployment_url": "https://lesson-plan-agent-gamma.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Lesson Plan Agent",
-            "Query institutional records via Lesson Plan Agent",
-            "Audit compliance metrics for Lesson Plan Agent"
+            "Generate session-by-session lesson delivery plan aligned with R23 academic calendar",
+            "Map Course Outcomes (CO1-CO5) and Bloom's levels to weekly lecture sessions",
+            "Track planned versus actual syllabus delivery velocity and identify topic coverage variances"
           ],
           "status": "online"
         },
@@ -2914,12 +2914,12 @@
           "primary_users": "Scholarship section, students and parents, accounts section, Heads of Department.",
           "inputs": "Scheme catalogues covering central and state government, institutional, and private and corporate scholarships; eligibility criteria including category, income, marks, and attendance; student master with category and income data; academic performance records; application and disbursement status; and renewal conditions.",
           "outputs": "Per-student eligibility lists, application trackers, renewal risk alerts, disbursement reconciliations, coverage and rejection analyses. Integrations. Consumes Agents 10, 11. Feeds Agents 40, 41, 43.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/scholarship-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/scholarship-agent",
+          "endpoint_url": "https://scholarship-agent-42-1031611339150.asia-south1.run.app/",
+          "deployment_url": "https://scholarship-agent-42-1031611339150.asia-south1.run.app/",
           "sample_prompts": [
-            "Generate latest status report for Scholarship Agent",
-            "Query institutional records via Scholarship Agent",
-            "Audit compliance metrics for Scholarship Agent"
+            "Check student scholarship eligibility across National Scholarship Portal and state welfare schemes",
+            "Audit merit-cum-means scholarship renewal compliance and CGPA/attendance criteria",
+            "Generate scholarship application status tracking and disbursement reconciliation report"
           ],
           "status": "online"
         },
