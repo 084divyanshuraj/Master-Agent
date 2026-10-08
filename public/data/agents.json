@@ -1407,12 +1407,12 @@
               "primary_users": "Industry relations cell, training and placement officers, Heads of Department, Deans.",
               "inputs": "Memorandum of Understanding documents with validity dates and committed deliverables, industry contact records, guest lecture and industry visit records, internship and project data from Agent 51, consultancy records, and alumni-industry links from Agent 52.",
               "outputs": "Partner registers, Memorandum of Understanding trackers with deliverable status, engagement health dashboards, activity calendars, gap and target-partner analyses, accreditation evidence. Integrations. Consumes Agents 51, 52. Feeds Agents 9, 24, 49, 50, 57.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/industry-interaction-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/industry-interaction-agent",
+              "endpoint_url": "https://industrial-interaction-agent.onrender.com/",
+              "deployment_url": "https://industrial-interaction-agent.onrender.com/",
               "sample_prompts": [
-                "Generate latest status report for Industry Interaction Agent",
-                "Query institutional records via Industry Interaction Agent",
-                "Audit compliance metrics for Industry Interaction Agent"
+                "Audit institutional MoUs and track active deliverables, joint R&D initiatives, and validity schedules",
+                "Analyze industry engagement health across guest lectures, industrial visits, and corporate consultancy",
+                "Generate NIRF and NAAC Criterion 3 evidence reports for university-industry collaborative linkages"
               ],
               "status": "online"
             },
@@ -2556,12 +2556,12 @@
           "primary_users": "Industry relations cell, training and placement officers, Heads of Department, Deans.",
           "inputs": "Memorandum of Understanding documents with validity dates and committed deliverables, industry contact records, guest lecture and industry visit records, internship and project data from Agent 51, consultancy records, and alumni-industry links from Agent 52.",
           "outputs": "Partner registers, Memorandum of Understanding trackers with deliverable status, engagement health dashboards, activity calendars, gap and target-partner analyses, accreditation evidence. Integrations. Consumes Agents 51, 52. Feeds Agents 9, 24, 49, 50, 57.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/industry-interaction-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/industry-interaction-agent",
+          "endpoint_url": "https://industrial-interaction-agent.onrender.com/",
+          "deployment_url": "https://industrial-interaction-agent.onrender.com/",
           "sample_prompts": [
-            "Generate latest status report for Industry Interaction Agent",
-            "Query institutional records via Industry Interaction Agent",
-            "Audit compliance metrics for Industry Interaction Agent"
+            "Audit institutional MoUs and track active deliverables, joint R&D initiatives, and validity schedules",
+            "Analyze industry engagement health across guest lectures, industrial visits, and corporate consultancy",
+            "Generate NIRF and NAAC Criterion 3 evidence reports for university-industry collaborative linkages"
           ],
           "status": "online"
         },

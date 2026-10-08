@@ -517,6 +517,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• AI Training Needs Forecast: Analyzed departmental skill gaps across emerging technologies (AI/ML, Cloud Computing, Quantum, Cybersecurity), scheduling custom university development tracks.\n"
                 f"• Participation & Budget Tracking: Monitored registration velocity, attendance risk registers, seed grant expenditures, and auto-generated verifiable certificates for accreditation portfolios."
             )
+        elif a_id == "agent_28" or ("industry" in a_id and "interaction" in a_id) or "mou" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Industrial Interaction System Synchronized: https://industrial-interaction-agent.onrender.com/\n"
+                f"• Active MoU Lifecycle & Deliverables Tracking: Comprehensive monitoring of active corporate MoUs (Google India, Intel, Hyundai Motor, L&T, Capgemini) tracking committed milestones, joint curriculum design, and validity expiration alerts.\n"
+                f"• Corporate Engagement & Collaborative Initiatives: Coordinated industrial guest lecture series, student plant visits, joint R&D projects, and executive consultancy contracts across engineering and management departments.\n"
+                f"• NIRF & NAAC Criterion 3 Industry Linkages: Pre-assembled verifiable corporate partnership records, internship conversion logs (Agent 51), and institutional consultancy revenue registries for statutory accreditation reviews."
+            )
         elif a_id == "agent_45" or ("student" in a_id and "mentoring" in a_id):
             return (
                 f"**[{name} — {group_name}]**\n"
