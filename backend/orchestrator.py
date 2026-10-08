@@ -493,6 +493,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Corporate Partnerships: Active Platinum MoU with Google India (MOU-VIGNAN-GOOG-2023-08) for Joint R&D and Cloud Center of Excellence.\n"
                 f"• Mentor Matchmaker: 142 alumni mentors engaged across tier-1 tech firms for student guidance and guest lectures."
             )
+        elif a_id == "agent_50" or ("job" in a_id and "match" in a_id) or "santra" in a_id.lower():
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live SantraAI Job Matching System Synchronized: https://jobmatchingagent.onrender.com/\n"
+                f"• SantraAI Intelligent Matchmaking Engine: AI-driven matching of student skill profiles, certifications, and project portfolios against live corporate job descriptions and CTC tiers.\n"
+                f"• Role Fit Scorecards & Gap Diagnosis: Multi-dimensional skill-fit scoring across technical competencies, aptitude assessments, and domain benchmarks, pinpointing precise preparation gaps.\n"
+                f"• Placement Drive Candidate Shortlists: Automated candidate shortlisting for visiting recruiters (Google, Intel, ABB, Capgemini) ensuring objective, qualification-driven recruitment queues.\n"
+            )
         elif a_id == "agent_51" or "internship" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

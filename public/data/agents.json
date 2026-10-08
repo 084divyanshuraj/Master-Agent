@@ -1488,12 +1488,12 @@
               "primary_users": "Training and placement cell, students, Heads of Department.",
               "inputs": "Student profiles including skills, projects, certifications, and interests from Agent 44; readiness assessments from Agent 49; company job descriptions with role, eligibility, skills, location, and compensation; historical placement data on which student profiles succeeded in which companies; and student preferences.",
               "outputs": "Per-student ranked opportunity lists with reasoning, per-company candidate shortlists, targeted preparation recommendations, unmatched student alerts, outcome-based match quality reports. Integrations. Consumes Agents 44, 49, 52, 68. Feeds Agents 51, 67. Guardrail. Matching must never filter on protected characteristics such as gender, caste, religion, or region, whether directly or through proxies that correlate with them. Audit the model’s recommendations each season for disparate impact across demographic groups, and publish the audit internally. Students must be able to see and apply to any opportunity they are eligible for regardless of their match score.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/job-matching-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/job-matching-agent",
+              "endpoint_url": "https://jobmatchingagent.onrender.com/",
+              "deployment_url": "https://jobmatchingagent.onrender.com/",
               "sample_prompts": [
-                "Generate latest status report for Job Matching Agent",
-                "Query institutional records via Job Matching Agent",
-                "Audit compliance metrics for Job Matching Agent"
+                "Match student technical profiles with active corporate openings and compute skill-fit ranking scores",
+                "Generate company candidate shortlists and gap analysis recommendations for upcoming placement drives",
+                "Audit campus placement role requirements and student eligibility metrics for SantraAI job matching engine"
               ],
               "status": "online"
             },
@@ -3122,12 +3122,12 @@
           "primary_users": "Training and placement cell, students, Heads of Department.",
           "inputs": "Student profiles including skills, projects, certifications, and interests from Agent 44; readiness assessments from Agent 49; company job descriptions with role, eligibility, skills, location, and compensation; historical placement data on which student profiles succeeded in which companies; and student preferences.",
           "outputs": "Per-student ranked opportunity lists with reasoning, per-company candidate shortlists, targeted preparation recommendations, unmatched student alerts, outcome-based match quality reports. Integrations. Consumes Agents 44, 49, 52, 68. Feeds Agents 51, 67. Guardrail. Matching must never filter on protected characteristics such as gender, caste, religion, or region, whether directly or through proxies that correlate with them. Audit the model’s recommendations each season for disparate impact across demographic groups, and publish the audit internally. Students must be able to see and apply to any opportunity they are eligible for regardless of their match score.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/job-matching-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/job-matching-agent",
+          "endpoint_url": "https://jobmatchingagent.onrender.com/",
+          "deployment_url": "https://jobmatchingagent.onrender.com/",
           "sample_prompts": [
-            "Generate latest status report for Job Matching Agent",
-            "Query institutional records via Job Matching Agent",
-            "Audit compliance metrics for Job Matching Agent"
+            "Match student technical profiles with active corporate openings and compute skill-fit ranking scores",
+            "Generate company candidate shortlists and gap analysis recommendations for upcoming placement drives",
+            "Audit campus placement role requirements and student eligibility metrics for SantraAI job matching engine"
           ],
           "status": "online"
         },
