@@ -144,6 +144,7 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_51": "https://internship-liard-sigma.vercel.app/",
     "agent_52": "https://alumini-finder.netlify.app/",
     "agent_53": "https://vision-y.vercel.app/",
+    "agent_54": "https://agent54.vercel.app/",
     "agent_56": "https://vignan-commiai-frontend.vercel.app/",
     "agent_58": "https://agent-58-tawny.vercel.app/",
     "agent_61": "https://agent-61.vercel.app/",

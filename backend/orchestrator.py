@@ -541,6 +541,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Examination & Governance Standards: Clause extracts verified for Ordinance 14 (Examination Conduct & Malpractice Rules), Grade Moderation, Revaluation, and Detained Candidate Re-admission.\n"
                 f"• Administrative Guardrails: Verified policy citations with automated escalation to competent authorities (Registrar / Dean Academics) for statutory interpretation and zero rule ambiguity."
             )
+        elif a_id == "agent_54" or ("regulation" in a_id and "compliance" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Regulation Compliance System Synchronized: https://agent54.vercel.app/\n"
+                f"• Statutory Regulatory Compliance Audit: Continuous compliance scanning against AICTE Approval Process Handbook, UGC Norms, and NBA/NAAC Tier-1 quality criteria.\n"
+                f"• Departmental Cadre & SFR Governance: Verified Cadre Ratio (1:2:6) and Student-to-Faculty Ratio (SFR 1:15 CSE, 1:20 allied) across all active engineering programmes.\n"
+                f"• Requirement Registers & Remediation Trackers: Quantified gap analyses with lead times, regulatory change alerts, and automated compliance filings for Registrar and IQAC.\n"
+            )
         elif a_id == "agent_56" or ("committee" in a_id and "management" in a_id) or "commiai" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

@@ -1602,12 +1602,12 @@
               "primary_users": "Internal Quality Assurance Cell, Registrar, Principal, Deans, Heads of Department.",
               "inputs": "University regulations, All India Council for Technical Education approval process handbook, University Grants Commission regulations, National Board of Accreditation and National Assessment and Accreditation Council criteria, and professional council requirements; plus live institutional data on curriculum, faculty, infrastructure, and processes.",
               "outputs": "Compliance dashboards, requirement-wise status registers, quantified gap reports with lead times, remediation trackers, regulatory change alerts. Integrations. Consumes Agents 1, 3, 53, 58. Feeds Agents 9, 57, 71.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/regulation-compliance-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/regulation-compliance-agent",
+              "endpoint_url": "https://agent54.vercel.app/",
+              "deployment_url": "https://agent54.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Regulation Compliance Agent",
-                "Query institutional records via Regulation Compliance Agent",
-                "Audit compliance metrics for Regulation Compliance Agent"
+                "Audit institutional compliance against AICTE Approval Process Handbook and UGC regulations",
+                "Check cadre ratio (1:2:6) and Student-Faculty Ratio (1:15/1:20) compliance across departments",
+                "Generate NBA/NAAC regulatory compliance gap report with lead-time remediation tracker"
               ],
               "status": "online"
             },
@@ -3227,12 +3227,12 @@
           "primary_users": "Internal Quality Assurance Cell, Registrar, Principal, Deans, Heads of Department.",
           "inputs": "University regulations, All India Council for Technical Education approval process handbook, University Grants Commission regulations, National Board of Accreditation and National Assessment and Accreditation Council criteria, and professional council requirements; plus live institutional data on curriculum, faculty, infrastructure, and processes.",
           "outputs": "Compliance dashboards, requirement-wise status registers, quantified gap reports with lead times, remediation trackers, regulatory change alerts. Integrations. Consumes Agents 1, 3, 53, 58. Feeds Agents 9, 57, 71.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/regulation-compliance-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/regulation-compliance-agent",
+          "endpoint_url": "https://agent54.vercel.app/",
+          "deployment_url": "https://agent54.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Regulation Compliance Agent",
-            "Query institutional records via Regulation Compliance Agent",
-            "Audit compliance metrics for Regulation Compliance Agent"
+            "Audit institutional compliance against AICTE Approval Process Handbook and UGC regulations",
+            "Check cadre ratio (1:2:6) and Student-Faculty Ratio (1:15/1:20) compliance across departments",
+            "Generate NBA/NAAC regulatory compliance gap report with lead-time remediation tracker"
           ],
           "status": "online"
         },
