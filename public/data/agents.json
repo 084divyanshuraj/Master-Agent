@@ -1097,12 +1097,12 @@
               "primary_users": "Students, Heads of Department, placement cell, Internal Quality Assurance Cell.",
               "inputs": "Student-submitted certificates, platform completion data where integration exists, the institutional certification catalogue, industry demand data from job descriptions in Agent 50, curriculum mapping from Agent 1, and placement outcome data.",
               "outputs": "Verified certification records, personalised recommendations, industry demand analyses, cohort preparation programmes, completion tracking, outcome correlation reports, accreditation statistics. Integrations. Consumes Agents 1, 50, 64, 67. Feeds Agents 13, 44, 48, 49, 50.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/certification-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/certification-agent",
+              "endpoint_url": "https://vijayadurgabolagani-stack.github.io/AI-certificate-advisor/",
+              "deployment_url": "https://vijayadurgabolagani-stack.github.io/AI-certificate-advisor/",
               "sample_prompts": [
-                "Generate latest status report for Certification Agent",
-                "Query institutional records via Certification Agent",
-                "Audit compliance metrics for Certification Agent"
+                "Recommend top industry certifications for CSE students targeting AI/ML placement roles",
+                "Track branch-wise certification completion rates and outcome correlation with placements",
+                "Audit verified student certification records for NAAC/NBA accreditation portfolio"
               ],
               "status": "online"
             }
@@ -1257,12 +1257,12 @@
               "primary_users": "Faculty, research coordinators, Deans of Research.",
               "inputs": "Portals and feeds from the Department of Science and Technology, the Anusandhan National Research Foundation and its Science and Engineering Research Board schemes, the Ministry of Electronics and Information Technology, the Defence Research and Development Organisation, the All India Council for Technical Education, the University Grants Commission, the Indian Council of Medical Research, state councils, industry programmes, and international agencies; plus faculty research profiles.",
               "outputs": "Curated opportunity feeds per faculty member, departmental funding calendars, eligibility summaries, deadline alerts, opportunity pipeline reports. Integrations. Consumes Agent 17. Feeds Agents 20, 21.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/funding-opportunity-monitoring-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/funding-opportunity-monitoring-agent",
+              "endpoint_url": "https://foma-agent.vercel.app/",
+              "deployment_url": "https://foma-agent.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Funding Opportunity Monitoring Agent",
-                "Query institutional records via Funding Opportunity Monitoring Agent",
-                "Audit compliance metrics for Funding Opportunity Monitoring Agent"
+                "Monitor active funding calls and grant deadlines across DST, SERB, MeitY, and DRDO for faculty",
+                "Match faculty research profiles with upcoming funding opportunities and calculate eligibility fit",
+                "Generate departmental grant opportunity calendar and upcoming call deadline alerts for Research Dean"
               ],
               "status": "online"
             },
@@ -1810,12 +1810,12 @@
               "primary_users": "Heads of Department, Deans, Principal, academic council.",
               "inputs": "Consolidated outputs from Agents 6, 7, 10, 11, 14, 15, 34, 35, 46, 59, 63, 69, plus historical intervention records and their outcomes.",
               "outputs": "Evidence-backed answers with reasoning, ranked priority lists, option analyses with expected effects, scenario comparisons, decision and outcome records. Integrations. Consumes most analytical agents. Feeds Agents 71, 72. Guardrail. The agent must show its working. A recommendation presented without the evidence and reasoning behind it invites either uncritical acceptance or dismissal, and both are worse than a recommendation that can be argued with. Where the analysis concerns individual faculty performance, apply the contextual controls described under",
-              "endpoint_url": "https://api.vignan.ac.in/agents/academic-decision-support-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/academic-decision-support-agent",
+              "endpoint_url": "https://agent-70.vercel.app/?_vercel_share=ArRJS7NP3SEkDRbgWc1iJBt9iea3aVqt",
+              "deployment_url": "https://agent-70.vercel.app/?_vercel_share=ArRJS7NP3SEkDRbgWc1iJBt9iea3aVqt",
               "sample_prompts": [
-                "Generate latest status report for Academic Decision Support Agent",
-                "Query institutional records via Academic Decision Support Agent",
-                "Audit compliance metrics for Academic Decision Support Agent"
+                "Evaluate cross-departmental academic diagnostic metrics and prioritize HoD intervention targets",
+                "Run scenario comparison for remedial faculty allocation and backlog reduction strategies",
+                "Generate evidence-backed academic council decision brief with risk and impact assessments"
               ],
               "status": "online"
             },
@@ -2406,12 +2406,12 @@
           "primary_users": "Faculty, research coordinators, Deans of Research.",
           "inputs": "Portals and feeds from the Department of Science and Technology, the Anusandhan National Research Foundation and its Science and Engineering Research Board schemes, the Ministry of Electronics and Information Technology, the Defence Research and Development Organisation, the All India Council for Technical Education, the University Grants Commission, the Indian Council of Medical Research, state councils, industry programmes, and international agencies; plus faculty research profiles.",
           "outputs": "Curated opportunity feeds per faculty member, departmental funding calendars, eligibility summaries, deadline alerts, opportunity pipeline reports. Integrations. Consumes Agent 17. Feeds Agents 20, 21.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/funding-opportunity-monitoring-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/funding-opportunity-monitoring-agent",
+          "endpoint_url": "https://foma-agent.vercel.app/",
+          "deployment_url": "https://foma-agent.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Funding Opportunity Monitoring Agent",
-            "Query institutional records via Funding Opportunity Monitoring Agent",
-            "Audit compliance metrics for Funding Opportunity Monitoring Agent"
+            "Monitor active funding calls and grant deadlines across DST, SERB, MeitY, and DRDO for faculty",
+            "Match faculty research profiles with upcoming funding opportunities and calculate eligibility fit",
+            "Generate departmental grant opportunity calendar and upcoming call deadline alerts for Research Dean"
           ],
           "status": "online"
         },
@@ -3586,12 +3586,12 @@
           "primary_users": "Students, Heads of Department, placement cell, Internal Quality Assurance Cell.",
           "inputs": "Student-submitted certificates, platform completion data where integration exists, the institutional certification catalogue, industry demand data from job descriptions in Agent 50, curriculum mapping from Agent 1, and placement outcome data.",
           "outputs": "Verified certification records, personalised recommendations, industry demand analyses, cohort preparation programmes, completion tracking, outcome correlation reports, accreditation statistics. Integrations. Consumes Agents 1, 50, 64, 67. Feeds Agents 13, 44, 48, 49, 50.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/certification-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/certification-agent",
+          "endpoint_url": "https://vijayadurgabolagani-stack.github.io/AI-certificate-advisor/",
+          "deployment_url": "https://vijayadurgabolagani-stack.github.io/AI-certificate-advisor/",
           "sample_prompts": [
-            "Generate latest status report for Certification Agent",
-            "Query institutional records via Certification Agent",
-            "Audit compliance metrics for Certification Agent"
+            "Recommend top industry certifications for CSE students targeting AI/ML placement roles",
+            "Track branch-wise certification completion rates and outcome correlation with placements",
+            "Audit verified student certification records for NAAC/NBA accreditation portfolio"
           ],
           "status": "online"
         }
@@ -3644,12 +3644,12 @@
           "primary_users": "Heads of Department, Deans, Principal, academic council.",
           "inputs": "Consolidated outputs from Agents 6, 7, 10, 11, 14, 15, 34, 35, 46, 59, 63, 69, plus historical intervention records and their outcomes.",
           "outputs": "Evidence-backed answers with reasoning, ranked priority lists, option analyses with expected effects, scenario comparisons, decision and outcome records. Integrations. Consumes most analytical agents. Feeds Agents 71, 72. Guardrail. The agent must show its working. A recommendation presented without the evidence and reasoning behind it invites either uncritical acceptance or dismissal, and both are worse than a recommendation that can be argued with. Where the analysis concerns individual faculty performance, apply the contextual controls described under",
-          "endpoint_url": "https://api.vignan.ac.in/agents/academic-decision-support-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/academic-decision-support-agent",
+          "endpoint_url": "https://agent-70.vercel.app/?_vercel_share=ArRJS7NP3SEkDRbgWc1iJBt9iea3aVqt",
+          "deployment_url": "https://agent-70.vercel.app/?_vercel_share=ArRJS7NP3SEkDRbgWc1iJBt9iea3aVqt",
           "sample_prompts": [
-            "Generate latest status report for Academic Decision Support Agent",
-            "Query institutional records via Academic Decision Support Agent",
-            "Audit compliance metrics for Academic Decision Support Agent"
+            "Evaluate cross-departmental academic diagnostic metrics and prioritize HoD intervention targets",
+            "Run scenario comparison for remedial faculty allocation and backlog reduction strategies",
+            "Generate evidence-backed academic council decision brief with risk and impact assessments"
           ],
           "status": "online"
         },

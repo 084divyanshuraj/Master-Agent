@@ -130,6 +130,7 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_09": "https://vignan-accreditation-agent-rmibobgo5lojrogjovrz7z.streamlit.app/",
     "agent_10": "https://bodhsight.vercel.app/",
     "agent_11": "https://attendance-analysis-agent.vercel.app/",
+    "agent_22": "https://foma-agent.vercel.app/",
     "agent_25": "https://hospitals-accessible-upon-morris.trycloudflare.com/",
     "agent_27": "https://fdpluse.onrender.com/",
     "agent_32": "https://question-paper-quality-agent.onrender.com/",
@@ -144,6 +145,8 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_64": "https://frontend-ten-puce-47.vercel.app/",
     "agent_65": "https://student-helpdesk-agent-two.vercel.app/",
     "agent_67": "https://gap2growvignan.netlify.app/",
+    "agent_68": "https://vijayadurgabolagani-stack.github.io/AI-certificate-advisor/",
+    "agent_70": "https://agent-70.vercel.app/?_vercel_share=ArRJS7NP3SEkDRbgWc1iJBt9iea3aVqt",
     "agent_72": "https://agent-72-zeta.vercel.app/",
 }
 
