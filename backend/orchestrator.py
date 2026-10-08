@@ -495,6 +495,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Procedural & Document Audit: Real-time verification of income certificates, category declarations, and academic renewal thresholds (minimum 75% attendance and 7.0 CGPA) with zero missed application deadlines.\n"
                 f"• Application Tracking & Reconciliation: End-to-end lifecycle tracking across submission, departmental verification, and direct bank disbursement reconciliations.\n"
             )
+        elif a_id == "agent_40" or ("fee" in a_id and "management" in a_id) or "feewise" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live FeeWise Finance Management Engine Synchronized: https://feewise-red.vercel.app/\n"
+                f"• Comprehensive Fee Ledger & Head Management: Reconciled tracking across tuition fees, hostel/mess charges, examination fees, and transport levies by regulation and cohort.\n"
+                f"• Multi-Channel Collection & Demand Generation: Automated semester fee demand notes, online payment gateway reconciliations (UPI/NetBanking/NEFT), and verified receipt generation.\n"
+                f"• Aging Analysis & Concession Governance: Segmented fee aging dashboards, approved installment plans, merit scholarship fee waiver adjustments (Agent 42), and refund settlements.\n"
+            )
         elif a_id == "agent_41" or ("fee" in a_id and "reminder" in a_id) or ("fee" in a_id and "due" in a_id):
             return (
                 f"**[{name} — {group_name}]**\n"

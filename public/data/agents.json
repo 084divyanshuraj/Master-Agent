@@ -797,12 +797,12 @@
               "primary_users": "Accounts section, students and parents, administration, management.",
               "inputs": "Fee structures by programme, regulation, category, and year; student enrolment and category records; payment transactions from all channels; scholarship and fee waiver records from Agent 42; and instalment and concession approvals.",
               "outputs": "Fee demands, receipts and statements, outstanding reports with ageing, collection dashboards, reconciliation reports, refund computations, fee certificates. Integrations. Consumes Agent 42. Feeds Agents 30, 41, 43, 71. Guardrail. Financial data requires stricter controls than academic data. Enforce strict role-based access, log every read and write, and never allow the agent to initiate a transaction or modify a balance without an authenticated human approval step.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/fee-management-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/fee-management-agent",
+              "endpoint_url": "https://feewise-red.vercel.app/",
+              "deployment_url": "https://feewise-red.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Fee Management Agent",
-                "Query institutional records via Fee Management Agent",
-                "Audit compliance metrics for Fee Management Agent"
+                "Audit institutional fee structure, collection receipts, and outstanding aging balances across academic cohorts",
+                "Generate student fee demand notices, concession approvals, and multi-channel payment reconciliation reports",
+                "Verify semester tuition clearance ledger and calculate refund settlements under university finance policies"
               ],
               "status": "online"
             },
@@ -2868,12 +2868,12 @@
           "primary_users": "Accounts section, students and parents, administration, management.",
           "inputs": "Fee structures by programme, regulation, category, and year; student enrolment and category records; payment transactions from all channels; scholarship and fee waiver records from Agent 42; and instalment and concession approvals.",
           "outputs": "Fee demands, receipts and statements, outstanding reports with ageing, collection dashboards, reconciliation reports, refund computations, fee certificates. Integrations. Consumes Agent 42. Feeds Agents 30, 41, 43, 71. Guardrail. Financial data requires stricter controls than academic data. Enforce strict role-based access, log every read and write, and never allow the agent to initiate a transaction or modify a balance without an authenticated human approval step.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/fee-management-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/fee-management-agent",
+          "endpoint_url": "https://feewise-red.vercel.app/",
+          "deployment_url": "https://feewise-red.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Fee Management Agent",
-            "Query institutional records via Fee Management Agent",
-            "Audit compliance metrics for Fee Management Agent"
+            "Audit institutional fee structure, collection receipts, and outstanding aging balances across academic cohorts",
+            "Generate student fee demand notices, concession approvals, and multi-channel payment reconciliation reports",
+            "Verify semester tuition clearance ledger and calculate refund settlements under university finance policies"
           ],
           "status": "online"
         },
