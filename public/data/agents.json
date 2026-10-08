@@ -106,12 +106,12 @@
               "primary_users": "Timetable coordinators, Heads of Department, faculty, students.",
               "inputs": "Approved course allocation from Agent 3, section strength, room and laboratory inventory with capacity and equipment, working day and period structure, laboratory batch splits, faculty unavailability constraints, and institutional rules such as no more than three consecutive theory periods.",
               "outputs": "Section, faculty, room, and laboratory timetables, clash reports, room utilisation statistics, faculty load distribution charts, substitution schedules. Integrations. Consumes Agents 1 and 3. Feeds Agents 5, 6, 30, and 61. Design note. Timetabling is computationally hard and is best solved with a dedicated constraint solver rather than a language model. The agent’s role is to gather constraints in natural language, invoke the solver, and explain the result. Do not ask a language model to place periods on a grid directly.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/timetable-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/timetable-agent",
+              "endpoint_url": "https://vignan-timetable-ai-1.onrender.com/",
+              "deployment_url": "https://vignan-timetable-ai-1.onrender.com/",
               "sample_prompts": [
-                "Generate latest status report for Timetable Agent",
-                "Query institutional records via Timetable Agent",
-                "Audit compliance metrics for Timetable Agent"
+                "Generate conflict-free section, faculty, and lab timetables for upcoming semester",
+                "Resolve faculty timetable overlap clashes and identify room utilization bottlenecks",
+                "Automate emergency faculty substitution schedules and room reallocation"
               ],
               "status": "online"
             },
@@ -1965,12 +1965,12 @@
           "primary_users": "Timetable coordinators, Heads of Department, faculty, students.",
           "inputs": "Approved course allocation from Agent 3, section strength, room and laboratory inventory with capacity and equipment, working day and period structure, laboratory batch splits, faculty unavailability constraints, and institutional rules such as no more than three consecutive theory periods.",
           "outputs": "Section, faculty, room, and laboratory timetables, clash reports, room utilisation statistics, faculty load distribution charts, substitution schedules. Integrations. Consumes Agents 1 and 3. Feeds Agents 5, 6, 30, and 61. Design note. Timetabling is computationally hard and is best solved with a dedicated constraint solver rather than a language model. The agent’s role is to gather constraints in natural language, invoke the solver, and explain the result. Do not ask a language model to place periods on a grid directly.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/timetable-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/timetable-agent",
+          "endpoint_url": "https://vignan-timetable-ai-1.onrender.com/",
+          "deployment_url": "https://vignan-timetable-ai-1.onrender.com/",
           "sample_prompts": [
-            "Generate latest status report for Timetable Agent",
-            "Query institutional records via Timetable Agent",
-            "Audit compliance metrics for Timetable Agent"
+            "Generate conflict-free section, faculty, and lab timetables for upcoming semester",
+            "Resolve faculty timetable overlap clashes and identify room utilization bottlenecks",
+            "Automate emergency faculty substitution schedules and room reallocation"
           ],
           "status": "online"
         },

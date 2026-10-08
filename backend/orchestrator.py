@@ -395,7 +395,15 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Criterion Gap Diagnostics: Identified evidence readiness score of 94.2% across faculty cadre ratio (1:2:6), Student-Faculty Ratio (SFR 1:15), and CO-PO attainment logs.\n"
                 f"• Continuous Audit Trail: Pre-assembled Self Assessment Report (SAR) tables and documentary proof repositories for NBA Peer Review Committee visit."
             )
-        elif "timetable" in a_id or "schedule" in a_id:
+        elif a_id == "agent_04" or "timetable" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Vignan Timetable AI System Synchronized: https://vignan-timetable-ai-1.onrender.com/\n"
+                f"• Conflict-Free Constraint Scheduling: Constraint-based multi-tier scheduling across sections, faculty allocations (Agent 03), lecture halls, and specialized laboratory complexes.\n"
+                f"• Faculty Workload & Room Optimization: Enforces institutional policies (max 3 consecutive theory periods, zero faculty double-booking, optimal lab batch splits and room utilization).\n"
+                f"• Dynamic Clash Resolution & Substitutions: Automated real-time clash diagnosis, emergency faculty substitution schedules, and room reallocation with instant calendar synchronization.\n"
+            )
+        elif "schedule" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
                 f"Operational schedule synchronized across departmental lecture halls and laboratory complexes. "
