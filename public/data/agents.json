@@ -498,12 +498,12 @@
               "primary_users": "Faculty, Heads of Department, Human Resources, administration, timetable coordinators.",
               "inputs": "Biometric or system attendance records, leave applications, leave entitlement and balance records, the leave policy including types, eligibility, and approval hierarchy, the timetable from Agent 4, and academic calendar and examination duty schedules.",
               "outputs": "Leave applications with impact analysis, substitution schedules, approval trails, balance statements, attendance reconciliation reports, lost class and compensation tracking. Integrations. Consumes Agent 4. Feeds Agents 4, 6, 30, 58. Guardrail. Medical leave reasons and supporting certificates are health information. Restrict access to Human Resources and the approving authority, and do not expose the reason for leave in the substitution notification sent to students or colleagues.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/faculty-attendance-and-leave-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/faculty-attendance-and-leave-agent",
+              "endpoint_url": "https://agent-61.vercel.app/",
+              "deployment_url": "https://agent-61.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Faculty Attendance and Leave Agent",
-                "Query institutional records via Faculty Attendance and Leave Agent",
-                "Audit compliance metrics for Faculty Attendance and Leave Agent"
+                "Audit faculty attendance compliance and biometric reconciliation across all departments",
+                "Track leave balance utilization and auto-substitution scheduling for upcoming academic week",
+                "Generate faculty attendance impact analysis with lost class compensation tracking"
               ],
               "status": "online"
             }
@@ -3400,12 +3400,12 @@
           "primary_users": "Faculty, Heads of Department, Human Resources, administration, timetable coordinators.",
           "inputs": "Biometric or system attendance records, leave applications, leave entitlement and balance records, the leave policy including types, eligibility, and approval hierarchy, the timetable from Agent 4, and academic calendar and examination duty schedules.",
           "outputs": "Leave applications with impact analysis, substitution schedules, approval trails, balance statements, attendance reconciliation reports, lost class and compensation tracking. Integrations. Consumes Agent 4. Feeds Agents 4, 6, 30, 58. Guardrail. Medical leave reasons and supporting certificates are health information. Restrict access to Human Resources and the approving authority, and do not expose the reason for leave in the substitution notification sent to students or colleagues.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/faculty-attendance-and-leave-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/faculty-attendance-and-leave-agent",
+          "endpoint_url": "https://agent-61.vercel.app/",
+          "deployment_url": "https://agent-61.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Faculty Attendance and Leave Agent",
-            "Query institutional records via Faculty Attendance and Leave Agent",
-            "Audit compliance metrics for Faculty Attendance and Leave Agent"
+            "Audit faculty attendance compliance and biometric reconciliation across all departments",
+            "Track leave balance utilization and auto-substitution scheduling for upcoming academic week",
+            "Generate faculty attendance impact analysis with lost class compensation tracking"
           ],
           "status": "online"
         }

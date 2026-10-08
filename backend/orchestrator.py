@@ -501,6 +501,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Weekly Workload Cap Audit: Contact hours balanced within university limits (Professors 12 hrs/wk, Associate Professors 14 hrs/wk, Assistant Professors max 18 hrs/wk) across lecture, lab, and tutorial sessions.\n"
                 f"• Overload & Underload Analytics: Real-time department distribution analysis integrating course allocations (Agent 3) and committee duties (Agent 56) with zero allocation bias."
             )
+        elif a_id == "agent_61" or ("faculty" in a_id and "attendance" in a_id) or ("faculty" in a_id and "leave" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Faculty Attendance & Leave System Synchronized: https://agent-61.vercel.app/\n"
+                f"• Biometric Attendance Reconciliation: Real-time faculty attendance tracking with biometric log verification, late arrival flagging, and department-wise compliance dashboards.\n"
+                f"• Leave Impact & Substitution Engine: Automated class impact analysis on leave applications, auto-generated substitution schedules, and zero unattended lecture slots during approved leave periods.\n"
+                f"• Balance Statements & Compliance: Live leave balance tracking (CL/EL/ML/OD), approval trail audit logs, and HR-compliant attendance reconciliation reports feeding into Agent 58 workload analytics."
+            )
         elif "placement" in a_id or "job" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
