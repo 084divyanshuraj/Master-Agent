@@ -1280,12 +1280,12 @@
               "primary_users": "Intellectual Property cell, faculty inventors, Deans of Research, management.",
               "inputs": "Invention disclosure records, patent agent and attorney correspondence, patent office databases, filing and grant records, and fee schedules.",
               "outputs": "Patent portfolio dashboards, stage-wise status reports, deadline alert queues, inventor-wise records, accreditation and ranking statistics. Integrations. Feeds Agents 9, 20, 59, 71. Guardrail. The agent tracks and alerts. It does not provide legal advice on patentability, claim drafting, or prosecution strategy, all of which require a registered patent agent. Make the boundary explicit in the interface.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/patent-monitoring-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/patent-monitoring-agent",
+              "endpoint_url": "https://patent-monitoring-agent.vercel.app/",
+              "deployment_url": "https://patent-monitoring-agent.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Patent Monitoring Agent",
-                "Query institutional records via Patent Monitoring Agent",
-                "Audit compliance metrics for Patent Monitoring Agent"
+                "Track university patent lifecycle from disclosure through filing, examination, and grant",
+                "Audit faculty patent portfolio for NIRF Research (RPC) and NBA Criterion 3 accreditation",
+                "Monitor upcoming patent prosecution deadlines, statutory fee schedules, and examination hearings"
               ],
               "status": "online"
             },
@@ -2429,12 +2429,12 @@
           "primary_users": "Intellectual Property cell, faculty inventors, Deans of Research, management.",
           "inputs": "Invention disclosure records, patent agent and attorney correspondence, patent office databases, filing and grant records, and fee schedules.",
           "outputs": "Patent portfolio dashboards, stage-wise status reports, deadline alert queues, inventor-wise records, accreditation and ranking statistics. Integrations. Feeds Agents 9, 20, 59, 71. Guardrail. The agent tracks and alerts. It does not provide legal advice on patentability, claim drafting, or prosecution strategy, all of which require a registered patent agent. Make the boundary explicit in the interface.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/patent-monitoring-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/patent-monitoring-agent",
+          "endpoint_url": "https://patent-monitoring-agent.vercel.app/",
+          "deployment_url": "https://patent-monitoring-agent.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Patent Monitoring Agent",
-            "Query institutional records via Patent Monitoring Agent",
-            "Audit compliance metrics for Patent Monitoring Agent"
+            "Track university patent lifecycle from disclosure through filing, examination, and grant",
+            "Audit faculty patent portfolio for NIRF Research (RPC) and NBA Criterion 3 accreditation",
+            "Monitor upcoming patent prosecution deadlines, statutory fee schedules, and examination hearings"
           ],
           "status": "online"
         },

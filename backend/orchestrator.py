@@ -449,7 +449,7 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Slow Learner & Backlog Rescue: Generated topic-level intervention roadmaps restoring on-track status for flagged students.\n"
                 f"• Timetable & Room Coordination: Automated conflict-free remedial classroom scheduling without colliding with primary course timetables."
             )
-        elif "publication" in a_id or "quartile" in a_id or "patent" in a_id:
+        elif "publication" in a_id or "quartile" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
                 f"Research metrics synchronized: 8 Scopus Q1/Q2 indexed journal articles registered for current assessment quarter. "
@@ -484,6 +484,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Multi-Agency Grant Tracking: Real-time monitoring across DST, ANRF/SERB, MeitY, DRDO, AICTE, UGC, ICMR, and bilateral international funding calls with automated deadline alert sequences.\n"
                 f"• Faculty Expertise & Call Matching: AI-driven matching of call eligibility and thematic priority areas with faculty publication profiles (Agent 17) to recommend targeted proposal development.\n"
                 f"• Grant Pipeline & Departmental Calendars: Generated comprehensive active grant pipelines, funding milestone calendars, and proposal readiness checklists for Deans of Research and HoDs.\n"
+            )
+        elif a_id == "agent_23" or "patent" in a_id or "ipr" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Patent Monitoring System Synchronized: https://patent-monitoring-agent.vercel.app/\n"
+                f"• Complete IP Lifecycle Tracking: Monitored university patent trajectory from invention disclosure through provisional/complete filing, FER responses, and final grants.\n"
+                f"• Statutory Prosecution & Deadline Alerts: Automated tracking of critical statutory deadlines, patent attorney correspondence, and official fee schedule maintenance.\n"
+                f"• Accreditation & Ranking IP Portfolio: Compiled institutional patent portfolios and inventor registries feeding NIRF Research (RPC) and NAAC/NBA Criterion 3 quality benchmarks.\n"
             )
         elif a_id == "agent_25" or "phd" in a_id.lower() or "doctoral" in a_id.lower():
             return (
