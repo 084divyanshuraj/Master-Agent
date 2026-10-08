@@ -463,6 +463,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Research metrics synchronized: 8 Scopus Q1/Q2 indexed journal articles registered for current assessment quarter. "
                 f"2 patent applications audited through University IPR Cell and assigned institutional filing numbers."
             )
+        elif a_id == "agent_37" or ("admission" in a_id and "counselling" in a_id) or "admissionai" in a_id or "admission" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live AdmissionAI Counselling Engine Synchronized: https://admissionai-1.onrender.com/\n"
+                f"• Personalized Programme Recommendations: AI-driven matching of candidate ranks (V-SAT, EAMCET, JEE), academic interests, and career ambitions against university branch specializations.\n"
+                f"• Cut-Off & Admission Probability Analytics: Real-time probability forecasting based on multi-year category cut-offs, quota matrix thresholds, and live seat vacancy dashboards.\n"
+                f"• Comparative Curriculum & Placement Intelligence: Objective, honest branch comparison briefs detailing curriculum tracks, accredited faculty ratios, and median CTC placement benchmarks (Agent 50 & 51).\n"
+            )
         elif a_id == "agent_42" or "scholarship" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

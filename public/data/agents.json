@@ -716,12 +716,12 @@
               "primary_users": "Prospective students and parents, admission counsellors.",
               "inputs": "Candidate rank, category, qualifying examination scores, subject strengths, stated interests and career goals; historical cut-off data by programme, category, and year; programme details; placement and higher-study outcomes by branch from Agent 49; and seat availability.",
               "outputs": "Personalised programme recommendations with reasoning, admission probability estimates, branch comparison summaries, preference list drafts, counsellor handover briefs. Integrations. Consumes Agents 1, 36, 38, 49. Feeds Agent 38. Guardrail. The agent must not overstate admission probability or placement outcomes to increase conversion. Build the honesty requirement into the output constraints explicitly, present historical figures with their year and sample size, and audit a sample of conversations for accuracy each cycle. An institution that oversells at admission pays for it in attrition and reputation.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/admission-counselling-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/admission-counselling-agent",
+              "endpoint_url": "https://admissionai-1.onrender.com/",
+              "deployment_url": "https://admissionai-1.onrender.com/",
               "sample_prompts": [
-                "Generate latest status report for Admission Counselling Agent",
-                "Query institutional records via Admission Counselling Agent",
-                "Audit compliance metrics for Admission Counselling Agent"
+                "Evaluate candidate admission eligibility and calculate cut-off probabilities across B.Tech branches based on V-SAT and EAMCET ranks",
+                "Generate personalized programme recommendations comparing curriculum, placement metrics, and fee structures",
+                "Provide branch preference order guidance and prepare counsellor handover briefs with seat matrix availability"
               ],
               "status": "online"
             },
@@ -2787,12 +2787,12 @@
           "primary_users": "Prospective students and parents, admission counsellors.",
           "inputs": "Candidate rank, category, qualifying examination scores, subject strengths, stated interests and career goals; historical cut-off data by programme, category, and year; programme details; placement and higher-study outcomes by branch from Agent 49; and seat availability.",
           "outputs": "Personalised programme recommendations with reasoning, admission probability estimates, branch comparison summaries, preference list drafts, counsellor handover briefs. Integrations. Consumes Agents 1, 36, 38, 49. Feeds Agent 38. Guardrail. The agent must not overstate admission probability or placement outcomes to increase conversion. Build the honesty requirement into the output constraints explicitly, present historical figures with their year and sample size, and audit a sample of conversations for accuracy each cycle. An institution that oversells at admission pays for it in attrition and reputation.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/admission-counselling-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/admission-counselling-agent",
+          "endpoint_url": "https://admissionai-1.onrender.com/",
+          "deployment_url": "https://admissionai-1.onrender.com/",
           "sample_prompts": [
-            "Generate latest status report for Admission Counselling Agent",
-            "Query institutional records via Admission Counselling Agent",
-            "Audit compliance metrics for Admission Counselling Agent"
+            "Evaluate candidate admission eligibility and calculate cut-off probabilities across B.Tech branches based on V-SAT and EAMCET ranks",
+            "Generate personalized programme recommendations comparing curriculum, placement metrics, and fee structures",
+            "Provide branch preference order guidance and prepare counsellor handover briefs with seat matrix availability"
           ],
           "status": "online"
         },
