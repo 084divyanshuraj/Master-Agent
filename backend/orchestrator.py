@@ -359,6 +359,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Bloom's Taxonomy Cognitive Distribution: Verified cognitive rigor balance across Remembering (L1), Understanding (L2), Applying (L3), and Analyzing/Evaluating (L4-L6) with zero blueprint drift.\n"
                 f"• Examination Moderation Governance: Flagged 0 construction ambiguities, verified marks-to-time ratios (1.5 min/mark), and auto-compiled the official Moderation Committee ledger."
             )
+        elif a_id == "agent_33" or ("internal" in a_id and "assessment" in a_id) or "smartassess" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live SmartAssess Internal Assessment Engine Synchronized: https://smartassess-3.vercel.app/\n"
+                f"• Continuous Internal Evaluation (CIE) Governance: Automated aggregation of Mid-1/Mid-2 tests, quizzes, assignments, and laboratory assessments computed under institutional weighting formulas.\n"
+                f"• Statistical Grade Variance & Outlier Detection: Automated multi-section anomaly audits flagging grade bunching, abnormal variance, and arithmetic discrepancy risks before mark finalization.\n"
+                f"• Grievance Redressal & Transmission Integrity: Closed-loop mark dispute tracking, CoE transmission lock compliance, and real-time feeds to Result Analysis (Agent 34) and CO Attainment (Agent 08)."
+            )
         elif "question" in a_id or "paper" in a_id or a_id == "agent_31":
             return (
                 f"**[{name} — {group_name}]**\n"

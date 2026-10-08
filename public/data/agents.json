@@ -348,12 +348,12 @@
               "primary_users": "Faculty, Heads of Department, examination section, students.",
               "inputs": "Assessment calendar, formative assessment and mid-term mark entries, assignment and quiz records, laboratory and project evaluations, the institutional internal mark computation formula, and attendance data.",
               "outputs": "Assessment calendars, mark entry status dashboards, computed internal mark sheets, anomaly reports, grievance registers, finalised mark transmissions. Integrations. Consumes Agents 5, 11. Feeds Agents 7, 8, 12, 15, 34.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/internal-assessment-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/internal-assessment-agent",
+              "endpoint_url": "https://smartassess-3.vercel.app/",
+              "deployment_url": "https://smartassess-3.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Internal Assessment Agent",
-                "Query institutional records via Internal Assessment Agent",
-                "Audit compliance metrics for Internal Assessment Agent"
+                "Compute and audit continuous internal evaluation (CIE) marks across mid-term assessments and lab components",
+                "Identify grade variance anomalies and marks bunching across multi-section courses",
+                "Generate assessment calendar status and student internal marks grievance reports"
               ],
               "status": "online"
             },
@@ -2683,12 +2683,12 @@
           "primary_users": "Faculty, Heads of Department, examination section, students.",
           "inputs": "Assessment calendar, formative assessment and mid-term mark entries, assignment and quiz records, laboratory and project evaluations, the institutional internal mark computation formula, and attendance data.",
           "outputs": "Assessment calendars, mark entry status dashboards, computed internal mark sheets, anomaly reports, grievance registers, finalised mark transmissions. Integrations. Consumes Agents 5, 11. Feeds Agents 7, 8, 12, 15, 34.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/internal-assessment-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/internal-assessment-agent",
+          "endpoint_url": "https://smartassess-3.vercel.app/",
+          "deployment_url": "https://smartassess-3.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Internal Assessment Agent",
-            "Query institutional records via Internal Assessment Agent",
-            "Audit compliance metrics for Internal Assessment Agent"
+            "Compute and audit continuous internal evaluation (CIE) marks across mid-term assessments and lab components",
+            "Identify grade variance anomalies and marks bunching across multi-section courses",
+            "Generate assessment calendar status and student internal marks grievance reports"
           ],
           "status": "online"
         },
