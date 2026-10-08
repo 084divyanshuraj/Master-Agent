@@ -581,6 +581,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Corporate Partnerships: Active Platinum MoU with Google India (MOU-VIGNAN-GOOG-2023-08) for Joint R&D and Cloud Center of Excellence.\n"
                 f"• Mentor Matchmaker: 142 alumni mentors engaged across tier-1 tech firms for student guidance and guest lectures."
             )
+        elif a_id == "agent_49" or ("placement" in a_id and "readiness" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Placement Readiness Assessment System Synchronized: https://agent-49-tau.vercel.app/\n"
+                f"• Multi-Factor Readiness Scoring: Evaluated student preparedness index across CGPA, coding platform activity (LeetCode/HackerRank), backlog clearance status (Agent 35), and mock aptitude percentiles.\n"
+                f"• Binding Constraint Gap Diagnostics: Identified specific qualification bottlenecks (DSA proficiency, communication benchmarks, domain electives) with tailored remedial preparation roadmaps (Agent 67).\n"
+                f"• Recruiter Eligibility Matching: Real-time candidate qualification rosters for visiting tier-1 corporate recruiters, feeding directly into Job Matching (Agent 50) and Placement Operations."
+            )
         elif a_id == "agent_50" or ("job" in a_id and "match" in a_id) or "santra" in a_id.lower():
             return (
                 f"**[{name} — {group_name}]**\n"

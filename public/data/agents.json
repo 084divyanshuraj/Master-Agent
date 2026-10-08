@@ -1465,12 +1465,12 @@
               "primary_users": "Training and placement cell, students, Heads of Department, training coordinators.",
               "inputs": "Academic records and Cumulative Grade Point Average, backlog status from Agent 35, technical skill assessments, programming platform activity, certifications from Agent 68, aptitude and mock test scores, communication assessments, project and internship records, and the eligibility criteria and skill requirements of recruiting companies.",
               "outputs": "Individual readiness scorecards, company qualification counts, binding constraint analyses, personalised preparation plans, cohort training requirement reports, progress tracking. Integrations. Consumes Agents 10, 35, 44, 48, 51, 68. Feeds Agents 16, 50, 67. Guardrail. Readiness scores must be visible to the student and to the placement cell, and must not be used to exclude a student from sitting for a company they are formally eligible for. The score guides preparation; the eligibility criteria govern participation.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/placement-readiness-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/placement-readiness-agent",
+              "endpoint_url": "https://agent-49-tau.vercel.app/",
+              "deployment_url": "https://agent-49-tau.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Placement Readiness Agent",
-                "Query institutional records via Placement Readiness Agent",
-                "Audit compliance metrics for Placement Readiness Agent"
+                "Calculate individual student placement readiness index based on CGPA, coding mock scores, and backlog clearance",
+                "Diagnose binding constraint skill gaps across technical aptitude, coding rounds, and interview communication",
+                "Generate recruiter qualification counts and targeted cohort preparation roadmaps for upcoming campus recruitment drives"
               ],
               "status": "online"
             },
@@ -3099,12 +3099,12 @@
           "primary_users": "Training and placement cell, students, Heads of Department, training coordinators.",
           "inputs": "Academic records and Cumulative Grade Point Average, backlog status from Agent 35, technical skill assessments, programming platform activity, certifications from Agent 68, aptitude and mock test scores, communication assessments, project and internship records, and the eligibility criteria and skill requirements of recruiting companies.",
           "outputs": "Individual readiness scorecards, company qualification counts, binding constraint analyses, personalised preparation plans, cohort training requirement reports, progress tracking. Integrations. Consumes Agents 10, 35, 44, 48, 51, 68. Feeds Agents 16, 50, 67. Guardrail. Readiness scores must be visible to the student and to the placement cell, and must not be used to exclude a student from sitting for a company they are formally eligible for. The score guides preparation; the eligibility criteria govern participation.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/placement-readiness-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/placement-readiness-agent",
+          "endpoint_url": "https://agent-49-tau.vercel.app/",
+          "deployment_url": "https://agent-49-tau.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Placement Readiness Agent",
-            "Query institutional records via Placement Readiness Agent",
-            "Audit compliance metrics for Placement Readiness Agent"
+            "Calculate individual student placement readiness index based on CGPA, coding mock scores, and backlog clearance",
+            "Diagnose binding constraint skill gaps across technical aptitude, coding rounds, and interview communication",
+            "Generate recruiter qualification counts and targeted cohort preparation roadmaps for upcoming campus recruitment drives"
           ],
           "status": "online"
         },
