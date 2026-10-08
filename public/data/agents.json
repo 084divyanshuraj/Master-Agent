@@ -1051,12 +1051,12 @@
               "primary_users": "Counselling cell and professional counsellors, mentors, Deans of Student Affairs, Heads of Department.",
               "inputs": "Behavioural and academic indicators from Agents 11, 12, 14, 44, 45; sudden changes in established patterns; mentor observations and referrals; self-referrals; and the institutional counselling protocol with escalation contacts.",
               "outputs": "Referral queues with urgency triage, counsellor scheduling and records, crisis escalation routing, accommodation coordination, anonymised aggregate reports, resource directories. Integrations. Consumes Agents 11, 12, 14, 44, 45, 65. Feeds Agent 45. Guardrail. This is the most safety-critical agent in the platform and requires the strictest treatment. The agent must never provide counselling, therapy, diagnosis, or clinical advice to a student. Its output to a student is limited to",
-              "endpoint_url": "https://api.vignan.ac.in/agents/counselling-support-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/counselling-support-agent",
+              "endpoint_url": "https://frontend-henna-one-27.vercel.app/",
+              "deployment_url": "https://frontend-henna-one-27.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Counselling Support Agent",
-                "Query institutional records via Counselling Support Agent",
-                "Audit compliance metrics for Counselling Support Agent"
+                "Identify students flagged for confidential counselling support and route through Mind Shield triage protocol",
+                "Review Faculty Evaluation Demo metrics and confidential student wellness indicators",
+                "Audit counsellor scheduling, crisis escalation routing, and anonymized student support statistics"
               ],
               "status": "online"
             },
@@ -3540,12 +3540,12 @@
           "primary_users": "Counselling cell and professional counsellors, mentors, Deans of Student Affairs, Heads of Department.",
           "inputs": "Behavioural and academic indicators from Agents 11, 12, 14, 44, 45; sudden changes in established patterns; mentor observations and referrals; self-referrals; and the institutional counselling protocol with escalation contacts.",
           "outputs": "Referral queues with urgency triage, counsellor scheduling and records, crisis escalation routing, accommodation coordination, anonymised aggregate reports, resource directories. Integrations. Consumes Agents 11, 12, 14, 44, 45, 65. Feeds Agent 45. Guardrail. This is the most safety-critical agent in the platform and requires the strictest treatment. The agent must never provide counselling, therapy, diagnosis, or clinical advice to a student. Its output to a student is limited to",
-          "endpoint_url": "https://api.vignan.ac.in/agents/counselling-support-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/counselling-support-agent",
+          "endpoint_url": "https://frontend-henna-one-27.vercel.app/",
+          "deployment_url": "https://frontend-henna-one-27.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Counselling Support Agent",
-            "Query institutional records via Counselling Support Agent",
-            "Audit compliance metrics for Counselling Support Agent"
+            "Identify students flagged for confidential counselling support and route through Mind Shield triage protocol",
+            "Review Faculty Evaluation Demo metrics and confidential student wellness indicators",
+            "Audit counsellor scheduling, crisis escalation routing, and anonymized student support statistics"
           ],
           "status": "online"
         },

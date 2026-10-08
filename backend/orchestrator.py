@@ -547,6 +547,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Attendance & Condonation Gate: Real-time consecutive lecture calculations (16 classes needed in Data Structures for 75% cutoff; R22 Clause 4.3 medical condonation window 65%–74.9%).\n"
                 f"• Institutional Gatekeeper: Automated hold audit (Clause 8.2 dual-clearance for End-Semester hall tickets requiring finance clearance and approved medical board sign-off).\n"
             )
+        elif a_id == "agent_66" or "counselling" in a_id or "mind shield" in a_id.lower():
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Mind Shield Counselling Support System Synchronized: https://frontend-henna-one-27.vercel.app/\n"
+                f"• Mind Shield Confidential Triage Protocol: Automated recognition and compassionate routing of students exhibiting academic or emotional distress to institutional human counsellors, with strict non-clinical boundaries.\n"
+                f"• Faculty Evaluation Demo Module: Integrated faculty evaluation and sentiment feedback telemetry assessing wellness touchpoints and student-faculty interaction indicators.\n"
+                f"• Counsellor Scheduling & Crisis Escalation: Real-time confidential appointment booking, crisis urgency triage, and anonymized aggregate reporting for the Dean of Student Affairs.\n"
+            )
         elif a_id == "agent_67" or ("learning" in a_id and "resource" in a_id) or "gap2grow" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

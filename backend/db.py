@@ -144,6 +144,7 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_63": "https://agent63-frontend.onrender.com",
     "agent_64": "https://frontend-ten-puce-47.vercel.app/",
     "agent_65": "https://student-helpdesk-agent-two.vercel.app/",
+    "agent_66": "https://frontend-henna-one-27.vercel.app/",
     "agent_67": "https://gap2growvignan.netlify.app/",
     "agent_68": "https://vijayadurgabolagani-stack.github.io/AI-certificate-advisor/",
     "agent_70": "https://agent-70.vercel.app/?_vercel_share=ArRJS7NP3SEkDRbgWc1iJBt9iea3aVqt",
