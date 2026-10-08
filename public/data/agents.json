@@ -855,23 +855,23 @@
             {
               "id": "agent_43",
               "number": 43,
-              "name": "Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied",
+              "name": "Education Loan Assistance Agent",
               "group_id": "group_7",
               "group_number": 7,
               "group_name": "Fee and Finance Agents",
               "category_id": "category_2",
               "category_number": 2,
               "category_name": "Student Success, Admissions & Support Services",
-              "description": "Ensures that every student receives every scholarship they are eligible for, and that no application lapses for a missed deadline or an incomplete document. Government scholarship schemes in particular have narrow windows, exacting documentation, and high rejection rates for procedural reasons.",
-              "primary_users": "Scholarship section, students and parents, accounts section, Heads of Department.",
-              "inputs": "Scheme catalogues covering central and state government, institutional, and private and corporate scholarships; eligibility criteria including category, income, marks, and attendance; student master with category and income data; academic performance records; application and disbursement status; and renewal conditions.",
-              "outputs": "Per-student eligibility lists, application trackers, renewal risk alerts, disbursement reconciliations, coverage and rejection analyses. Integrations. Consumes Agents 10, 11. Feeds Agents 40, 41, 43.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/guardrail-fee-reminders-must-never-be-delivered-in-a-way-that-identifies-a-students-financial-situation-to-peers-or-faculty-and-must-never-be-tied",
-              "deployment_url": "https://api.vignan.ac.in/agents/guardrail-fee-reminders-must-never-be-delivered-in-a-way-that-identifies-a-students-financial-situation-to-peers-or-faculty-and-must-never-be-tied",
+              "description": "Assists students and parents with education loan applications, documentation packaging, bank coordination, and institutional bonafide/fee estimate certifications to streamline tuition financing.",
+              "primary_users": "Students, parents, finance office, loan facilitation desk, partner banks.",
+              "inputs": "Fee structure certificates, bonafide letters, bank loan scheme guidelines (Vidya Lakshmi portal, SBI, Canara Bank, HDFC Credila), sanction status, and disbursement schedules.",
+              "outputs": "Bonafide loan documentation kits, fee demand estimates, Vidya Lakshmi status tracking dashboards, bank query resolution logs, and disbursement ledger reconciliations. Integrations. Consumes Agents 40, 41, 42. Feeds Agents 40, 65.",
+              "endpoint_url": "https://education-loan-assist.vercel.app/",
+              "deployment_url": "https://education-loan-assist.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied",
-                "Query institutional records via Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied",
-                "Audit compliance metrics for Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied"
+                "Generate education loan bonafide documentation package and institutional fee estimate certificates",
+                "Track student loan application status across Vidya Lakshmi portal and partner banking institutions",
+                "Reconcile education loan disbursement schedules and semester tuition ledger clearances"
               ],
               "status": "online"
             }
@@ -2926,23 +2926,23 @@
         {
           "id": "agent_43",
           "number": 43,
-          "name": "Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied",
+          "name": "Education Loan Assistance Agent",
           "group_id": "group_7",
           "group_number": 7,
           "group_name": "Fee and Finance Agents",
           "category_id": "category_2",
           "category_number": 2,
           "category_name": "Student Success, Admissions & Support Services",
-          "description": "Ensures that every student receives every scholarship they are eligible for, and that no application lapses for a missed deadline or an incomplete document. Government scholarship schemes in particular have narrow windows, exacting documentation, and high rejection rates for procedural reasons.",
-          "primary_users": "Scholarship section, students and parents, accounts section, Heads of Department.",
-          "inputs": "Scheme catalogues covering central and state government, institutional, and private and corporate scholarships; eligibility criteria including category, income, marks, and attendance; student master with category and income data; academic performance records; application and disbursement status; and renewal conditions.",
-          "outputs": "Per-student eligibility lists, application trackers, renewal risk alerts, disbursement reconciliations, coverage and rejection analyses. Integrations. Consumes Agents 10, 11. Feeds Agents 40, 41, 43.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/guardrail-fee-reminders-must-never-be-delivered-in-a-way-that-identifies-a-students-financial-situation-to-peers-or-faculty-and-must-never-be-tied",
-          "deployment_url": "https://api.vignan.ac.in/agents/guardrail-fee-reminders-must-never-be-delivered-in-a-way-that-identifies-a-students-financial-situation-to-peers-or-faculty-and-must-never-be-tied",
+          "description": "Assists students and parents with education loan applications, documentation packaging, bank coordination, and institutional bonafide/fee estimate certifications to streamline tuition financing.",
+          "primary_users": "Students, parents, finance office, loan facilitation desk, partner banks.",
+          "inputs": "Fee structure certificates, bonafide letters, bank loan scheme guidelines (Vidya Lakshmi portal, SBI, Canara Bank, HDFC Credila), sanction status, and disbursement schedules.",
+          "outputs": "Bonafide loan documentation kits, fee demand estimates, Vidya Lakshmi status tracking dashboards, bank query resolution logs, and disbursement ledger reconciliations. Integrations. Consumes Agents 40, 41, 42. Feeds Agents 40, 65.",
+          "endpoint_url": "https://education-loan-assist.vercel.app/",
+          "deployment_url": "https://education-loan-assist.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied",
-            "Query institutional records via Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied",
-            "Audit compliance metrics for Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied"
+            "Generate education loan bonafide documentation package and institutional fee estimate certificates",
+            "Track student loan application status across Vidya Lakshmi portal and partner banking institutions",
+            "Reconcile education loan disbursement schedules and semester tuition ledger clearances"
           ],
           "status": "online"
         }

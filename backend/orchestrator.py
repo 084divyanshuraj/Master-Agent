@@ -479,6 +479,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Confidential Reminder Dispatch: Automated issuance of respectful, private installment notifications and payment schedule alerts adhering to student privacy guardrails.\n"
                 f"• Hardship Referral & Concession Coordination: Seamless routing of genuine financial hardship cases to institutional concession and scholarship boards (Agent 42).\n"
             )
+        elif a_id == "agent_43" or ("loan" in a_id and "assist" in a_id) or "education-loan" in a_id or "loan" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Education Loan Assistance Portal Synchronized: https://education-loan-assist.vercel.app/\n"
+                f"• Vidya Lakshmi & Multi-Bank Loan Packaging: Automated compilation of certified institutional bonafide letters, fee estimate demand schedules, and syllabus accreditations for nationalized and private bank loan approvals.\n"
+                f"• Student Application Tracking: Real-time tracking of loan sanction workflows across partner banks (SBI, Canara Bank, Union Bank, HDFC Credila), monitoring document submission verification and query turnaround.\n"
+                f"• Disbursement & Ledger Reconciliation: Direct coordination between university finance desk and bank disbursement channels, ensuring automated semester tuition fee clearance and zero student registration holds."
+            )
         elif "fee" in a_id or "loan" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
