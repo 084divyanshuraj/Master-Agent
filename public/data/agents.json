@@ -1326,12 +1326,12 @@
               "primary_users": "Research Deans, doctoral supervisors, scholars, research section, doctoral committees.",
               "inputs": "Scholar admission records, supervisor allocations and their current supervision counts, university doctoral regulations, coursework results, comprehensive examination records, doctoral committee review minutes, publication records from Agent 17, and progress reports.",
               "outputs": "Scholar progress dashboards, milestone alert queues, supervisor load reports, publication eligibility verification, duration compliance reports, stalled case lists. Integrations. Consumes Agents 17, 18. Feeds Agents 20, 59, 71.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/phd-monitoring-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/phd-monitoring-agent",
+              "endpoint_url": "https://hospitals-accessible-upon-morris.trycloudflare.com/",
+              "deployment_url": "https://hospitals-accessible-upon-morris.trycloudflare.com/",
               "sample_prompts": [
-                "Generate latest status report for PhD Monitoring Agent",
-                "Query institutional records via PhD Monitoring Agent",
-                "Audit compliance metrics for PhD Monitoring Agent"
+                "Track doctoral scholar milestone progress and regulatory compliance across all departments",
+                "Audit PhD supervisor load distribution and publication eligibility verification",
+                "Generate stalled scholar case list and duration compliance report for Research Dean"
               ],
               "status": "online"
             }
@@ -2475,12 +2475,12 @@
           "primary_users": "Research Deans, doctoral supervisors, scholars, research section, doctoral committees.",
           "inputs": "Scholar admission records, supervisor allocations and their current supervision counts, university doctoral regulations, coursework results, comprehensive examination records, doctoral committee review minutes, publication records from Agent 17, and progress reports.",
           "outputs": "Scholar progress dashboards, milestone alert queues, supervisor load reports, publication eligibility verification, duration compliance reports, stalled case lists. Integrations. Consumes Agents 17, 18. Feeds Agents 20, 59, 71.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/phd-monitoring-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/phd-monitoring-agent",
+          "endpoint_url": "https://hospitals-accessible-upon-morris.trycloudflare.com/",
+          "deployment_url": "https://hospitals-accessible-upon-morris.trycloudflare.com/",
           "sample_prompts": [
-            "Generate latest status report for PhD Monitoring Agent",
-            "Query institutional records via PhD Monitoring Agent",
-            "Audit compliance metrics for PhD Monitoring Agent"
+            "Track doctoral scholar milestone progress and regulatory compliance across all departments",
+            "Audit PhD supervisor load distribution and publication eligibility verification",
+            "Generate stalled scholar case list and duration compliance report for Research Dean"
           ],
           "status": "online"
         }

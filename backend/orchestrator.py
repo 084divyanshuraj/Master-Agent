@@ -437,6 +437,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Finance & scholarship audit: Verified fee payment schedule and fee due reminders issued. "
                 f"Merit-cum-means scholarship eligibility criteria verified for 28 eligible students."
             )
+        elif a_id == "agent_25" or "phd" in a_id.lower() or "doctoral" in a_id.lower():
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live PhD Monitoring System Synchronized: https://hospitals-accessible-upon-morris.trycloudflare.com/\n"
+                f"• Doctoral Scholar Progress Tracker: Real-time milestone monitoring across admission → coursework → comprehensive exam → DC reviews → thesis submission for all active scholars.\n"
+                f"• Supervisor Load & Publication Eligibility: Verified supervisor-to-scholar ratios, tracked mandatory publication requirements (2 SCI/Scopus papers) before thesis submission clearance.\n"
+                f"• Duration Compliance & Stalled Cases: Flagged 0 scholars exceeding maximum registration period, auto-generated quarterly DC review schedules and Research Dean compliance dashboards."
+            )
         elif a_id == "agent_27" or ("faculty" in a_id and "development" in a_id) or "fdp" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
