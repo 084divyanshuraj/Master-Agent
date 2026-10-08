@@ -60,12 +60,12 @@
               "primary_users": "Faculty preparing lesson plans, students, question paper setters, accreditation coordinators.",
               "inputs": "Syllabus documents at unit and topic granularity, textbook and reference book lists, Course Outcome statements, and the CO-PO-PSO mapping matrix.",
               "outputs": "Unit-wise content listings, course summary sheets, prerequisite chains, CO and PO mapping tables, textbook lists. Example query. “Give me the course contents of Data Structures for II B.Tech CSE under R23 regulation.” Integrations. Consumes Agent 1. Feeds Agents 5, 31, 32, and 67.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/course-content-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/course-content-agent",
+              "endpoint_url": "https://course-content-agent.vercel.app/?utm_source=chatgpt.com",
+              "deployment_url": "https://course-content-agent.vercel.app/?utm_source=chatgpt.com",
               "sample_prompts": [
-                "Generate latest status report for Course Content Agent",
-                "Query institutional records via Course Content Agent",
-                "Audit compliance metrics for Course Content Agent"
+                "Extract unit-wise syllabus and reading list for Data Structures under R23 regulation",
+                "Map Course Outcomes (CO1-CO5) to POs/PSOs and verify prerequisite chains",
+                "Retrieve prescribed textbooks and reference materials for Machine Learning course"
               ],
               "status": "online"
             },
@@ -1918,12 +1918,12 @@
           "primary_users": "Faculty preparing lesson plans, students, question paper setters, accreditation coordinators.",
           "inputs": "Syllabus documents at unit and topic granularity, textbook and reference book lists, Course Outcome statements, and the CO-PO-PSO mapping matrix.",
           "outputs": "Unit-wise content listings, course summary sheets, prerequisite chains, CO and PO mapping tables, textbook lists. Example query. “Give me the course contents of Data Structures for II B.Tech CSE under R23 regulation.” Integrations. Consumes Agent 1. Feeds Agents 5, 31, 32, and 67.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/course-content-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/course-content-agent",
+          "endpoint_url": "https://course-content-agent.vercel.app/?utm_source=chatgpt.com",
+          "deployment_url": "https://course-content-agent.vercel.app/?utm_source=chatgpt.com",
           "sample_prompts": [
-            "Generate latest status report for Course Content Agent",
-            "Query institutional records via Course Content Agent",
-            "Audit compliance metrics for Course Content Agent"
+            "Extract unit-wise syllabus and reading list for Data Structures under R23 regulation",
+            "Map Course Outcomes (CO1-CO5) to POs/PSOs and verify prerequisite chains",
+            "Retrieve prescribed textbooks and reference materials for Machine Learning course"
           ],
           "status": "online"
         },

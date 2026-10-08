@@ -124,6 +124,7 @@ def init_mongo_connection():
 
 
 DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
+    "agent_02": "https://course-content-agent.vercel.app/?utm_source=chatgpt.com",
     "agent_03": "https://faculty-course-allocation-agent.vercel.app/",
     "agent_04": "https://vignan-timetable-ai-1.onrender.com/",
     "agent_06": "https://ai-academic-recovery-agent.vercel.app/",

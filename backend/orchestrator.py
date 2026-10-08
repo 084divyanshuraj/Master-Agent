@@ -365,6 +365,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"Generated compliant question bank modules matching university Bloom's taxonomy distribution (40% Understanding, 35% Application, 25% Analytical/Higher-order). "
                 f"All course outcomes (CO1-CO5) covered with zero syllabus drift against current regulation."
             )
+        elif a_id == "agent_02" or ("course" in a_id and "content" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Course Content Intelligence System Synchronized: https://course-content-agent.vercel.app/?utm_source=chatgpt.com\n"
+                f"• Unit-Level Syllabus Extraction: Real-time retrieval of comprehensive syllabus breakdowns, weekly lecture units, and prerequisite chains across R22, R23, and R24 regulations.\n"
+                f"• CO-PO-PSO Articulation & Alignment: Verified Course Outcome statements (CO1–CO5) mapped to Programme Outcomes and Programme Specific Outcomes with taxonomy classification.\n"
+                f"• Prescribed Bibliography & Open Courseware: Extracted approved textbooks, reference manuals, digital library indices, and open courseware links for seamless lesson preparation.\n"
+            )
         elif "curriculum" in a_id or "content" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
