@@ -367,6 +367,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Statistical Grade Variance & Outlier Detection: Automated multi-section anomaly audits flagging grade bunching, abnormal variance, and arithmetic discrepancy risks before mark finalization.\n"
                 f"• Grievance Redressal & Transmission Integrity: Closed-loop mark dispute tracking, CoE transmission lock compliance, and real-time feeds to Result Analysis (Agent 34) and CO Attainment (Agent 08)."
             )
+        elif a_id == "agent_35" or "backlog" in a_id or "arrear" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Backlog Monitoring System Synchronized: https://backlog-monitoring-agent-vu.vercel.app/\n"
+                f"• Arrear Accumulation & Duration Compliance: Real-time tracking of student arrears across semester cohorts, evaluating degree completion velocity against VFSTR maximum duration regulations (N+2 rule).\n"
+                f"• Chronic Failure Pattern Diagnostics: Multi-attempt failure analysis identifying high-fatality prerequisite bottlenecks (Mathematics, Data Structures, Signals & Systems) for targeted remedial interventions.\n"
+                f"• Supplementary Scheduling & Mentorship Escalation: Auto-compiled supplementary examination rosters, placement clearance eligibility lists, and mentor intervention alerts (Agent 45 & 06)."
+            )
         elif "question" in a_id or "paper" in a_id or a_id == "agent_31":
             return (
                 f"**[{name} — {group_name}]**\n"

@@ -142,6 +142,7 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_28": "https://industrial-interaction-agent.onrender.com/",
     "agent_32": "https://question-paper-quality-agent.onrender.com/",
     "agent_33": "https://smartassess-3.vercel.app/",
+    "agent_35": "https://backlog-monitoring-agent-vu.vercel.app/",
     "agent_37": "https://admissionai-1.onrender.com/",
     "agent_41": "https://fee-managment.netlify.app/",
     "agent_42": "https://scholarship-agent-42-1031611339150.asia-south1.run.app/",

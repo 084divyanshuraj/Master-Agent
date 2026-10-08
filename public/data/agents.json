@@ -394,12 +394,12 @@
               "primary_users": "Heads of Department, mentors, students, examination section, placement cell.",
               "inputs": "Semester results across all attempts, registration records for supplementary examinations, university regulations on promotion and maximum duration, and the student master.",
               "outputs": "Student-wise arrear registers, promotion eligibility lists, duration risk alerts, chronic failure pattern reports, segmented intervention lists, supplementary registration reports, clearance trend analyses. Integrations. Consumes Agents 30, 34. Feeds Agents 12, 14, 16, 45, 49.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/backlog-monitoring-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/backlog-monitoring-agent",
+              "endpoint_url": "https://backlog-monitoring-agent-vu.vercel.app/",
+              "deployment_url": "https://backlog-monitoring-agent-vu.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Backlog Monitoring Agent",
-                "Query institutional records via Backlog Monitoring Agent",
-                "Audit compliance metrics for Backlog Monitoring Agent"
+                "Audit accumulated arrears across cohorts and flag students at promotion or maximum duration risk",
+                "Analyze chronic subject failure patterns and identify root-cause courses requiring remedial intervention",
+                "Generate supplementary examination clearance reports, placement eligibility rosters, and mentor recovery briefs"
               ],
               "status": "online"
             }
@@ -2729,12 +2729,12 @@
           "primary_users": "Heads of Department, mentors, students, examination section, placement cell.",
           "inputs": "Semester results across all attempts, registration records for supplementary examinations, university regulations on promotion and maximum duration, and the student master.",
           "outputs": "Student-wise arrear registers, promotion eligibility lists, duration risk alerts, chronic failure pattern reports, segmented intervention lists, supplementary registration reports, clearance trend analyses. Integrations. Consumes Agents 30, 34. Feeds Agents 12, 14, 16, 45, 49.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/backlog-monitoring-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/backlog-monitoring-agent",
+          "endpoint_url": "https://backlog-monitoring-agent-vu.vercel.app/",
+          "deployment_url": "https://backlog-monitoring-agent-vu.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Backlog Monitoring Agent",
-            "Query institutional records via Backlog Monitoring Agent",
-            "Audit compliance metrics for Backlog Monitoring Agent"
+            "Audit accumulated arrears across cohorts and flag students at promotion or maximum duration risk",
+            "Analyze chronic subject failure patterns and identify root-cause courses requiring remedial intervention",
+            "Generate supplementary examination clearance reports, placement eligibility rosters, and mentor recovery briefs"
           ],
           "status": "online"
         }
