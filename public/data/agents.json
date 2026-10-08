@@ -1361,12 +1361,12 @@
               "primary_users": "Conference chairs, organising committees, reviewers, authors, participants.",
               "inputs": "Conference configuration including tracks, dates, and review policy; reviewer database with expertise areas; submitted papers; review scores; registration and payment records; and institutional certificate and proceedings templates.",
               "outputs": "Call for papers, submission and review dashboards, reviewer assignment sheets, decision letters, programme schedules, certificates, proceedings, post-event reports. Integrations. Consumes Agent 17 for reviewer expertise. Feeds Agents 9, 57, 62.",
-              "endpoint_url": "https://api.vignan.ac.in/agents/conference-management-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/conference-management-agent",
+              "endpoint_url": "https://conference-management-agent.vercel.app/",
+              "deployment_url": "https://conference-management-agent.vercel.app/",
               "sample_prompts": [
-                "Generate latest status report for Conference Management Agent",
-                "Query institutional records via Conference Management Agent",
-                "Audit compliance metrics for Conference Management Agent"
+                "Audit conference lifecycle across call for papers, peer review assignments, and decision notifications",
+                "Generate multi-track conference session schedules, keynote rosters, and presenter directories",
+                "Compile camera-ready manuscript proceedings and IEEE / Scopus publication compliance records"
               ],
               "status": "online"
             },
@@ -2510,12 +2510,12 @@
           "primary_users": "Conference chairs, organising committees, reviewers, authors, participants.",
           "inputs": "Conference configuration including tracks, dates, and review policy; reviewer database with expertise areas; submitted papers; review scores; registration and payment records; and institutional certificate and proceedings templates.",
           "outputs": "Call for papers, submission and review dashboards, reviewer assignment sheets, decision letters, programme schedules, certificates, proceedings, post-event reports. Integrations. Consumes Agent 17 for reviewer expertise. Feeds Agents 9, 57, 62.",
-          "endpoint_url": "https://api.vignan.ac.in/agents/conference-management-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/conference-management-agent",
+          "endpoint_url": "https://conference-management-agent.vercel.app/",
+          "deployment_url": "https://conference-management-agent.vercel.app/",
           "sample_prompts": [
-            "Generate latest status report for Conference Management Agent",
-            "Query institutional records via Conference Management Agent",
-            "Audit compliance metrics for Conference Management Agent"
+            "Audit conference lifecycle across call for papers, peer review assignments, and decision notifications",
+            "Generate multi-track conference session schedules, keynote rosters, and presenter directories",
+            "Compile camera-ready manuscript proceedings and IEEE / Scopus publication compliance records"
           ],
           "status": "online"
         },

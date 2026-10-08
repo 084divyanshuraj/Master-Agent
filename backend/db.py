@@ -136,6 +136,7 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_22": "https://foma-agent.vercel.app/",
     "agent_23": "https://patent-monitoring-agent.vercel.app/",
     "agent_25": "https://hospitals-accessible-upon-morris.trycloudflare.com/",
+    "agent_26": "https://conference-management-agent.vercel.app/",
     "agent_27": "https://fdpluse.onrender.com/",
     "agent_28": "https://industrial-interaction-agent.onrender.com/",
     "agent_32": "https://question-paper-quality-agent.onrender.com/",

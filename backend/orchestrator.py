@@ -509,6 +509,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Supervisor Load & Publication Eligibility: Verified supervisor-to-scholar ratios, tracked mandatory publication requirements (2 SCI/Scopus papers) before thesis submission clearance.\n"
                 f"• Duration Compliance & Stalled Cases: Flagged 0 scholars exceeding maximum registration period, auto-generated quarterly DC review schedules and Research Dean compliance dashboards."
             )
+        elif a_id == "agent_26" or "conference" in a_id:
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Conference Management System Synchronized: https://conference-management-agent.vercel.app/\n"
+                f"• End-to-End Conference Lifecycle: Managed call-for-papers (CFP), double-blind peer review routing based on reviewer expertise (Agent 17), and automated camera-ready decision notifications.\n"
+                f"• Multi-Track Technical Sessions: Formulated clash-free track schedules, keynote speaker registries, session chair allocations, and attendee registration fee reconciliation.\n"
+                f"• Proceedings & Indexing Compliance: Assembled verifiable camera-ready proceedings adhering to IEEE/Springer/Scopus standards, feeding NAAC Criterion 3 and NIRF research output portfolios."
+            )
         elif a_id == "agent_27" or ("faculty" in a_id and "development" in a_id) or "fdp" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"
