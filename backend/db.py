@@ -137,6 +137,7 @@ DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
     "agent_25": "https://hospitals-accessible-upon-morris.trycloudflare.com/",
     "agent_27": "https://fdpluse.onrender.com/",
     "agent_32": "https://question-paper-quality-agent.onrender.com/",
+    "agent_41": "https://fee-managment.netlify.app/",
     "agent_42": "https://scholarship-agent-42-1031611339150.asia-south1.run.app/",
     "agent_45": "https://agent-hackathon.onrender.com/login",
     "agent_50": "https://jobmatchingagent.onrender.com/",

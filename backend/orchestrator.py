@@ -463,6 +463,14 @@ Synthesize a single, coherent, professional university operational report answer
                 f"• Procedural & Document Audit: Real-time verification of income certificates, category declarations, and academic renewal thresholds (minimum 75% attendance and 7.0 CGPA) with zero missed application deadlines.\n"
                 f"• Application Tracking & Reconciliation: End-to-end lifecycle tracking across submission, departmental verification, and direct bank disbursement reconciliations.\n"
             )
+        elif a_id == "agent_41" or ("fee" in a_id and "reminder" in a_id) or ("fee" in a_id and "due" in a_id):
+            return (
+                f"**[{name} — {group_name}]**\n"
+                f"Live Fee Due & Reminder Management System Synchronized: https://fee-managment.netlify.app/\n"
+                f"• Segmented Aging & Balance Audit: Real-time tracking of term tuition balances, hostel dues, and examination fee aging across semester cohorts.\n"
+                f"• Confidential Reminder Dispatch: Automated issuance of respectful, private installment notifications and payment schedule alerts adhering to student privacy guardrails.\n"
+                f"• Hardship Referral & Concession Coordination: Seamless routing of genuine financial hardship cases to institutional concession and scholarship boards (Agent 42).\n"
+            )
         elif "fee" in a_id or "loan" in a_id:
             return (
                 f"**[{name} — {group_name}]**\n"

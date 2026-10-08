@@ -820,12 +820,12 @@
               "primary_users": "Accounts section, students and parents, Heads of Department, management.",
               "inputs": "Outstanding balances and ageing from Agent 40, student and parent contact details with communication consent, payment history, approved concession and instalment arrangements, and institutional communication policy.",
               "outputs": "Segmented reminder schedules, personalised communications, escalation notices, hardship referral lists, collection effectiveness reports. Integrations. Consumes Agents 40, 42. Feeds Agent 43. Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied",
-              "endpoint_url": "https://api.vignan.ac.in/agents/fee-due-reminder-agent",
-              "deployment_url": "https://api.vignan.ac.in/agents/fee-due-reminder-agent",
+              "endpoint_url": "https://fee-managment.netlify.app/",
+              "deployment_url": "https://fee-managment.netlify.app/",
               "sample_prompts": [
-                "Generate latest status report for Fee Due Reminder Agent",
-                "Query institutional records via Fee Due Reminder Agent",
-                "Audit compliance metrics for Fee Due Reminder Agent"
+                "Track student fee dues, aging balances, and scheduled payment installments",
+                "Generate personalized, confidential fee reminder notices and hardship referral lists",
+                "Audit fee collection velocity and payment schedule adherence for Accounts section"
               ],
               "status": "online"
             },
@@ -2891,12 +2891,12 @@
           "primary_users": "Accounts section, students and parents, Heads of Department, management.",
           "inputs": "Outstanding balances and ageing from Agent 40, student and parent contact details with communication consent, payment history, approved concession and instalment arrangements, and institutional communication policy.",
           "outputs": "Segmented reminder schedules, personalised communications, escalation notices, hardship referral lists, collection effectiveness reports. Integrations. Consumes Agents 40, 42. Feeds Agent 43. Guardrail. Fee reminders must never be delivered in a way that identifies a student’s financial situation to peers or faculty, and must never be tied",
-          "endpoint_url": "https://api.vignan.ac.in/agents/fee-due-reminder-agent",
-          "deployment_url": "https://api.vignan.ac.in/agents/fee-due-reminder-agent",
+          "endpoint_url": "https://fee-managment.netlify.app/",
+          "deployment_url": "https://fee-managment.netlify.app/",
           "sample_prompts": [
-            "Generate latest status report for Fee Due Reminder Agent",
-            "Query institutional records via Fee Due Reminder Agent",
-            "Audit compliance metrics for Fee Due Reminder Agent"
+            "Track student fee dues, aging balances, and scheduled payment installments",
+            "Generate personalized, confidential fee reminder notices and hardship referral lists",
+            "Audit fee collection velocity and payment schedule adherence for Accounts section"
           ],
           "status": "online"
         },
