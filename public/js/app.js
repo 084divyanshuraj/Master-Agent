@@ -1905,7 +1905,7 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
                 <td><code class="chat-code-pill">${escapeHtml(m.roll_number || '')}</code></td>
                 <td><strong>${escapeHtml(m.name || '')}</strong></td>
                 <td>Year ${escapeHtml(String(m.current_year || '3'))}, Sec-${escapeHtml(String(m.section || '3'))}</td>
-                <td>${escapeHtml(String(m.cgpa || ''))}</td>
+                <td>${escapeHtml(String(m.tenth_percentage || ''))}%</td>
                 <td>${escapeHtml(String(m.attendance_pct || ''))}%</td>
               `;
               tbody.appendChild(tr);
