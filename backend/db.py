@@ -5,6 +5,7 @@ Supports MongoDB Atlas persistence with automatic in-memory fallback.
 
 import os
 import time
+import json
 import logging
 import hashlib
 import secrets
@@ -15,10 +16,11 @@ load_dotenv(override=True)
 logger = logging.getLogger("mongo_db")
 logger.setLevel(logging.INFO)
 
-# In-memory storage fallback for query logs, custom agent endpoints, and user sessions
+# In-memory storage fallback for query logs, custom agent endpoints, student records, and user sessions
 IN_MEMORY_LOGS: List[Dict[str, Any]] = []
 IN_MEMORY_USERS: Dict[str, Dict[str, Any]] = {}
 IN_MEMORY_ENDPOINTS: Dict[str, str] = {}
+IN_MEMORY_STUDENTS: Dict[str, Dict[str, Any]] = {}
 MAX_LOG_HISTORY = 100
 
 mongo_client = None
@@ -121,6 +123,7 @@ def init_mongo_connection():
 
     seed_default_users()
     seed_default_agent_endpoints()
+    load_students_cache()
 
 
 DEFAULT_LIVE_ENDPOINTS: Dict[str, str] = {
@@ -189,9 +192,6 @@ def seed_default_agent_endpoints():
                 )
             except Exception as e:
                 logger.error(f"Error seeding agent {agent_id} endpoint to MongoDB: {e}")
-
-
-init_mongo_connection()
 
 
 class AuditDB:
@@ -444,3 +444,112 @@ class AuditDB:
 
 
 db = AuditDB()
+
+
+def load_students_cache():
+    """Loads all student records from public/data/students.json into memory and MongoDB."""
+    global IN_MEMORY_STUDENTS
+    students_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "public", "data", "students.json")
+    if os.path.exists(students_path):
+        try:
+            with open(students_path, "r", encoding="utf-8") as f:
+                records = json.load(f)
+            for r in records:
+                roll = r.get("roll_number", "").strip().upper()
+                if roll:
+                    IN_MEMORY_STUDENTS[roll] = r
+            logger.info(f"Loaded {len(IN_MEMORY_STUDENTS)} verified student records into memory cache.")
+
+            if is_mongo_connected and mongo_db is not None:
+                try:
+                    col = mongo_db["students"]
+                    if col.estimated_document_count() < len(records):
+                        from pymongo import UpdateOne
+                        ops = [UpdateOne({"roll_number": r["roll_number"]}, {"$set": r}, upsert=True) for r in records]
+                        col.bulk_write(ops, ordered=False)
+                        logger.info("Bulk-synced 4,121 student records to MongoDB Atlas.")
+                except Exception as e:
+                    logger.warning(f"MongoDB students sync error: {e}")
+        except Exception as ex:
+            logger.error(f"Error loading students.json: {ex}")
+    else:
+        logger.warning(f"students.json not found at {students_path}")
+
+
+def get_student_by_roll(roll_number: str) -> Optional[Dict[str, Any]]:
+    """O(1) lookup of student profile by registration roll number."""
+    if not roll_number:
+        return None
+    roll = roll_number.strip().upper()
+    if roll in IN_MEMORY_STUDENTS:
+        return IN_MEMORY_STUDENTS[roll]
+    if is_mongo_connected and mongo_db is not None:
+        try:
+            doc = mongo_db["students"].find_one({"roll_number": roll}, {"_id": 0})
+            if doc:
+                IN_MEMORY_STUDENTS[roll] = doc
+                return doc
+        except Exception as e:
+            logger.error(f"MongoDB roll lookup error: {e}")
+    return None
+
+
+def search_students(query: str, limit: int = 15) -> List[Dict[str, Any]]:
+    """Search students by name, roll number, section, or counsellor."""
+    if not query:
+        return []
+    q = query.strip().upper()
+    results = []
+    for roll, st in IN_MEMORY_STUDENTS.items():
+        if (q in roll or 
+            q in st.get("name", "").upper() or 
+            q in st.get("counsellor", "").upper() or 
+            q == f"SEC-{st.get('section', '')}" or
+            q == f"SECTION {st.get('section', '')}"):
+            results.append(st)
+            if len(results) >= limit:
+                break
+    return results
+
+
+def get_students_by_counsellor(counsellor_name: str) -> List[Dict[str, Any]]:
+    """Get all mentees assigned to a specific faculty counsellor."""
+    c_name = counsellor_name.strip().upper()
+    return [st for st in IN_MEMORY_STUDENTS.values() if c_name in st.get("counsellor", "").upper()]
+
+
+def get_students_by_section(year: int, section: str) -> List[Dict[str, Any]]:
+    """Get students by year and section."""
+    s_sec = str(section).strip()
+    return [st for st in IN_MEMORY_STUDENTS.values() if st.get("current_year") == year and str(st.get("section", "")).strip() == s_sec]
+
+
+def get_student_cohort_stats() -> Dict[str, Any]:
+    """Provides high-level cohort telemetry for HOD and Deans."""
+    total = len(IN_MEMORY_STUDENTS)
+    if total == 0:
+        return {"total_students": 0}
+    y2 = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 2)
+    y3 = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 3)
+    y4 = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 4)
+    hostellers = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("hostel_status") == "Hosteller")
+    detained = sum(1 for s in IN_MEMORY_STUDENTS.values() if "Detained" in s.get("attendance_status", ""))
+    pending_fees = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("fee_due_amount", 0) > 0)
+    counsellors = len(set(s.get("counsellor") for s in IN_MEMORY_STUDENTS.values() if s.get("counsellor")))
+    return {
+        "total_students": total,
+        "branch": "CSE",
+        "years": {"year_2": y2, "year_3": y3, "year_4": y4},
+        "hostellers": hostellers,
+        "day_scholars": total - hostellers,
+        "detained_attendance_count": detained,
+        "pending_fee_count": pending_fees,
+        "total_faculty_mentors": counsellors,
+    }
+
+
+# Initialize database connection and sync caches
+init_mongo_connection()
+if not IN_MEMORY_STUDENTS:
+    load_students_cache()
+

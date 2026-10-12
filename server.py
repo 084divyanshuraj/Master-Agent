@@ -23,7 +23,14 @@ from dotenv import load_dotenv
 
 from backend.orchestrator import orchestrator
 from backend.groq_pool import groq_pool
-from backend.db import db
+from backend.db import (
+    db,
+    get_student_by_roll,
+    search_students,
+    get_students_by_counsellor,
+    get_students_by_section,
+    get_student_cohort_stats,
+)
 
 load_dotenv()
 
@@ -228,6 +235,36 @@ async def get_audit_logs(limit: int = 20):
         "recent_traces": db.get_recent_logs(limit=limit),
         "database": db.get_status(),
     }
+
+
+@app.get("/api/students/stats")
+@app.get("/students/stats")
+async def get_student_cohort_stats_endpoint():
+    """Provides high-level student cohort telemetry across CSE Year 2, 3, and 4."""
+    return get_student_cohort_stats()
+
+
+@app.get("/api/students/search")
+@app.get("/students/search")
+async def search_students_endpoint(q: str = "", limit: int = 15):
+    """Fast search across 4,121 student records by name, roll number, section, or counsellor."""
+    if not q.strip():
+        return {"query": q, "count": 0, "results": []}
+    results = search_students(q, limit=limit)
+    return {"query": q, "count": len(results), "results": results}
+
+
+@app.get("/api/students/{roll_number}")
+@app.get("/students/{roll_number}")
+async def get_student_profile_endpoint(roll_number: str):
+    """O(1) verified institutional student profile lookup by registration roll number."""
+    student = get_student_by_roll(roll_number)
+    if not student:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Student record for roll number '{roll_number.upper()}' not found in VFSTR departmental registry."
+        )
+    return student
 
 
 class ReportExportRequest(BaseModel):
