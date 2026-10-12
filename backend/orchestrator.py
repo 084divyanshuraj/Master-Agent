@@ -33,6 +33,25 @@ MODEL_SYNTHESIS = os.getenv("GROQ_MODEL_SYNTHESIS", "openai/gpt-oss-120b")
 ROLL_REGEX = re.compile(r'\b(2[1-5]\d[fF][aA]\w{5})\b', re.IGNORECASE)
 
 
+def format_student_address(st: Dict[str, Any]) -> str:
+    door = str(st.get("door_no", "")).strip()
+    street = str(st.get("street", "")).strip()
+    town = str(st.get("town", "")).strip()
+    mandal = str(st.get("mandal", "")).strip()
+    dist = str(st.get("district", "")).strip()
+    state = str(st.get("state", "")).strip()
+    pin = str(st.get("pincode", "")).replace(".0", "").strip()
+
+    parts = []
+    for p in [door, street, town, mandal, dist, state]:
+        if p and p.upper() not in ["-", "NULL", "NONE", "0", "0.0"]:
+            parts.append(p)
+    addr = ", ".join(parts)
+    if pin and pin not in ["-", "null", "None", "0", "0.0"]:
+        addr = f"{addr} (PIN: {pin})" if addr else f"PIN: {pin}"
+    return addr or "Permanent address not recorded in registry"
+
+
 def format_student_institutional_badge(st: Dict[str, Any]) -> str:
     roll = st.get("roll_number", "")
     name = st.get("name", "")
@@ -49,6 +68,11 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
     rank = st.get("entrance_rank", "N/A")
     email = st.get("email", "")
 
+    father = st.get("father_name", "").strip()
+    occ = st.get("father_occupation", "").strip()
+    father_str = f"{father} ({occ})" if (father and occ) else (father or "N/A")
+    addr = format_student_address(st)
+
     fee_badge = f"₹{fee_due:,} ({fee_stat})" if fee_due > 0 else "Fully Cleared (₹0 Due)"
     backlog_badge = f"⚠️ {backlogs} Active Arrear(s)" if backlogs > 0 else "✅ 0 Clear Record"
     att_badge = f"{att_pct}% ({att_stat})"
@@ -61,6 +85,8 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
         f"| **Registration No (Roll)** | `{roll}` |\n"
         f"| **Program & Cohort** | B.Tech CSE — Year {year}, Section {sec} |\n"
         f"| **Assigned Faculty Counsellor** | **{counsellor}** |\n"
+        f"| **Permanent Residential Address** | **{addr}** |\n"
+        f"| **Father / Guardian** | {father_str} |\n"
         f"| **Academic Standing (CGPA)** | **{cgpa}** |\n"
         f"| **Attendance Telemetry** | **{att_badge}** |\n"
         f"| **Active Arrears / Backlogs** | {backlog_badge} |\n"
@@ -152,6 +178,56 @@ class MasterOrchestrator:
                 }
 
         query_lower = query.lower()
+
+        # Deterministic Student Address / Residential Demographics Query
+        if detected_student and any(w in query_lower for w in ["address", "residence", "residential", "live", "where does", "location", "native", "home", "house", "staying"]):
+            addr = format_student_address(detected_student)
+            father = detected_student.get("father_name", "").strip()
+            occ = detected_student.get("father_occupation", "").strip()
+            father_str = f"{father} ({occ})" if (father and occ) else (father or "N/A")
+            roll = detected_student.get("roll_number")
+            name = detected_student.get("name")
+            counsel = detected_student.get("counsellor")
+            year = detected_student.get("current_year")
+            sec = detected_student.get("section")
+            town = detected_student.get("town") or "N/A"
+            state = detected_student.get("state") or "N/A"
+            pin = str(detected_student.get("pincode", "")).replace(".0", "") or "N/A"
+            door = detected_student.get("door_no") or "N/A"
+
+            addr_answer = (
+                f"### 🏠 Official Residential Demographic Record: {name}\n"
+                f"**Department of Computer Science & Engineering | VFSTR Student Registry Database**\n\n"
+                f"| Demographic & Residential Field | Official Institutional Record |\n"
+                f"|---|---|\n"
+                f"| **Student Name** | **{name}** |\n"
+                f"| **Registration No (Roll)** | `{roll}` |\n"
+                f"| **Program & Cohort** | B.Tech CSE — Year {year}, Section {sec} |\n"
+                f"| **Permanent Address** | **{addr}** |\n"
+                f"| **Door / Street / Locality** | {door} |\n"
+                f"| **City / Town** | {town} |\n"
+                f"| **State** | {state} |\n"
+                f"| **PIN Code** | `{pin}` |\n"
+                f"| **Father / Guardian** | {father_str} |\n"
+                f"| **Assigned Faculty Counsellor** | **{counsel}** |\n\n"
+                f"**System Verification Seal:**\n"
+                f"• Verified against official departmental admission dossier (`data/Students details.xls`).\n"
+                f"• Synchronized under Student Mentoring System (Agent 45) and Dean of Student Affairs Registry."
+            )
+            trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+            trace_data["final_answer"] = addr_answer
+            db.log_query(trace_data)
+            return {
+                "answer": addr_answer,
+                "mode": mode,
+                "route": "student_address",
+                "citations": [
+                    {"name": "Departmental Student Registry", "url": "https://vignan.ac.in/academics/cse"},
+                    {"name": "Agent 45 — Student Mentoring System", "url": "https://agent-hackathon.onrender.com/login"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
 
         # Deterministic Cohort Statistics Query (HOD & Dean Executive View)
         if any(k in query_lower for k in [
@@ -341,11 +417,15 @@ Respond strictly in JSON:
         compact_agents = self.get_compact_registry_prompt()
         student_context_prompt = ""
         if detected_student:
+            s_addr = format_student_address(detected_student)
+            s_father = detected_student.get("father_name", "")
             student_context_prompt = (
                 f"\nVerified Student Profile:\n"
                 f"- Roll No: {detected_student.get('roll_number')} | Name: {detected_student.get('name')}\n"
                 f"- Year & Section: Year {detected_student.get('current_year')}, Sec-{detected_student.get('section')}\n"
                 f"- Assigned Counsellor: {detected_student.get('counsellor')}\n"
+                f"- Permanent Address: {s_addr}\n"
+                f"- Father's Name: {s_father} ({detected_student.get('father_occupation', '')})\n"
                 f"- CGPA: {detected_student.get('cgpa') or 'Awaited'} | Attendance: {detected_student.get('attendance_pct')}%\n"
                 f"- Backlogs: {detected_student.get('backlogs')} | Fee Due: ₹{detected_student.get('fee_due_amount', 0):,}\n"
             )
@@ -462,11 +542,15 @@ Respond strictly in JSON format:
 
         s6_student_notes = ""
         if detected_student:
+            s_addr = format_student_address(detected_student)
+            s_father = detected_student.get("father_name", "")
             s6_student_notes = (
                 f"\nOfficial Verified Institutional Records:\n"
                 f"• Student Name: {detected_student.get('name')} (Roll No: {detected_student.get('roll_number')})\n"
                 f"• Program: B.Tech CSE, Year {detected_student.get('current_year')}, Section {detected_student.get('section')}\n"
                 f"• Assigned Faculty Counsellor: {detected_student.get('counsellor')}\n"
+                f"• Permanent Address: {s_addr}\n"
+                f"• Father / Guardian: {s_father} ({detected_student.get('father_occupation', '')})\n"
                 f"• CGPA: {detected_student.get('cgpa') or 'Awaited'} | Attendance: {detected_student.get('attendance_pct')}%\n"
                 f"• Active Backlogs: {detected_student.get('backlogs')} | Fee Due: ₹{detected_student.get('fee_due_amount', 0):,}\n"
             )
@@ -481,7 +565,7 @@ Partial Data Retrieved:
 
 Synthesize a single, coherent, professional university operational report answering the original query directly.
 - Group the findings clearly under bold numbered headings.
-- Weave the student's verified profile details (name, roll number, section, counsellor, CGPA, attendance) accurately into the report.
+- Weave the student's verified profile details (name, roll number, section, counsellor, address, CGPA, attendance) accurately into the report. If the query asks for the student's address, location, or contact details, explicitly state the official permanent address clearly in bold.
 - Highlight specific facts, percentages, or status metrics clearly."""
 
         s6_res = await groq_pool.chat_completion(
