@@ -267,6 +267,18 @@ async def get_student_profile_endpoint(roll_number: str):
     return student
 
 
+@app.get("/api/students/counsellor/{counsellor_name}")
+@app.get("/students/counsellor/{counsellor_name}")
+async def get_counsellor_mentees_endpoint(counsellor_name: str):
+    """Returns all verified mentees assigned to a faculty counsellor."""
+    mentees = get_students_by_counsellor(counsellor_name)
+    return {
+        "counsellor": counsellor_name,
+        "count": len(mentees),
+        "mentees": mentees
+    }
+
+
 class ReportExportRequest(BaseModel):
     query: str
     answer: str

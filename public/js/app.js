@@ -1872,6 +1872,262 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
     document.querySelectorAll('.report-download-dropdown.open').forEach(d => d.classList.remove('open'));
   });
 
+  // Global helper to toggle mentee extra rows
+  window.toggleMenteeRows = async function(groupId, btn) {
+    if (!btn) return;
+    let rows = document.querySelectorAll('.' + groupId);
+
+    // Dynamic recovery fallback: if extra rows are not already in DOM, fetch them from the server registry!
+    if (!rows.length) {
+      const counsellor = btn.getAttribute('data-counsellor') || 'Dr. Phanindra Thota';
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = `
+        <svg class="spin-icon" style="width:16px;height:16px;animation:spin 1s linear infinite;margin-right:6px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:0.25;"></circle>
+          <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span>Fetching all mentees from registry...</span>
+      `;
+      try {
+        const res = await fetch((window.API_BASE || 'http://localhost:8000') + '/api/students/counsellor/' + encodeURIComponent(counsellor));
+        if (res.ok) {
+          const data = await res.json();
+          const mentees = data.mentees || [];
+          if (mentees.length > 8) {
+            const extra = mentees.slice(8);
+            const trParent = btn.closest('tr');
+            const tbody = trParent.parentElement;
+
+            extra.forEach(m => {
+              const tr = document.createElement('tr');
+              tr.className = `mentee-extra-row ${groupId}`;
+              tr.innerHTML = `
+                <td><code class="chat-code-pill">${escapeHtml(m.roll_number || '')}</code></td>
+                <td><strong>${escapeHtml(m.name || '')}</strong></td>
+                <td>Year ${escapeHtml(String(m.current_year || '3'))}, Sec-${escapeHtml(String(m.section || '3'))}</td>
+                <td>${escapeHtml(String(m.cgpa || ''))}</td>
+                <td>${escapeHtml(String(m.attendance_pct || ''))}%</td>
+              `;
+              tbody.appendChild(tr);
+            });
+            rows = document.querySelectorAll('.' + groupId);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching mentee roster:', err);
+      }
+      btn.innerHTML = origHtml;
+    }
+
+    if (!rows.length) return;
+    const isExpanded = btn.getAttribute('data-expanded') === 'true';
+
+    if (isExpanded) {
+      rows.forEach(r => r.style.display = 'none');
+      btn.setAttribute('data-expanded', 'false');
+      const orig = btn.getAttribute('data-orig-label');
+      if (orig) {
+        const lbl = btn.querySelector('.expand-label');
+        if (lbl) lbl.innerText = orig;
+      }
+      btn.classList.remove('expanded');
+    } else {
+      rows.forEach(r => r.style.display = 'table-row');
+      btn.setAttribute('data-expanded', 'true');
+      const lbl = btn.querySelector('.expand-label');
+      if (lbl && !btn.getAttribute('data-orig-label')) {
+        btn.setAttribute('data-orig-label', lbl.innerText);
+      }
+      if (lbl) lbl.innerText = '▲ Click to collapse remaining mentees';
+      btn.classList.add('expanded');
+    }
+  };
+
+  function formatInlineMarkdown(str) {
+    if (!str) return '';
+    return str
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+      .replace(/`([^`]+)`/g, '<code class="chat-code-pill">$1</code>');
+  }
+
+  function formatAssistantMarkdown(text) {
+    if (!text) return '';
+
+    let src = text.replace(/\r\n/g, '\n');
+    const lines = src.split('\n');
+    let outLines = [];
+    let inTable = false;
+    let tableLines = [];
+
+    function flushTable() {
+      if (tableLines.length === 0) return;
+
+      const dataRows = [];
+      let headerRow = null;
+
+      for (let i = 0; i < tableLines.length; i++) {
+        const rowStr = tableLines[i].trim();
+        // Skip separator row (|---|---|)
+        if (/^\|[\s:-|-]+\|$/.test(rowStr)) {
+          continue;
+        }
+        const cells = rowStr
+          .replace(/^\|/, '')
+          .replace(/\|$/, '')
+          .split('|')
+          .map(c => c.trim());
+
+        if (!headerRow) {
+          headerRow = cells;
+        } else {
+          dataRows.push(cells);
+        }
+      }
+
+      if (!headerRow) {
+        tableLines = [];
+        return;
+      }
+
+      const maxCols = Math.max(headerRow.length, ...dataRows.map(r => r.length));
+      const expandId = 'mentee_exp_' + Math.random().toString(36).substring(2, 9);
+      let html = '<div class="chat-table-wrapper"><table class="chat-markdown-table">';
+      html += '<thead><tr>';
+      headerRow.forEach(h => {
+        html += `<th>${formatInlineMarkdown(escapeHtml(h))}</th>`;
+      });
+      // Pad header if fewer columns
+      if (headerRow.length < maxCols) {
+        for (let k = headerRow.length; k < maxCols; k++) {
+          html += '<th>Status</th>';
+        }
+      }
+      html += '</tr></thead><tbody>';
+
+      let isHidingExtra = false;
+
+      for (let i = 0; i < dataRows.length; i++) {
+        const cells = dataRows[i];
+        const rowText = cells.join(' ');
+
+        // Check if this row is the expand trigger row
+        if (rowText.includes('[EXPAND_MENTEES:') || /more verified mentees/i.test(rowText)) {
+          isHidingExtra = true;
+          let countMatch = rowText.match(/\+(\d+)\s+more/i);
+          let countStr = countMatch ? countMatch[1] : '';
+
+          let counsellorName = '';
+          const cMatch = rowText.match(/for\s+([^\]|]+)/i);
+          if (cMatch) counsellorName = cMatch[1].trim();
+
+          let label = `👉 Click to view all +${countStr || '30'} more verified mentees ▼`;
+          if (rowText.includes('EXPAND_MENTEES:')) {
+            const cleanLabel = rowText.replace(/.*\[EXPAND_MENTEES:([^\]]+)\].*/, '$1').trim();
+            label = `👉 Click to view all ${cleanLabel} ▼`;
+          }
+
+          html += `
+            <tr class="mentee-expand-trigger-tr" onclick="window.toggleMenteeRows('${expandId}', this.querySelector('button'))">
+              <td colspan="${maxCols}">
+                <button type="button" class="btn-mentee-expand" data-target="${expandId}" data-counsellor="${escapeHtml(counsellorName)}" onclick="event.stopPropagation(); window.toggleMenteeRows('${expandId}', this);">
+                  <span class="expand-icon">📋</span>
+                  <span class="expand-label">${escapeHtml(label)}</span>
+                  <span class="expand-pill">+${countStr || 'More'} Students</span>
+                </button>
+              </td>
+            </tr>
+          `;
+          continue;
+        }
+
+        if (isHidingExtra) {
+          html += `<tr class="mentee-extra-row ${expandId}" style="display:none;">`;
+        } else {
+          html += '<tr>';
+        }
+
+        cells.forEach(c => {
+          html += `<td>${formatInlineMarkdown(escapeHtml(c))}</td>`;
+        });
+        // Pad data row if fewer columns
+        if (cells.length < maxCols) {
+          for (let k = cells.length; k < maxCols; k++) {
+            html += '<td></td>';
+          }
+        }
+        html += '</tr>';
+      }
+
+      html += '</tbody></table></div>';
+      outLines.push(html);
+      tableLines = [];
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (line.startsWith('|')) {
+        inTable = true;
+        tableLines.push(lines[i]);
+      } else {
+        if (inTable) {
+          flushTable();
+          inTable = false;
+        }
+        outLines.push(lines[i]);
+      }
+    }
+    if (inTable) {
+      flushTable();
+    }
+
+    let processed = [];
+    let bqContent = [];
+
+    function flushBlockquote() {
+      if (bqContent.length > 0) {
+        processed.push(`<blockquote class="chat-blockquote">${bqContent.join('<br>')}</blockquote>`);
+        bqContent = [];
+      }
+    }
+
+    for (let i = 0; i < outLines.length; i++) {
+      let l = outLines[i];
+      let trimmed = l.trim();
+
+      if (trimmed.startsWith('>')) {
+        let bqLine = trimmed.replace(/^>\s*/, '');
+        bqContent.push(formatInlineMarkdown(escapeHtml(bqLine)));
+        continue;
+      } else {
+        flushBlockquote();
+      }
+
+      if (trimmed.startsWith('### ')) {
+        let hText = trimmed.replace(/^###\s*/, '');
+        processed.push(`<h3 class="chat-heading-3">${formatInlineMarkdown(escapeHtml(hText))}</h3>`);
+        continue;
+      } else if (trimmed.startsWith('## ')) {
+        let hText = trimmed.replace(/^##\s*/, '');
+        processed.push(`<h2 class="chat-heading-2">${formatInlineMarkdown(escapeHtml(hText))}</h2>`);
+        continue;
+      } else if (trimmed === '---') {
+        processed.push('<hr class="chat-divider">');
+        continue;
+      } else if (trimmed.startsWith('<div class="chat-table-wrapper">')) {
+        processed.push(l);
+        continue;
+      }
+
+      if (trimmed) {
+        processed.push(`<p>${formatInlineMarkdown(escapeHtml(trimmed))}</p>`);
+      }
+    }
+    flushBlockquote();
+
+    return processed.join('');
+  }
+
   function renderBackendAssistantResponse(data, query) {
     const assistantRow = document.createElement('div');
     assistantRow.className = 'message-row assistant';
@@ -1890,12 +2146,8 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
     }
     traceStepsContainer.innerHTML = tickerHtml;
 
-    // Convert markdown asterisks/newlines to html paragraphs
-    let formattedAnswer = escapeHtml(data.answer)
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/\n/g, '<br>');
+    // Convert rich markdown, tables, headings, and expandable mentee lists to HTML
+    const formattedAnswer = formatAssistantMarkdown(data.answer);
 
     const citationChips = (data.citations || []).map(c => `
       <a href="${c.url}" target="_blank" class="citation-chip-link" title="Open ${c.name} deployment link">
@@ -1910,7 +2162,7 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
         <span class="message-timestamp">${getCurrentTime()}</span>
       </div>
       <div class="message-body">
-        <p>${formattedAnswer}</p>
+        ${formattedAnswer}
         <div class="agent-citations">
           <span style="font-size:0.72rem;font-weight:700;color:#64748B;width:100%;margin-bottom:0.2rem;">VERIFIED AGENT SOURCES:</span>
           ${citationChips}

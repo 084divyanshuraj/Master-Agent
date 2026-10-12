@@ -203,41 +203,52 @@ class MasterOrchestrator:
             }
 
         # Deterministic Faculty Counsellor Mentee Roster Query
-        if any(w in query_lower for w in ["counsellor", "mentor", "mentee", "mentees"]):
-            c_matches = []
-            matched_faculty = None
-            for f_name in set(s.get("counsellor", "") for s in IN_MEMORY_STUDENTS.values() if s.get("counsellor")):
-                clean_name = f_name.replace("Dr.", "").replace("Mr.", "").replace("Mrs.", "").replace(".", " ").strip().lower()
-                toks = [t for t in clean_name.split() if len(t) >= 4]
-                if any(tok in query_lower for tok in toks):
-                    c_matches = get_students_by_counsellor(f_name)
-                    matched_faculty = f_name
-                    break
+        is_mentee_kw = any(w in query_lower for w in ["counsellor", "counselor", "mentor", "mentee", "mentees", "advisee", "advisees", "students", "student", "roster", "list"])
+        c_matches = []
+        matched_faculty = None
+        for f_name in set(s.get("counsellor", "") for s in IN_MEMORY_STUDENTS.values() if s.get("counsellor")):
+            clean_name = f_name.replace("Dr.", "").replace("Mr.", "").replace("Mrs.", "").replace(".", " ").strip().lower()
+            toks = [t for t in clean_name.split() if len(t) >= 4]
+            matching_toks = [t for t in toks if t in query_lower]
+            if matching_toks and (is_mentee_kw or len(matching_toks) >= 2 or len(matching_toks) == len(toks)):
+                c_matches = get_students_by_counsellor(f_name)
+                matched_faculty = f_name
+                break
 
-            if c_matches and matched_faculty:
-                sample_mentees = c_matches[:8]
-                mentee_rows = "\n".join([
-                    f"| `{m.get('roll_number')}` | **{m.get('name')}** | Year {m.get('current_year')}, Sec-{m.get('section')} | CGPA: {m.get('cgpa')} | Att: {m.get('attendance_pct')}% |"
-                    for m in sample_mentees
+        if c_matches and matched_faculty:
+            initial_mentees = c_matches[:8]
+            extra_mentees = c_matches[8:]
+            initial_rows = "\n".join([
+                f"| `{m.get('roll_number')}` | **{m.get('name')}** | Year {m.get('current_year')}, Sec-{m.get('section')} | {m.get('cgpa')} | {m.get('attendance_pct')}% |"
+                for m in initial_mentees
+            ])
+
+            if extra_mentees:
+                extra_rows = "\n".join([
+                    f"| `{m.get('roll_number')}` | **{m.get('name')}** | Year {m.get('current_year')}, Sec-{m.get('section')} | {m.get('cgpa')} | {m.get('attendance_pct')}% |"
+                    for m in extra_mentees
                 ])
-                mentee_answer = (
-                    f"### 👨‍🏫 Official Mentee Roster: {matched_faculty}\n"
-                    f"**Department of Computer Science & Engineering | NBA Criterion 9 Mentoring Registry**\n\n"
-                    f"Total Assigned Mentees: **{len(c_matches)} Students** (1:20 Faculty Ratio Compliant)\n\n"
-                    f"| Roll Number | Student Name | Year & Section | Academic Standing |\n"
-                    f"|---|---|---|---|\n"
-                    f"{mentee_rows}\n"
-                    f"{'| ... | *+' + str(len(c_matches) - 8) + ' more verified mentees* | | |' if len(c_matches) > 8 else ''}\n\n"
-                    f"**Mentorship Governance Note:**\n"
-                    f"All {len(c_matches)} student profiles are synchronized under assigned counsellor **{matched_faculty}**. Linked directly to Student Mentoring Agent (Agent 45) and Academic Recovery (Agent 06)."
-                )
-                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
-                trace_data["final_answer"] = mentee_answer
-                db.log_query(trace_data)
-                return {
-                    "answer": mentee_answer,
-                    "mode": mode,
-                    "route": "counsellor_roster",
+                table_content = f"{initial_rows}\n| ... | [EXPAND_MENTEES:+{len(extra_mentees)} more verified mentees for {matched_faculty}] | | | |\n{extra_rows}"
+            else:
+                table_content = initial_rows
+
+            mentee_answer = (
+                f"### 👨‍🏫 Official Mentee Roster: {matched_faculty}\n"
+                f"**Department of Computer Science & Engineering | NBA Criterion 9 Mentoring Registry**\n\n"
+                f"Total Assigned Mentees: **{len(c_matches)} Students** (1:20 Faculty Ratio Compliant)\n\n"
+                f"| Roll Number | Student Name | Year & Section | CGPA | Attendance |\n"
+                f"|---|---|---|---|---|\n"
+                f"{table_content}\n\n"
+                f"**Mentorship Governance Note:**\n"
+                f"All {len(c_matches)} student profiles are synchronized under assigned counsellor **{matched_faculty}**. Linked directly to Student Mentoring Agent (Agent 45) and Academic Recovery (Agent 06)."
+            )
+            trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+            trace_data["final_answer"] = mentee_answer
+            db.log_query(trace_data)
+            return {
+                "answer": mentee_answer,
+                "mode": mode,
+                "route": "counsellor_roster",
                     "citations": [
                         {"name": "Agent 45 — Student Mentoring System", "url": "https://agent-hackathon.onrender.com/login"}
                     ],
