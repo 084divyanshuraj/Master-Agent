@@ -39,14 +39,12 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
     year = st.get("current_year", "")
     sec = st.get("section", "")
     counsellor = st.get("counsellor", "Assigned Faculty")
-    tenth_pct = st.get("tenth_percentage", "N/A")
-    inter_pct = st.get("inter_percentage", "N/A")
+    cgpa = st.get("cgpa") or "Awaited"
     att_pct = st.get("attendance_pct", 85)
     att_stat = st.get("attendance_status", "Normal")
     backlogs = st.get("backlogs", 0)
     fee_due = st.get("fee_due_amount", 0)
     fee_stat = st.get("fee_status", "Cleared")
-    hostel = st.get("hostel_status", "Day Scholar")
     exam = st.get("entrance_exam", "EAMCET")
     rank = st.get("entrance_rank", "N/A")
     email = st.get("email", "")
@@ -61,11 +59,9 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
         f"|---|---|\n"
         f"| **Student Name** | **{name}** |\n"
         f"| **Registration No (Roll)** | `{roll}` |\n"
-        f"| **Program & Cohort** | B.Tech CSE — Year {year}, Section {sec} ({hostel}) |\n"
+        f"| **Program & Cohort** | B.Tech CSE — Year {year}, Section {sec} |\n"
         f"| **Assigned Faculty Counsellor** | **{counsellor}** |\n"
-        f"| **SSC (10th) Marks** | **{tenth_pct}%** (Verified Board Record) |\n"
-        f"| **Intermediate (10+2)** | **{inter_pct}%** |\n"
-        f"| **B.Tech CGPA** | *Awaited from Examination Cell (Not yet provided)* |\n"
+        f"| **Academic Standing (CGPA)** | **{cgpa}** |\n"
         f"| **Attendance Telemetry** | **{att_badge}** |\n"
         f"| **Active Arrears / Backlogs** | {backlog_badge} |\n"
         f"| **Fee Clearance Status** | {fee_badge} |\n"
@@ -221,13 +217,13 @@ class MasterOrchestrator:
             initial_mentees = c_matches[:8]
             extra_mentees = c_matches[8:]
             initial_rows = "\n".join([
-                f"| `{m.get('roll_number')}` | **{m.get('name')}** | Year {m.get('current_year')}, Sec-{m.get('section')} | {m.get('tenth_percentage')}% | {m.get('attendance_pct')}% |"
+                f"| `{m.get('roll_number')}` | **{m.get('name')}** | Year {m.get('current_year')}, Sec-{m.get('section')} | {m.get('cgpa') or 'Awaited'} | {m.get('attendance_pct')}% |"
                 for m in initial_mentees
             ])
 
             if extra_mentees:
                 extra_rows = "\n".join([
-                    f"| `{m.get('roll_number')}` | **{m.get('name')}** | Year {m.get('current_year')}, Sec-{m.get('section')} | {m.get('tenth_percentage')}% | {m.get('attendance_pct')}% |"
+                    f"| `{m.get('roll_number')}` | **{m.get('name')}** | Year {m.get('current_year')}, Sec-{m.get('section')} | {m.get('cgpa') or 'Awaited'} | {m.get('attendance_pct')}% |"
                     for m in extra_mentees
                 ])
                 table_content = f"{initial_rows}\n| ... | [EXPAND_MENTEES:+{len(extra_mentees)} more verified mentees for {matched_faculty}] | | | |\n{extra_rows}"
@@ -238,12 +234,12 @@ class MasterOrchestrator:
                 f"### 👨‍🏫 Official Mentee Roster: {matched_faculty}\n"
                 f"**Department of Computer Science & Engineering | NBA Criterion 9 Mentoring Registry**\n\n"
                 f"Total Assigned Mentees: **{len(c_matches)} Students** (1:20 Faculty Ratio Compliant)\n\n"
-                f"| Roll Number | Student Name | Year & Section | SSC (10th) Marks | Attendance |\n"
+                f"| Roll Number | Student Name | Year & Section | CGPA | Attendance |\n"
                 f"|---|---|---|---|---|\n"
                 f"{table_content}\n\n"
                 f"**Mentorship Governance Note:**\n"
                 f"• All {len(c_matches)} student profiles are synchronized under assigned counsellor **{matched_faculty}**. Linked directly to Student Mentoring Agent (Agent 45) and Academic Recovery (Agent 06).\n"
-                f"• **Academic Data Note:** The marks displayed above represent verified **SSC (10th Board) percentages** from the departmental database (`Students details.xls`). Official B.Tech CGPA semester tabulation has not been provided yet by the examination cell."
+                f"• *Note: B.Tech CGPA records will update automatically as soon as departmental grade sheets are synced.*"
             )
             trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
             trace_data["final_answer"] = mentee_answer
@@ -350,7 +346,7 @@ Respond strictly in JSON:
                 f"- Roll No: {detected_student.get('roll_number')} | Name: {detected_student.get('name')}\n"
                 f"- Year & Section: Year {detected_student.get('current_year')}, Sec-{detected_student.get('section')}\n"
                 f"- Assigned Counsellor: {detected_student.get('counsellor')}\n"
-                f"- SSC (10th) Marks: {detected_student.get('tenth_percentage')}% | Inter: {detected_student.get('inter_percentage')}% (B.Tech CGPA not yet provided) | Attendance: {detected_student.get('attendance_pct')}%\n"
+                f"- CGPA: {detected_student.get('cgpa') or 'Awaited'} | Attendance: {detected_student.get('attendance_pct')}%\n"
                 f"- Backlogs: {detected_student.get('backlogs')} | Fee Due: ₹{detected_student.get('fee_due_amount', 0):,}\n"
             )
 
@@ -471,8 +467,7 @@ Respond strictly in JSON format:
                 f"• Student Name: {detected_student.get('name')} (Roll No: {detected_student.get('roll_number')})\n"
                 f"• Program: B.Tech CSE, Year {detected_student.get('current_year')}, Section {detected_student.get('section')}\n"
                 f"• Assigned Faculty Counsellor: {detected_student.get('counsellor')}\n"
-                f"• SSC (10th) Marks: {detected_student.get('tenth_percentage')}% | Inter: {detected_student.get('inter_percentage')}% (B.Tech CGPA not provided yet)\n"
-                f"• Attendance: {detected_student.get('attendance_pct')}%\n"
+                f"• CGPA: {detected_student.get('cgpa') or 'Awaited'} | Attendance: {detected_student.get('attendance_pct')}%\n"
                 f"• Active Backlogs: {detected_student.get('backlogs')} | Fee Due: ₹{detected_student.get('fee_due_amount', 0):,}\n"
             )
 
@@ -486,7 +481,7 @@ Partial Data Retrieved:
 
 Synthesize a single, coherent, professional university operational report answering the original query directly.
 - Group the findings clearly under bold numbered headings.
-- Weave the student's verified profile details (name, roll number, section, counsellor, SSC marks, attendance) accurately into the report. Note that B.Tech CGPA data has not been provided yet by the examination cell.
+- Weave the student's verified profile details (name, roll number, section, counsellor, CGPA, attendance) accurately into the report.
 - Highlight specific facts, percentages, or status metrics clearly."""
 
         s6_res = await groq_pool.chat_completion(
@@ -896,8 +891,8 @@ Synthesize a single, coherent, professional university operational report answer
                     f"**[{name} — {group_name}]**\n"
                     f"Live Student Mentoring System Synchronized: https://agent-hackathon.onrender.com/login\n"
                     f"• Official Assigned Faculty Counsellor: **{s_counsel}** (Mentor for Section {s_sec})\n"
-                    f"• Mentee Dossier: **{s_name}** (`{s_roll}`) | B.Tech CSE Year {s_year}, Section {s_sec} | Residential: {s_hostel}\n"
-                    f"• Academic Standing: SSC (10th) Marks **{s_tenth}%** | Inter: **{s_inter}%** *(B.Tech CGPA pending evaluation)* | Attendance **{s_att}%** | Arrears: **{s_bl}**\n"
+                    f"• Mentee Dossier: **{s_name}** (`{s_roll}`) | B.Tech CSE Year {s_year}, Section {s_sec}\n"
+                    f"• Academic Standing: CGPA **{s_cgpa or 'Awaited'}** | Attendance **{s_att}%** | Arrears: **{s_bl}**\n"
                     f"• NBA Criterion 9 Compliance: 1:20 mentor-mentee ratio verified. Session advisory logs active; parent communication trail maintained."
                 )
             return (
@@ -927,9 +922,9 @@ Synthesize a single, coherent, professional university operational report answer
                 return (
                     f"**[{name} — {group_name}]**\n"
                     f"Live Placement Readiness Assessment System Synchronized: https://agent-49-tau.vercel.app/\n"
-                    f"• Candidate Dossier: **{s_name}** (`{s_roll}`) | SSC (10th) Marks: **{s_tenth}%** | Active Backlogs: **{s_bl}**.\n"
+                    f"• Candidate Dossier: **{s_name}** (`{s_roll}`) | CGPA: **{s_cgpa or 'Awaited'}** | Active Backlogs: **{s_bl}**.\n"
                     f"• Recruiter Eligibility: {p_text}\n"
-                    f"• Readiness Scorecard: Candidate foundation verified across board marks & attendance ({s_att}%); mock technical coding & aptitude modules assigned."
+                    f"• Readiness Scorecard: Candidate foundation verified across attendance ({s_att}%); mock technical coding & aptitude modules assigned."
                 )
             return (
                 f"**[{name} — {group_name}]**\n"

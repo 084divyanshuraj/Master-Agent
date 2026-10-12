@@ -166,7 +166,7 @@ def ingest_students() -> List[Dict[str, Any]]:
 
             counsellor = clean_str(sh.cell_value(r, 48))
             hostel_val = clean_str(sh.cell_value(r, 46)).upper()
-            hostel_status = "Hosteller" if hostel_val in ["YES", "HOSTEL", "HOSTELLER", "Y"] else "Day Scholar"
+            hostel_status = "Hosteller" if hostel_val in ["YES", "HOSTEL", "HOSTELLER", "Y"] else ("Day Scholar" if hostel_val in ["NO", "DAY SCHOLAR", "N"] else "Awaited")
 
             income = clean_str(sh.cell_value(r, 40))
             caste = clean_str(sh.cell_value(r, 43))
