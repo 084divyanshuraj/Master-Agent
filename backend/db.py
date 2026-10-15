@@ -524,6 +524,53 @@ def get_students_by_section(year: int, section: str) -> List[Dict[str, Any]]:
     return [st for st in IN_MEMORY_STUDENTS.values() if st.get("current_year") == year and str(st.get("section", "")).strip() == s_sec]
 
 
+def get_student_attendance(roll_number: str) -> Optional[Dict[str, Any]]:
+    """Returns verified live attendance telemetry for a student."""
+    st = get_student_by_roll(roll_number)
+    if not st:
+        return None
+    return {
+        "roll_number": st.get("roll_number"),
+        "name": st.get("name"),
+        "current_year": st.get("current_year"),
+        "section": st.get("section"),
+        "counsellor": st.get("counsellor"),
+        "attendance_pct": st.get("attendance_pct", 0.0),
+        "attendance_conducted": st.get("attendance_conducted", 0),
+        "attendance_attended": st.get("attendance_attended", 0),
+        "attendance_status": st.get("attendance_status", "Normal"),
+        "hall_ticket_status": st.get("hall_ticket_status", "Clear"),
+        "subjects_attendance": st.get("subjects_attendance", []),
+    }
+
+
+def get_detained_students(year: Optional[int] = None, section: Optional[str] = None) -> List[Dict[str, Any]]:
+    """Returns students flagged below 65% mandatory attendance threshold."""
+    res = []
+    for st in IN_MEMORY_STUDENTS.values():
+        if year and st.get("current_year") != year:
+            continue
+        if section and str(st.get("section", "")).strip() != str(section).strip():
+            continue
+        if "Detained" in st.get("attendance_status", "") or (st.get("attendance_pct", 100) < 65.0):
+            res.append(st)
+    return sorted(res, key=lambda x: x.get("attendance_pct", 0.0))
+
+
+def get_condonation_students(year: Optional[int] = None, section: Optional[str] = None) -> List[Dict[str, Any]]:
+    """Returns students in the 65% - 74.99% condonation window."""
+    res = []
+    for st in IN_MEMORY_STUDENTS.values():
+        if year and st.get("current_year") != year:
+            continue
+        if section and str(st.get("section", "")).strip() != str(section).strip():
+            continue
+        pct = st.get("attendance_pct", 100)
+        if 65.0 <= pct < 75.0:
+            res.append(st)
+    return sorted(res, key=lambda x: x.get("attendance_pct", 0.0))
+
+
 def get_student_cohort_stats() -> Dict[str, Any]:
     """Provides high-level cohort telemetry for HOD and Deans."""
     total = len(IN_MEMORY_STUDENTS)
@@ -533,7 +580,9 @@ def get_student_cohort_stats() -> Dict[str, Any]:
     y3 = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 3)
     y4 = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 4)
     hostellers = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("hostel_status") == "Hosteller")
-    detained = sum(1 for s in IN_MEMORY_STUDENTS.values() if "Detained" in s.get("attendance_status", ""))
+    detained = sum(1 for s in IN_MEMORY_STUDENTS.values() if "Detained" in s.get("attendance_status", "") or s.get("attendance_pct", 100) < 65.0)
+    condonation = sum(1 for s in IN_MEMORY_STUDENTS.values() if 65.0 <= s.get("attendance_pct", 100) < 75.0)
+    satisfactory = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("attendance_pct", 0) >= 75.0)
     pending_fees = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("fee_due_amount", 0) > 0)
     counsellors = len(set(s.get("counsellor") for s in IN_MEMORY_STUDENTS.values() if s.get("counsellor")))
     return {
@@ -542,6 +591,8 @@ def get_student_cohort_stats() -> Dict[str, Any]:
         "years": {"year_2": y2, "year_3": y3, "year_4": y4},
         "hostellers": hostellers,
         "day_scholars": total - hostellers,
+        "satisfactory_attendance_count": satisfactory,
+        "condonation_attendance_count": condonation,
         "detained_attendance_count": detained,
         "pending_fee_count": pending_fees,
         "total_faculty_mentors": counsellors,
@@ -552,4 +603,5 @@ def get_student_cohort_stats() -> Dict[str, Any]:
 init_mongo_connection()
 if not IN_MEMORY_STUDENTS:
     load_students_cache()
+
 

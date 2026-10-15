@@ -29,6 +29,9 @@ from backend.db import (
     search_students,
     get_students_by_counsellor,
     get_students_by_section,
+    get_student_attendance,
+    get_detained_students,
+    get_condonation_students,
     get_student_cohort_stats,
 )
 
@@ -276,6 +279,71 @@ async def get_counsellor_mentees_endpoint(counsellor_name: str):
         "counsellor": counsellor_name,
         "count": len(mentees),
         "mentees": mentees
+    }
+
+
+@app.get("/api/students/{roll_number}/attendance")
+@app.get("/students/{roll_number}/attendance")
+async def get_student_attendance_endpoint(roll_number: str):
+    """Returns verified live attendance telemetry and subject breakdown for a student."""
+    att = get_student_attendance(roll_number)
+    if not att:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Attendance record for roll number '{roll_number.upper()}' not found in registry."
+        )
+    return att
+
+
+@app.get("/api/attendance/detained")
+@app.get("/attendance/detained")
+async def get_detained_endpoint(year: Optional[int] = None, section: Optional[str] = None):
+    """Returns students flagged below 65% mandatory attendance threshold."""
+    detained = get_detained_students(year=year, section=section)
+    return {
+        "status": "detained",
+        "threshold": "<65%",
+        "count": len(detained),
+        "students": detained
+    }
+
+
+@app.get("/api/attendance/condonation")
+@app.get("/attendance/condonation")
+async def get_condonation_endpoint(year: Optional[int] = None, section: Optional[str] = None):
+    """Returns students in the 65% - 74.99% medical condonation window."""
+    cond = get_condonation_students(year=year, section=section)
+    return {
+        "status": "condonation",
+        "threshold": "65% - 74.99%",
+        "count": len(cond),
+        "students": cond
+    }
+
+
+@app.get("/api/attendance/section/{year}/{section}")
+@app.get("/attendance/section/{year}/{section}")
+async def get_section_attendance_endpoint(year: int, section: str):
+    """Returns attendance statistics and student roster for a specific section."""
+    students = get_students_by_section(year, section)
+    if not students:
+        raise HTTPException(status_code=404, detail=f"No students found for Year {year} Section {section}")
+
+    total = len(students)
+    avg_att = round(sum(s.get("attendance_pct", 0) for s in students) / total, 2) if total else 0.0
+    detained = [s for s in students if s.get("attendance_pct", 100) < 65.0]
+    condonation = [s for s in students if 65.0 <= s.get("attendance_pct", 100) < 75.0]
+    satisfactory = [s for s in students if s.get("attendance_pct", 0) >= 75.0]
+
+    return {
+        "year": year,
+        "section": section,
+        "total_students": total,
+        "average_attendance_pct": avg_att,
+        "satisfactory_count": len(satisfactory),
+        "condonation_count": len(condonation),
+        "detained_count": len(detained),
+        "students": students
     }
 
 
