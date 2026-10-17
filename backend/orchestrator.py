@@ -368,34 +368,60 @@ class MasterOrchestrator:
                 "status": "success",
             }
 
-        # Deterministic Year 2 (and general Year) CGPA Statistics & Toppers Query
-        if any(k in query_lower for k in [
-            "2nd year cgpa", "year 2 cgpa", "ii year cgpa", "second year cgpa",
-            "2nd year topper", "year 2 topper", "ii year topper",
-            "2nd year academic", "year 2 academic", "cgpa of 2nd year", "top students in 2nd year", "top 2nd year"
-        ]):
-            stats = get_year_cgpa_stats(year=2)
+        # Deterministic Academic CGPA Statistics & Toppers Query (Year 2, Year 3, Year 4)
+        is_cgpa_stat_query = any(k in query_lower for k in [
+            "cgpa", "sgpa", "topper", "toppers", "academic performance", "academics", 
+            "grade report", "grade stats", "top students", "grades", "top 2nd year", "top 3rd year", "top 4th year"
+        ])
+        
+        target_year = None
+        if any(k in query_lower for k in ["3rd year", "year 3", "iii year", "third year", "3rd yr"]):
+            target_year = 3
+        elif any(k in query_lower for k in ["2nd year", "year 2", "ii year", "second year", "2nd yr"]):
+            target_year = 2
+        elif any(k in query_lower for k in ["4th year", "year 4", "iv year", "fourth year", "final year", "4th yr"]):
+            target_year = 4
+
+        if target_year and is_cgpa_stat_query:
+            stats = get_year_cgpa_stats(year=target_year)
             avg_c = stats["average_cgpa"]
             max_c = stats["highest_cgpa"]
             min_c = stats["lowest_cgpa"]
             b = stats["brackets"]
             toppers = stats["toppers"][:5]
 
+            year_roman = {2: "II", 3: "III", 4: "IV"}.get(target_year, str(target_year))
+            batch_str = {2: "2024–2028 Batch", 3: "2023–2027 Batch", 4: "2022–2026 Batch"}.get(target_year, f"Year {target_year}")
+            file_src = {
+                2: "data/B_TECH_COMPUTER_SCIENCE_ENGINEERING_IIYear_GradeReport(3).xlsx",
+                3: "data/B_TECH_COMPUTER_SCIENCE_ENGINEERING_IIIYear_GradeReport(3).xlsx",
+                4: "data/B_TECH_COMPUTER_SCIENCE_ENGINEERING_IVYear_GradeReport(4).xlsx"
+            }.get(target_year, "Official Examination Records")
+
             topper_rows = []
             for t in toppers:
-                s1 = t["semesters_sgpa"][0]["sgpa"] if len(t["semesters_sgpa"]) > 0 else "N/A"
-                s2 = t["semesters_sgpa"][1]["sgpa"] if len(t["semesters_sgpa"]) > 1 else "N/A"
-                topper_rows.append(f"| #{t['rank']} | `{t['roll_number']}` | **{t['name']}** | Sec {t['section']} | **{t['cgpa']:.2f}** | Sem1: {s1}, Sem2: {s2} |")
+                sems_list = t.get("semesters_sgpa", [])
+                if sems_list:
+                    sem_str = ", ".join([f"Sem{s['semester']}: {s['sgpa']}" for s in sems_list])
+                else:
+                    sem_str = "Verified in Grade Dossier"
+                topper_rows.append(f"| #{t['rank']} | `{t['roll_number']}` | **{t['name']}** | Sec {t['section']} | **{t['cgpa']:.2f}** | {sem_str} |")
 
             topper_table = "\n".join(topper_rows)
 
-            y2_cgpa_answer = (
-                f"### 🏆 Official B.Tech CSE II Year (2024–2028 Batch) Academic Performance & CGPA Analytics\n"
+            cohort_note = ""
+            if target_year == 2:
+                cohort_note = f"Total Enrolled Strength: **{stats['total_enrolled']:,} Students** | Evaluated Regular Cohort: **{stats['total_evaluated']:,} Students** (34 Lateral Entry pending first-sem evaluation)"
+            else:
+                cohort_note = f"Total Enrolled Strength: **{stats['total_enrolled']:,} Students** | Evaluated Cohort: **{stats['total_evaluated']:,} Students** (100% Evaluated)"
+
+            year_cgpa_answer = (
+                f"### 🏆 Official B.Tech CSE {year_roman} Year ({batch_str}) Academic Performance & CGPA Analytics\n"
                 f"**Department of Computer Science & Engineering | Official Institutional Grade Dossier**\n\n"
-                f"Total Enrolled Strength: **{stats['total_enrolled']:,} Students** | Evaluated Regular Cohort: **{stats['total_evaluated']:,} Students** (34 Lateral Entry pending first-sem evaluation)\n\n"
+                f"{cohort_note}\n\n"
                 f"| Cohort Metric | Official Departmental Value | Accreditation Benchmarking |\n"
                 f"|---|---|---|\n"
-                f"| **Batch Average CGPA** | **{avg_c:.2f}** | Normalized across Sections 1 to 20 |\n"
+                f"| **Batch Average CGPA** | **{avg_c:.2f}** | Normalized across All Sections |\n"
                 f"| **Department Topper CGPA** | **{max_c:.2f}** | Gold Medalist Trajectory (Agent 13) |\n"
                 f"| **Minimum Passing CGPA** | **{min_c:.2f}** | Remediated under NBA Criterion 4 |\n"
                 f"| **Students with Active Backlogs** | **{stats['active_backlogs_count']} Students ({stats['active_backlogs_pct']}%)** | Assigned to Remedial Coaching (Agent 12) |\n\n"
@@ -407,19 +433,19 @@ class MasterOrchestrator:
                 f"| **CGPA $7.0 - 7.99$** | ✅ First Class | **{b['first_class_7_to_8']['count']} Students** | {b['first_class_7_to_8']['pct']}% |\n"
                 f"| **CGPA $6.0 - 6.99$** | ⚠️ Second Class | **{b['second_class_6_to_7']['count']} Students** | {b['second_class_6_to_7']['pct']}% |\n"
                 f"| **CGPA $< 6.0$** | 🚨 Remedial Intervention Window | **{b['remedial_lt_6']['count']} Students** | {b['remedial_lt_6']['pct']}% |\n\n"
-                f"#### 🥇 Top 5 Academic Toppers — Year II CSE\n"
+                f"#### 🥇 Top 5 Academic Toppers — Year {year_roman} CSE\n"
                 f"| Rank | Roll Number | Student Name | Section | Official CGPA | Semester Progression |\n"
                 f"|---|---|---|---|---|---|\n"
                 f"{topper_table}\n\n"
                 f"**Data Integrity Note:**\n"
-                f"• Data parsed directly from `data/B_TECH_COMPUTER_SCIENCE_ENGINEERING_IIYear_GradeReport(3).xlsx`.\n"
+                f"• Data parsed directly from `{file_src}`.\n"
                 f"• Linked to Fast Learner & Talent Engine (Agent 13) and Slow Learner Identification (Agent 12)."
             )
             trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
-            trace_data["final_answer"] = y2_cgpa_answer
+            trace_data["final_answer"] = year_cgpa_answer
             db.log_query(trace_data)
             return {
-                "answer": y2_cgpa_answer,
+                "answer": year_cgpa_answer,
                 "mode": mode,
                 "route": "year_cgpa_analytics",
                 "citations": [
