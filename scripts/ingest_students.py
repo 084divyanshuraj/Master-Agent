@@ -210,12 +210,29 @@ def load_grades_map() -> Dict[str, Dict[str, Any]]:
             except:
                 credits_cnt = 0
 
+            # Extract semester-by-semester SGPA and credits earned
+            sems = []
+            for sem_idx, col_sg in enumerate(range(6, col_cgpa, 8)):
+                if col_sg < len(row):
+                    sg_val = row[col_sg]
+                    cr_col = col_sg - 1
+                    cr_val = row[cr_col] if cr_col >= 0 else None
+                    if sg_val not in [None, "", "-"]:
+                        try:
+                            val = round(float(sg_val), 2)
+                            if val > 0:
+                                c_num = int(cr_val) if cr_val and str(cr_val).strip() not in ["-", ""] else 0
+                                sems.append({"semester": sem_idx + 1, "sgpa": val, "credits": c_num})
+                        except:
+                            pass
+
             grades_map[roll] = {
                 "cgpa": cgpa_val,
                 "active_backlogs": backlogs_cnt,
                 "backlog_courses": rcourses,
                 "hostel_status": hostel_stat,
                 "credits_earned": credits_cnt,
+                "semesters_sgpa": sems,
             }
         wb.close()
 
@@ -360,6 +377,7 @@ def ingest_students() -> List[Dict[str, Any]]:
                 backlog_courses = grd_info["backlog_courses"]
                 hostel_status = grd_info["hostel_status"]
                 credits_earned = grd_info["credits_earned"]
+                semesters_sgpa = grd_info.get("semesters_sgpa", [])
             else:
                 cgpa = fallback["cgpa"]
                 active_backlogs = fallback["active_backlogs"]
@@ -367,6 +385,7 @@ def ingest_students() -> List[Dict[str, Any]]:
                 hostel_val = clean_str(sh.cell_value(r, 46)).upper()
                 hostel_status = "Hosteller" if hostel_val in ["YES", "HOSTEL", "HOSTELLER", "Y"] else "Day Scholar"
                 credits_earned = fallback["credits_earned"]
+                semesters_sgpa = []
 
             # Fee and Placement Indicators based on Real Telemetry
             tuition_base = 125000
@@ -446,6 +465,7 @@ def ingest_students() -> List[Dict[str, Any]]:
                 "active_backlogs": active_backlogs,
                 "backlog_courses": backlog_courses,
                 "credits_earned": credits_earned,
+                "semesters_sgpa": semesters_sgpa,
                 "tuition_annual": tuition_base,
                 "scholarship_applied": scholarship_applied,
                 "fee_due_amount": due_amount,

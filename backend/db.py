@@ -599,6 +599,144 @@ def get_student_cohort_stats() -> Dict[str, Any]:
     }
 
 
+def get_student_academic_profile(roll_number: str) -> Optional[Dict[str, Any]]:
+    """Returns verified academic profile including real cumulative CGPA and semester progression."""
+    st = get_student_by_roll(roll_number)
+    if not st:
+        return None
+    cgpa = st.get("cgpa", 0.0)
+    standing = "Pending / First Sem"
+    if isinstance(cgpa, (int, float)) and cgpa > 0:
+        if cgpa >= 9.0:
+            standing = "Outstanding (First Class with Distinction)"
+        elif cgpa >= 8.0:
+            standing = "Distinction"
+        elif cgpa >= 7.0:
+            standing = "First Class"
+        elif cgpa >= 6.0:
+            standing = "Second Class"
+        else:
+            standing = "Remedial Coaching Required"
+
+    return {
+        "roll_number": st.get("roll_number"),
+        "name": st.get("name"),
+        "current_year": st.get("current_year"),
+        "section": st.get("section"),
+        "counsellor": st.get("counsellor"),
+        "cgpa": cgpa,
+        "credits_earned": st.get("credits_earned", 0),
+        "semesters_sgpa": st.get("semesters_sgpa", []),
+        "active_backlogs": st.get("active_backlogs", 0),
+        "backlog_courses": st.get("backlog_courses", ""),
+        "standing_classification": standing,
+        "hostel_status": st.get("hostel_status", "Day Scholar"),
+    }
+
+
+def get_year_cgpa_stats(year: int = 2) -> Dict[str, Any]:
+    """Provides official CGPA analytics, grade distribution, and toppers for a specific academic year."""
+    students = [s for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == year]
+    evaluated = [s for s in students if isinstance(s.get("cgpa"), (int, float)) and s.get("cgpa") > 0]
+    total_enrolled = len(students)
+    total_evaluated = len(evaluated)
+
+    if total_evaluated == 0:
+        return {
+            "year": year,
+            "total_enrolled": total_enrolled,
+            "total_evaluated": 0,
+            "average_cgpa": 0.0,
+            "highest_cgpa": 0.0,
+            "lowest_cgpa": 0.0,
+            "brackets": {},
+            "toppers": [],
+        }
+
+    cgpa_list = [float(s["cgpa"]) for s in evaluated]
+    avg_cgpa = round(sum(cgpa_list) / total_evaluated, 2)
+    max_cgpa = max(cgpa_list)
+    min_cgpa = min(cgpa_list)
+
+    b_9_plus = len([c for c in cgpa_list if c >= 9.0])
+    b_8_9 = len([c for c in cgpa_list if 8.0 <= c < 9.0])
+    b_7_8 = len([c for c in cgpa_list if 7.0 <= c < 8.0])
+    b_6_7 = len([c for c in cgpa_list if 6.0 <= c < 7.0])
+    b_below_6 = len([c for c in cgpa_list if c < 6.0])
+
+    with_backlogs = [s for s in evaluated if s.get("active_backlogs", 0) > 0]
+    toppers = sorted(evaluated, key=lambda x: x.get("cgpa", 0.0), reverse=True)[:10]
+
+    return {
+        "year": year,
+        "total_enrolled": total_enrolled,
+        "total_evaluated": total_evaluated,
+        "average_cgpa": avg_cgpa,
+        "highest_cgpa": max_cgpa,
+        "lowest_cgpa": min_cgpa,
+        "brackets": {
+            "outstanding_ge_9": {"count": b_9_plus, "pct": round(b_9_plus / total_evaluated * 100, 1)},
+            "distinction_8_to_9": {"count": b_8_9, "pct": round(b_8_9 / total_evaluated * 100, 1)},
+            "first_class_7_to_8": {"count": b_7_8, "pct": round(b_7_8 / total_evaluated * 100, 1)},
+            "second_class_6_to_7": {"count": b_6_7, "pct": round(b_6_7 / total_evaluated * 100, 1)},
+            "remedial_lt_6": {"count": b_below_6, "pct": round(b_below_6 / total_evaluated * 100, 1)},
+        },
+        "active_backlogs_count": len(with_backlogs),
+        "active_backlogs_pct": round(len(with_backlogs) / total_evaluated * 100, 1),
+        "toppers": [
+            {
+                "rank": idx + 1,
+                "roll_number": t.get("roll_number"),
+                "name": t.get("name"),
+                "section": t.get("section"),
+                "cgpa": t.get("cgpa"),
+                "credits": t.get("credits_earned"),
+                "semesters_sgpa": t.get("semesters_sgpa", []),
+                "hostel_status": t.get("hostel_status"),
+            }
+            for idx, t in enumerate(toppers)
+        ],
+    }
+
+
+def get_toppers(year: Optional[int] = None, limit: int = 10) -> List[Dict[str, Any]]:
+    """Returns top performing students by CGPA across a year or department."""
+    candidates = [
+        s for s in IN_MEMORY_STUDENTS.values()
+        if (year is None or s.get("current_year") == year) and isinstance(s.get("cgpa"), (int, float)) and s.get("cgpa") > 0
+    ]
+    sorted_cand = sorted(candidates, key=lambda x: x.get("cgpa", 0.0), reverse=True)[:limit]
+    return [
+        {
+            "rank": idx + 1,
+            "roll_number": t.get("roll_number"),
+            "name": t.get("name"),
+            "current_year": t.get("current_year"),
+            "section": t.get("section"),
+            "cgpa": t.get("cgpa"),
+            "credits_earned": t.get("credits_earned"),
+            "semesters_sgpa": t.get("semesters_sgpa", []),
+            "counsellor": t.get("counsellor"),
+        }
+        for idx, t in enumerate(sorted_cand)
+    ]
+
+
+def get_slow_learners(year: Optional[int] = None, section: Optional[str] = None) -> List[Dict[str, Any]]:
+    """Identifies students needing remedial academic intervention (CGPA < 6.5 or active backlogs > 0)."""
+    res = []
+    for s in IN_MEMORY_STUDENTS.values():
+        if year and s.get("current_year") != year:
+            continue
+        if section and str(s.get("section", "")).strip() != str(section).strip():
+            continue
+        cgpa = s.get("cgpa", 0.0)
+        bl = s.get("active_backlogs", 0)
+        if (isinstance(cgpa, (int, float)) and cgpa > 0 and cgpa < 6.5) or bl > 0:
+            res.append(s)
+    return sorted(res, key=lambda x: (x.get("active_backlogs", 0), -(x.get("cgpa") or 0.0)), reverse=True)
+
+
 # Initialize database connection and sync caches
 init_mongo_connection()
 if not IN_MEMORY_STUDENTS:

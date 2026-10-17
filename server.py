@@ -33,6 +33,10 @@ from backend.db import (
     get_detained_students,
     get_condonation_students,
     get_student_cohort_stats,
+    get_student_academic_profile,
+    get_year_cgpa_stats,
+    get_toppers,
+    get_slow_learners,
 )
 
 load_dotenv()
@@ -345,6 +349,55 @@ async def get_section_attendance_endpoint(year: int, section: str):
         "detained_count": len(detained),
         "students": students
     }
+
+
+@app.get("/api/academics/stats/{year}")
+@app.get("/academics/stats/{year}")
+async def get_academic_stats_endpoint(year: int):
+    """Returns official cumulative CGPA analytics, grade brackets, and metrics for a specific B.Tech year."""
+    stats = get_year_cgpa_stats(year=year)
+    if not stats or stats.get("total_evaluated", 0) == 0:
+        raise HTTPException(status_code=404, detail=f"No academic grade records found for Year {year}")
+    return stats
+
+
+@app.get("/api/academics/toppers/{year}")
+@app.get("/academics/toppers/{year}")
+async def get_toppers_endpoint(year: int, limit: int = 10):
+    """Returns top academic performers for a specific B.Tech year ranked by official CGPA."""
+    toppers = get_toppers(year=year, limit=limit)
+    return {
+        "year": year,
+        "count": len(toppers),
+        "toppers": toppers
+    }
+
+
+@app.get("/api/academics/slow-learners/{year}")
+@app.get("/academics/slow-learners/{year}")
+async def get_slow_learners_endpoint(year: int, section: Optional[str] = None):
+    """Returns students flagged for remedial coaching (CGPA < 6.5 or active backlogs > 0)."""
+    slow_learners = get_slow_learners(year=year, section=section)
+    return {
+        "year": year,
+        "section": section,
+        "count": len(slow_learners),
+        "threshold": "CGPA < 6.5 or active backlogs > 0",
+        "students": slow_learners
+    }
+
+
+@app.get("/api/students/{roll_number}/academics")
+@app.get("/students/{roll_number}/academics")
+async def get_student_academics_endpoint(roll_number: str):
+    """Returns official cumulative CGPA, credits, and semester SGPA history for a student."""
+    profile = get_student_academic_profile(roll_number)
+    if not profile:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Academic profile for roll number '{roll_number.upper()}' not found in registry."
+        )
+    return profile
 
 
 class ReportExportRequest(BaseModel):
