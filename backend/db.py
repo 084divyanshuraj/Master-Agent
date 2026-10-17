@@ -21,6 +21,8 @@ IN_MEMORY_LOGS: List[Dict[str, Any]] = []
 IN_MEMORY_USERS: Dict[str, Dict[str, Any]] = {}
 IN_MEMORY_ENDPOINTS: Dict[str, str] = {}
 IN_MEMORY_STUDENTS: Dict[str, Dict[str, Any]] = {}
+IN_MEMORY_TIMETABLES: Dict[str, Dict[str, Any]] = {}
+IN_MEMORY_FACULTIES: List[Dict[str, Any]] = []
 MAX_LOG_HISTORY = 100
 
 mongo_client = None
@@ -737,9 +739,121 @@ def get_slow_learners(year: Optional[int] = None, section: Optional[str] = None)
     return sorted(res, key=lambda x: (x.get("active_backlogs", 0), -(x.get("cgpa") or 0.0)), reverse=True)
 
 
+def load_timetables_cache():
+    """Loads all section timetables and departmental faculty directory into memory."""
+    global IN_MEMORY_TIMETABLES, IN_MEMORY_FACULTIES
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    tt_path = os.path.join(base_dir, "public", "data", "timetables.json")
+    fac_path = os.path.join(base_dir, "public", "data", "faculties.json")
+
+    if os.path.exists(tt_path):
+        try:
+            with open(tt_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            count = 0
+            for y_k, secs in data.items():
+                for s_k, s_data in secs.items():
+                    key = f"{y_k}_{s_k}"
+                    IN_MEMORY_TIMETABLES[key] = s_data
+                    count += 1
+            logger.info(f"Loaded {count} section timetables into memory cache.")
+        except Exception as ex:
+            logger.error(f"Error loading timetables.json: {ex}")
+
+    if os.path.exists(fac_path):
+        try:
+            with open(fac_path, "r", encoding="utf-8") as f:
+                IN_MEMORY_FACULTIES = json.load(f)
+            logger.info(f"Loaded {len(IN_MEMORY_FACULTIES)} faculty directory entries into memory cache.")
+        except Exception as ex:
+            logger.error(f"Error loading faculties.json: {ex}")
+
+
+def get_section_timetable(year: int, section: str) -> Optional[Dict[str, Any]]:
+    """Returns official weekly schedule, room, class teacher, and course faculty for a section."""
+    sec_clean = str(section).strip().upper().replace("SEC-", "").replace("SEC", "").replace("SECTION", "").strip()
+    key = f"{year}_{sec_clean}"
+    if key in IN_MEMORY_TIMETABLES:
+        return IN_MEMORY_TIMETABLES[key]
+    if is_mongo_connected and mongo_db is not None:
+        try:
+            doc = mongo_db["timetables"].find_one({"year": year, "section": sec_clean}, {"_id": 0})
+            if doc:
+                IN_MEMORY_TIMETABLES[key] = doc
+                return doc
+        except Exception as e:
+            logger.error(f"MongoDB timetable lookup error: {e}")
+    return None
+
+
+def get_student_timetable(roll_number: str) -> Optional[Dict[str, Any]]:
+    """O(1) student timetable lookup resolving year and section to official weekly timetable."""
+    st = get_student_by_roll(roll_number)
+    if not st:
+        return None
+    year = st.get("current_year")
+    sec = st.get("section")
+    if not year or not sec:
+        return None
+    tt = get_section_timetable(year, str(sec))
+    return {
+        "roll_number": st.get("roll_number"),
+        "name": st.get("name"),
+        "year": year,
+        "section": sec,
+        "counsellor": st.get("counsellor"),
+        "timetable": tt
+    }
+
+
+def get_faculty_profile(faculty_name: str) -> Optional[Dict[str, Any]]:
+    """Searches faculty directory for exact or fuzzy match, returning courses and sections taught."""
+    if not faculty_name:
+        return None
+    q = faculty_name.strip().upper()
+    for f in IN_MEMORY_FACULTIES:
+        if q in f.get("name", "").upper():
+            return f
+    return None
+
+
+def search_faculties(query: str, limit: int = 20) -> List[Dict[str, Any]]:
+    """Searches faculty directory by name, course taught, or phone number."""
+    if not query:
+        return IN_MEMORY_FACULTIES[:limit]
+    q = query.strip().upper()
+    res = []
+    for f in IN_MEMORY_FACULTIES:
+        name_match = q in f.get("name", "").upper()
+        phone_match = q in f.get("phone", "")
+        course_match = any(q in c.get("subject", "").upper() for c in f.get("courses", []))
+        if name_match or phone_match or course_match:
+            res.append(f)
+            if len(res) >= limit:
+                break
+    return res
+
+
+def get_timetables_summary() -> Dict[str, Any]:
+    """Returns overview of available section timetables across Years 2, 3, and 4."""
+    y2_secs = [k.split("_")[1] for k in IN_MEMORY_TIMETABLES if k.startswith("2_")]
+    y3_secs = [k.split("_")[1] for k in IN_MEMORY_TIMETABLES if k.startswith("3_")]
+    y4_secs = [k.split("_")[1] for k in IN_MEMORY_TIMETABLES if k.startswith("4_")]
+    return {
+        "total_sections": len(IN_MEMORY_TIMETABLES),
+        "total_faculties": len(IN_MEMORY_FACULTIES),
+        "year_2": {"sections_count": len(y2_secs), "sections": sorted(y2_secs, key=lambda x: int(x) if x.isdigit() else 0)},
+        "year_3": {"sections_count": len(y3_secs), "sections": sorted(y3_secs, key=lambda x: int(x) if x.isdigit() else 0)},
+        "year_4": {"sections_count": len(y4_secs), "sections": sorted(y4_secs, key=lambda x: int(x) if x.isdigit() else 0)},
+    }
+
+
 # Initialize database connection and sync caches
 init_mongo_connection()
 if not IN_MEMORY_STUDENTS:
     load_students_cache()
+if not IN_MEMORY_TIMETABLES:
+    load_timetables_cache()
+
 
 

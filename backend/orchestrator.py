@@ -17,6 +17,7 @@ from backend.groq_pool import groq_pool
 from backend.db import (
     db,
     IN_MEMORY_STUDENTS,
+    IN_MEMORY_FACULTIES,
     get_student_by_roll,
     search_students,
     get_students_by_counsellor,
@@ -28,6 +29,11 @@ from backend.db import (
     get_year_cgpa_stats,
     get_toppers,
     get_slow_learners,
+    get_section_timetable,
+    get_student_timetable,
+    get_faculty_profile,
+    search_faculties,
+    get_timetables_summary,
 )
 
 logger = logging.getLogger("orchestrator")
@@ -136,6 +142,10 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
             + remedial_note
         )
 
+    tt = get_section_timetable(year, str(sec)) if (year and sec) else None
+    room_str = f"Room {tt['room']}" if (tt and tt.get("room")) else "Department Classroom"
+    ct_str = tt.get("class_teacher") if (tt and tt.get("class_teacher")) else "Department Faculty"
+
     badge = (
         f"### 🎓 VFSTR Student Institutional Profile Verified\n"
         f"| Field | Official Departmental Record |\n"
@@ -143,6 +153,8 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
         f"| **Student Name** | **{name}** |\n"
         f"| **Registration No (Roll)** | `{roll}` |\n"
         f"| **Program & Cohort** | B.Tech CSE — Year {year}, Section {sec} ({hostel_stat}) |\n"
+        f"| **Section Class Teacher** | **{ct_str}** |\n"
+        f"| **Assigned Classroom** | **{room_str}** |\n"
         f"| **Assigned Faculty Counsellor** | **{counsellor}** |\n"
         f"| **Permanent Residential Address** | **{addr}** |\n"
         f"| **Father / Guardian** | {father_str} |\n"
@@ -368,6 +380,73 @@ class MasterOrchestrator:
                 "status": "success",
             }
 
+        # Deterministic Student Timetable & Class Schedule Query
+        if detected_student and any(w in query_lower for w in ["timetable", "time table", "schedule", "classes", "periods", "routine", "class teacher", "classroom", "timing", "room"]):
+            roll = detected_student.get("roll_number")
+            name = detected_student.get("name")
+            st_tt = get_student_timetable(roll)
+            tt = st_tt.get("timetable") if st_tt else None
+
+            if tt:
+                year = tt.get("year")
+                sec = tt.get("section")
+                batch = tt.get("batch")
+                room = tt.get("room") or "Department Allocated Classroom"
+                ct = tt.get("class_teacher") or "Department Faculty"
+                ct_phone = tt.get("class_teacher_phone") or ""
+                ct_display = f"**{ct}**" + (f" (Contact: `{ct_phone}`)" if ct_phone else "")
+
+                sched = tt.get("weekly_schedule", {})
+                sched_rows = []
+                for day, periods in sched.items():
+                    periods_str = " | ".join(periods) if periods else "Self Study / Academic Projects"
+                    sched_rows.append(f"| **{day}** | {periods_str} |")
+                sched_table = "\n".join(sched_rows) if sched_rows else "| All Days | Official Department Timetable in Effect |"
+
+                alloc_rows = []
+                for a in tt.get("course_allocations", []):
+                    alloc_rows.append(f"| {a.get('subject')} | **{a.get('faculty')}** |")
+                alloc_table = "\n".join(alloc_rows[:12]) if alloc_rows else "| Department Curriculum | Assigned Departmental Faculty |"
+
+                tt_answer = (
+                    f"### 📅 Official Academic Schedule & Timetable: {name}\n"
+                    f"**Department of Computer Science & Engineering | Academic Year 2026–2027**\n\n"
+                    f"| Student & Section Parameter | Official Institutional Allocation |\n"
+                    f"|---|---|\n"
+                    f"| **Student Name** | **{name}** |\n"
+                    f"| **Registration No (Roll)** | `{roll}` |\n"
+                    f"| **Program & Cohort** | B.Tech CSE — Year {year}, Section {sec} ({batch}) |\n"
+                    f"| **Allocated Classroom** | 🏛️ **Room {room}** |\n"
+                    f"| **Section Class Teacher** | 👨‍🏫 {ct_display} |\n"
+                    f"| **Assigned Faculty Counsellor** | 🤝 **{detected_student.get('counsellor')}** |\n\n"
+                    f"#### ⏰ Weekly Period Schedule\n"
+                    f"| Day | Scheduled Lectures, Tutorials & Practical Labs |\n"
+                    f"|---|---|\n"
+                    f"{sched_table}\n\n"
+                    f"#### 📚 Course Faculty Allocations\n"
+                    f"| Subject & Course Code | Assigned Teaching Faculty |\n"
+                    f"|---|---|\n"
+                    f"{alloc_table}\n\n"
+                    f"**Timetable Governance Advisory:**\n"
+                    f"• Extracted directly from official departmental timetable registry (`data/...TT...xlsx`).\n"
+                    f"• Synchronized under Academic Operations (Agent 01), Class Scheduling (Agent 04), and Student Mentoring (Agent 45)."
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = tt_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": tt_answer,
+                    "mode": mode,
+                    "route": "student_timetable",
+                    "citations": [
+                        {"name": "Departmental Timetable Registry", "url": "https://vignan.ac.in/academics/cse"},
+                        {"name": "Agent 01 — Academic Operations", "url": "https://agent-hackathon.onrender.com/login"},
+                        {"name": "Agent 45 — Student Mentoring System", "url": "https://agent-hackathon.onrender.com/login"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
+
         # Deterministic Academic CGPA Statistics & Toppers Query (Year 2, Year 3, Year 4)
         is_cgpa_stat_query = any(k in query_lower for k in [
             "cgpa", "sgpa", "topper", "toppers", "academic performance", "academics", 
@@ -456,6 +535,162 @@ class MasterOrchestrator:
                 "trace": trace_data,
                 "status": "success",
             }
+
+        # Deterministic Section Timetable Query (Year 2, 3, 4)
+        is_tt_kw = any(w in query_lower for w in ["timetable", "time table", "schedule", "routine", "periods", "class teacher", "classes", "classroom"])
+        if is_tt_kw and not detected_student:
+            sec_match = re.search(r'(?:sec(?:tion)?|sec-)\s*(\d{1,2})\b', query_lower)
+            target_year = None
+            if any(k in query_lower for k in ["3rd year", "year 3", "iii year", "third year", "3rd yr"]):
+                target_year = 3
+            elif any(k in query_lower for k in ["2nd year", "year 2", "ii year", "second year", "2nd yr"]):
+                target_year = 2
+            elif any(k in query_lower for k in ["4th year", "year 4", "iv year", "fourth year", "final year", "4th yr"]):
+                target_year = 4
+
+            if sec_match:
+                req_sec = sec_match.group(1)
+                req_year = target_year or 2
+                sec_tt = get_section_timetable(req_year, req_sec)
+                if sec_tt:
+                    year_roman = {2: "II", 3: "III", 4: "IV"}.get(req_year, str(req_year))
+                    room = sec_tt.get("room") or "Department Allocated Classroom"
+                    ct = sec_tt.get("class_teacher") or "Department Faculty"
+                    batch = sec_tt.get("batch") or f"Year {req_year}"
+
+                    sched_rows = []
+                    for day, periods in sec_tt.get("weekly_schedule", {}).items():
+                        periods_str = " | ".join(periods) if periods else "Self Study / Academic Projects"
+                        sched_rows.append(f"| **{day}** | {periods_str} |")
+                    sched_table = "\n".join(sched_rows) if sched_rows else "| All Days | Official Department Timetable in Effect |"
+
+                    alloc_rows = []
+                    for a in sec_tt.get("course_allocations", []):
+                        alloc_rows.append(f"| {a.get('subject')} | **{a.get('faculty')}** |")
+                    alloc_table = "\n".join(alloc_rows[:15]) if alloc_rows else "| Department Curriculum | Assigned Departmental Faculty |"
+
+                    sec_tt_answer = (
+                        f"### 📅 Official B.Tech CSE Year {year_roman} — Section {req_sec} Class Timetable\n"
+                        f"**Department of Computer Science & Engineering | Academic Session 2026–2027 ({batch})**\n\n"
+                        f"| Parameter | Official Institutional Allocation |\n"
+                        f"|---|---|\n"
+                        f"| **Academic Cohort** | B.Tech CSE — Year {year_roman}, Section {req_sec} |\n"
+                        f"| **Allocated Classroom** | 🏛️ **Room {room}** |\n"
+                        f"| **Section Class Teacher** | 👨‍🏫 **{ct}** |\n\n"
+                        f"#### ⏰ Weekly Period Schedule\n"
+                        f"| Day | Scheduled Lectures, Tutorials & Practical Labs |\n"
+                        f"|---|---|\n"
+                        f"{sched_table}\n\n"
+                        f"#### 📚 Course Faculty Allocations\n"
+                        f"| Subject & Course Code | Assigned Teaching Faculty |\n"
+                        f"|---|---|\n"
+                        f"{alloc_table}\n\n"
+                        f"**Data Integrity Seal:**\n"
+                        f"• Parsed directly from official departmental timetable workbooks (`data/...TT...xlsx`).\n"
+                        f"• Governed under Academic Operations (Agent 01) and Faculty Workload (Agent 03)."
+                    )
+                    trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                    trace_data["final_answer"] = sec_tt_answer
+                    db.log_query(trace_data)
+                    return {
+                        "answer": sec_tt_answer,
+                        "mode": mode,
+                        "route": "section_timetable",
+                        "citations": [
+                            {"name": "Departmental Timetable Registry", "url": "https://vignan.ac.in/academics/cse"},
+                            {"name": "Agent 01 — Academic Operations", "url": "https://agent-hackathon.onrender.com/login"},
+                            {"name": "Agent 03 — Faculty Workload Engine", "url": "https://agent-hackathon.onrender.com/login"}
+                        ],
+                        "trace": trace_data,
+                        "status": "success",
+                    }
+
+        # Deterministic Faculty Directory & Course Allocation Query
+        is_fac_kw = any(w in query_lower for w in ["faculty directory", "faculty list", "cse faculties", "faculty members", "who teaches", "classes of", "faculty contact", "teacher of", "who is teaching"])
+        if is_fac_kw and not detected_student:
+            matched_fac = None
+            for f in IN_MEMORY_FACULTIES:
+                f_clean = re.sub(r'^(dr\.|mr\.|mrs\.|ms\.)\s*', '', f["name"].lower()).strip()
+                if len(f_clean) >= 4 and f_clean in query_lower:
+                    matched_fac = f
+                    break
+
+            if matched_fac:
+                courses_rows = []
+                for c in matched_fac.get("courses", []):
+                    courses_rows.append(f"| Year {c['year']}, Sec {c['section']} | **{c['subject']}** |")
+                courses_table = "\n".join(courses_rows[:15]) if courses_rows else "| Assigned Courses | Department Curriculum |"
+
+                ct_str = ", ".join(matched_fac.get("class_teacher_of", [])) or "None (Course Faculty)"
+                phone_str = f"`{matched_fac['phone']}`" if matched_fac.get("phone") else "Recorded in Department Directory"
+
+                fac_answer = (
+                    f"### 👨‍🏫 Official Faculty Profile: {matched_fac['name']}\n"
+                    f"**Department of Computer Science & Engineering | VFSTR Faculty Registry**\n\n"
+                    f"| Academic Parameter | Official Departmental Record |\n"
+                    f"|---|---|\n"
+                    f"| **Faculty Name** | **{matched_fac['name']}** |\n"
+                    f"| **Official Contact Number** | {phone_str} |\n"
+                    f"| **Class Teacher Responsibility** | 🏛️ **{ct_str}** |\n"
+                    f"| **Total Section Allocations** | **{len(matched_fac.get('courses', []))} Course Allocations** |\n\n"
+                    f"#### 📚 Course Teaching Allocations\n"
+                    f"| Year & Section | Assigned Course / Laboratory Component |\n"
+                    f"|---|---|\n"
+                    f"{courses_table}\n\n"
+                    f"**Accreditation Note:**\n"
+                    f"• Faculty allocations mapped directly from official department timetable dossiers.\n"
+                    f"• Monitored under Faculty Workload & Allocation Engine (Agent 03)."
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = fac_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": fac_answer,
+                    "mode": mode,
+                    "route": "faculty_profile",
+                    "citations": [
+                        {"name": "Departmental Faculty Directory", "url": "https://vignan.ac.in/academics/cse"},
+                        {"name": "Agent 03 — Faculty Workload Engine", "url": "https://agent-hackathon.onrender.com/login"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
+            elif any(w in query_lower for w in ["faculty directory", "faculty list", "cse faculties", "faculty members"]):
+                summ = get_timetables_summary()
+                top_fac = IN_MEMORY_FACULTIES[:12]
+                fac_rows = []
+                for f in top_fac:
+                    ph = f.get('phone') or 'Department Direct'
+                    ct = f.get('class_teacher_of', [])
+                    ct_d = f"CT: {ct[0]}" if ct else "Faculty"
+                    c_count = len(f.get('courses', []))
+                    fac_rows.append(f"| **{f['name']}** | `{ph}` | {ct_d} | {c_count} Courses |")
+                fac_table = "\n".join(fac_rows)
+
+                dir_answer = (
+                    f"### 👨‍🏫 Official VFSTR CSE Department — Faculty Directory\n"
+                    f"**Department of Computer Science & Engineering | Verified Academic Registry**\n\n"
+                    f"Total Registered Faculty Members: **{summ['total_faculties']} Faculty Members** | Sections Covered: **60 Sections across Years II, III, IV**\n\n"
+                    f"| Faculty Name | Contact Number | Role / Class Teacher | Allocations |\n"
+                    f"|---|---|---|---|\n"
+                    f"{fac_table}\n\n"
+                    f"**Search Tip:**\n"
+                    f"• Query any faculty member by name (e.g., *'Classes of Dr. Satish Kumar Satti'* or *'Contact of Dr. P. Siva Prasad'*) to view their complete teaching schedule and phone number."
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = dir_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": dir_answer,
+                    "mode": mode,
+                    "route": "faculty_directory",
+                    "citations": [
+                        {"name": "Departmental Faculty Directory", "url": "https://vignan.ac.in/academics/cse"},
+                        {"name": "Agent 03 — Faculty Workload Engine", "url": "https://agent-hackathon.onrender.com/login"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
 
         # Deterministic Cohort Statistics Query (HOD & Dean Executive View)
         if any(k in query_lower for k in [

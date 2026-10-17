@@ -37,6 +37,11 @@ from backend.db import (
     get_year_cgpa_stats,
     get_toppers,
     get_slow_learners,
+    get_section_timetable,
+    get_student_timetable,
+    get_faculty_profile,
+    search_faculties,
+    get_timetables_summary,
 )
 
 load_dotenv()
@@ -396,6 +401,64 @@ async def get_student_academics_endpoint(roll_number: str):
         raise HTTPException(
             status_code=404,
             detail=f"Academic profile for roll number '{roll_number.upper()}' not found in registry."
+        )
+    return profile
+
+
+@app.get("/api/timetable/summary")
+@app.get("/timetable/summary")
+async def get_timetable_summary_endpoint():
+    """Returns overview of all 60 section timetables and 494 faculty profiles across Years 2, 3, and 4."""
+    return get_timetables_summary()
+
+
+@app.get("/api/timetable/{year}/{section}")
+@app.get("/timetable/{year}/{section}")
+async def get_section_timetable_endpoint(year: int, section: str):
+    """Returns official weekly schedule, room, class teacher, and course faculty for a section."""
+    tt = get_section_timetable(year, section)
+    if not tt:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Timetable for Year {year} Section {section} not found in departmental registry."
+        )
+    return tt
+
+
+@app.get("/api/students/{roll_number}/timetable")
+@app.get("/students/{roll_number}/timetable")
+async def get_student_timetable_endpoint(roll_number: str):
+    """Returns personalized weekly timetable, room, and class teacher for a student."""
+    st_tt = get_student_timetable(roll_number)
+    if not st_tt or not st_tt.get("timetable"):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Timetable allocation for student '{roll_number.upper()}' not found."
+        )
+    return st_tt
+
+
+@app.get("/api/faculties")
+@app.get("/faculties")
+async def get_faculties_endpoint(q: str = "", limit: int = 30):
+    """Searches official CSE departmental faculty directory by name, course, or phone number."""
+    results = search_faculties(q, limit=limit)
+    return {
+        "query": q,
+        "count": len(results),
+        "faculties": results
+    }
+
+
+@app.get("/api/faculties/{faculty_name}")
+@app.get("/faculties/{faculty_name}")
+async def get_faculty_profile_endpoint(faculty_name: str):
+    """Returns detailed teaching allocations, sections, and contact number for a faculty member."""
+    profile = get_faculty_profile(faculty_name)
+    if not profile:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Faculty profile for '{faculty_name}' not found in departmental registry."
         )
     return profile
 
