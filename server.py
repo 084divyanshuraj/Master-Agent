@@ -17,9 +17,12 @@ import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, Dict, Any, List
 from dotenv import load_dotenv
+from slowapi import Limiter
+from slowapi.errors import RateLimitExceeded
 
 from backend.orchestrator import orchestrator
 from backend.groq_pool import groq_pool
@@ -46,11 +49,44 @@ from backend.db import (
 
 load_dotenv()
 
+
+def get_client_ip(request: Request) -> str:
+    """Extracts client IP respecting proxy headers for Vercel, Nginx, and cloud hosts."""
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    real_ip = request.headers.get("x-real-ip")
+    if real_ip:
+        return real_ip.strip()
+    if request.client and request.client.host:
+        return request.client.host
+    return "127.0.0.1"
+
+
+limiter = Limiter(key_func=get_client_ip, default_limits=["120/minute"])
+
 app = FastAPI(
     title="Vignan's University — Master Agent API",
     description="Centralized Master Agent Orchestrator across 72 specialized departmental hackathon agents.",
     version="2.0.0",
 )
+app.state.limiter = limiter
+
+
+@app.exception_handler(RateLimitExceeded)
+async def custom_rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
+    """Returns standardized JSON 429 response when request limits are exceeded."""
+    return JSONResponse(
+        status_code=429,
+        content={
+            "status": "rate_limited",
+            "error": "Rate limit exceeded",
+            "detail": f"Rate limit exceeded: {exc.detail}. Please slow down your requests to protect university servers.",
+            "path": request.url.path,
+        },
+        headers={"Retry-After": "60"}
+    )
+
 
 # CORS Middleware
 app.add_middleware(
@@ -118,7 +154,8 @@ class UserLoginRequest(BaseModel):
 
 @app.post("/api/auth/register")
 @app.post("/auth/register")
-async def register_user_endpoint(req: UserRegisterRequest):
+@limiter.limit("5/minute")
+async def register_user_endpoint(request: Request, req: UserRegisterRequest):
     """Registers a new faculty or staff member into MongoDB Atlas."""
     if len(req.password.strip()) < 4:
         raise HTTPException(status_code=400, detail="Password must be at least 4 characters.")
@@ -137,7 +174,8 @@ async def register_user_endpoint(req: UserRegisterRequest):
 
 @app.post("/api/auth/login")
 @app.post("/auth/login")
-async def login_user_endpoint(req: UserLoginRequest):
+@limiter.limit("10/minute")
+async def login_user_endpoint(request: Request, req: UserLoginRequest):
     """Authenticates faculty credentials against MongoDB Atlas."""
     res = db.authenticate_user(
         employee_code=req.employee_code,
@@ -193,7 +231,8 @@ async def get_agents():
 
 @app.post("/api/chat")
 @app.post("/chat")
-async def chat_endpoint(req: ChatRequest):
+@limiter.limit("15/minute")
+async def chat_endpoint(request: Request, req: ChatRequest):
     """
     Main Master Agent execution endpoint:
     Executes Intent Check -> Decomposition -> Parallel Dispatch -> Fault Isolation -> Synthesis.
@@ -258,7 +297,8 @@ async def get_student_cohort_stats_endpoint():
 
 @app.get("/api/students/search")
 @app.get("/students/search")
-async def search_students_endpoint(q: str = "", limit: int = 15):
+@limiter.limit("40/minute")
+async def search_students_endpoint(request: Request, q: str = "", limit: int = 15):
     """Fast search across 4,121 student records by name, roll number, section, or counsellor."""
     if not q.strip():
         return {"query": q, "count": 0, "results": []}
@@ -268,7 +308,8 @@ async def search_students_endpoint(q: str = "", limit: int = 15):
 
 @app.get("/api/students/{roll_number}")
 @app.get("/students/{roll_number}")
-async def get_student_profile_endpoint(roll_number: str):
+@limiter.limit("60/minute")
+async def get_student_profile_endpoint(roll_number: str, request: Request):
     """O(1) verified institutional student profile lookup by registration roll number."""
     student = get_student_by_roll(roll_number)
     if not student:
@@ -440,7 +481,8 @@ async def get_student_timetable_endpoint(roll_number: str):
 
 @app.get("/api/faculties")
 @app.get("/faculties")
-async def get_faculties_endpoint(q: str = "", limit: int = 30):
+@limiter.limit("40/minute")
+async def get_faculties_endpoint(request: Request, q: str = "", limit: int = 30):
     """Searches official CSE departmental faculty directory by name, course, or phone number."""
     results = search_faculties(q, limit=limit)
     return {
@@ -475,7 +517,8 @@ class ReportExportRequest(BaseModel):
 
 @app.post("/api/report/export")
 @app.post("/report/export")
-async def export_report_endpoint(req: ReportExportRequest):
+@limiter.limit("20/minute")
+async def export_report_endpoint(request: Request, req: ReportExportRequest):
     """
     Exports a structured accreditation audit report generated by the Master Agent.
     Supports markdown (.md), plain text (.txt), and technical json (.json) formatting.
