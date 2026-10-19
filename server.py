@@ -45,6 +45,11 @@ from backend.db import (
     get_faculty_profile,
     search_faculties,
     get_timetables_summary,
+    get_placements_summary,
+    get_company_placements,
+    get_section_placements,
+    get_student_placement,
+    get_multi_offer_students,
 )
 
 load_dotenv()
@@ -503,6 +508,61 @@ async def get_faculty_profile_endpoint(faculty_name: str):
             detail=f"Faculty profile for '{faculty_name}' not found in departmental registry."
         )
     return profile
+
+
+@app.get("/api/placements")
+@app.get("/placements")
+@limiter.limit("40/minute")
+async def get_placements_endpoint(request: Request):
+    """Returns official department placement summary, company stats, and section leaderboard."""
+    return get_placements_summary()
+
+
+@app.get("/api/placements/companies")
+@app.get("/placements/companies")
+async def get_placement_companies_endpoint():
+    """Returns all recruiting organizations and offer totals."""
+    summary = get_placements_summary()
+    return {"companies": summary.get("companies", [])}
+
+
+@app.get("/api/placements/companies/{company_name}")
+@app.get("/placements/companies/{company_name}")
+async def get_company_placements_endpoint(company_name: str):
+    """Returns candidate offers and package details for a specific recruiter."""
+    res = get_company_placements(company_name)
+    if not res:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Recruitment data for '{company_name}' not found in placement dossier."
+        )
+    return res
+
+
+@app.get("/api/placements/sections/{section}")
+@app.get("/placements/sections/{section}")
+async def get_section_placements_endpoint(section: str):
+    """Returns placement rate and placed student roster for a specific 4th-year section."""
+    res = get_section_placements(section)
+    if not res:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Placement records for Section '{section}' not found."
+        )
+    return res
+
+
+@app.get("/api/students/{roll_number}/placement")
+@app.get("/students/{roll_number}/placement")
+async def get_student_placement_endpoint(roll_number: str):
+    """Returns verified placement status, company selections, and packages for a student."""
+    plc = get_student_placement(roll_number)
+    if not plc:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Placement telemetry for student '{roll_number.upper()}' not found."
+        )
+    return plc
 
 
 class ReportExportRequest(BaseModel):

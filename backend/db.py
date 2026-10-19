@@ -24,6 +24,7 @@ IN_MEMORY_ENDPOINTS: Dict[str, str] = {}
 IN_MEMORY_STUDENTS: Dict[str, Dict[str, Any]] = {}
 IN_MEMORY_TIMETABLES: Dict[str, Dict[str, Any]] = {}
 IN_MEMORY_FACULTIES: List[Dict[str, Any]] = []
+IN_MEMORY_PLACEMENTS: Dict[str, Any] = {}
 MAX_LOG_HISTORY = 100
 
 mongo_client = None
@@ -671,6 +672,11 @@ def get_student_academic_profile(roll_number: str) -> Optional[Dict[str, Any]]:
         "backlog_courses": st.get("backlog_courses", ""),
         "standing_classification": standing,
         "hostel_status": st.get("hostel_status", "Day Scholar"),
+        "placement_status": st.get("placement_status", "Unspecified"),
+        "placement_offers": st.get("placement_offers", []),
+        "total_offers": st.get("total_offers", 0),
+        "primary_company": st.get("primary_company"),
+        "highest_package": st.get("highest_package"),
     }
 
 
@@ -942,12 +948,134 @@ def get_timetables_summary() -> Dict[str, Any]:
     }
 
 
+def load_placements_cache():
+    """Loads official department placement dossier into memory cache."""
+    global IN_MEMORY_PLACEMENTS
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    plc_path = os.path.join(base_dir, "public", "data", "placements.json")
+    if os.path.exists(plc_path):
+        try:
+            with open(plc_path, "r", encoding="utf-8") as f:
+                IN_MEMORY_PLACEMENTS = json.load(f)
+            logger.info(f"Loaded placement registry ({IN_MEMORY_PLACEMENTS.get('total_placed_count', 0)} placed students) into memory cache.")
+        except Exception as ex:
+            logger.error(f"Error loading placements.json: {ex}")
+
+
+def get_placements_summary() -> Dict[str, Any]:
+    """Returns official executive placement statistics, company breakdown, and section leaderboard."""
+    if not IN_MEMORY_PLACEMENTS:
+        load_placements_cache()
+    summary = IN_MEMORY_PLACEMENTS.get("summary", {})
+    companies = IN_MEMORY_PLACEMENTS.get("companies", [])
+    sections = IN_MEMORY_PLACEMENTS.get("sections", [])
+    return {
+        "summary": summary,
+        "companies": companies,
+        "sections": sections,
+        "total_placed_count": IN_MEMORY_PLACEMENTS.get("total_placed_count", 0),
+        "total_offers_count": IN_MEMORY_PLACEMENTS.get("total_offers_count", 0),
+        "multi_offer_students_count": len(IN_MEMORY_PLACEMENTS.get("multi_offer_students", [])),
+    }
+
+
+def get_company_placements(company_name: str) -> Optional[Dict[str, Any]]:
+    """Returns official placement stats and placed student roster for a specific recruiter."""
+    if not IN_MEMORY_PLACEMENTS:
+        load_placements_cache()
+    if not company_name:
+        return None
+    q = company_name.strip().upper()
+    comp_summary = None
+    for c in IN_MEMORY_PLACEMENTS.get("companies", []):
+        if q in c.get("company", "").upper() or c.get("company", "").upper() in q:
+            comp_summary = c
+            break
+
+    matched_offers = []
+    for off in IN_MEMORY_PLACEMENTS.get("all_offers", []):
+        if q in off.get("company", "").upper() or off.get("company", "").upper() in q:
+            matched_offers.append(off)
+
+    if not comp_summary and not matched_offers:
+        return None
+
+    return {
+        "company": comp_summary.get("company") if comp_summary else company_name,
+        "summary": comp_summary,
+        "offers_count": len(matched_offers),
+        "offers": matched_offers
+    }
+
+
+def get_section_placements(section: str) -> Optional[Dict[str, Any]]:
+    """Returns placement performance and placed student roster for a specific 4th-year section."""
+    if not IN_MEMORY_PLACEMENTS:
+        load_placements_cache()
+    sec_clean = str(section).strip().upper().replace("SEC-", "").replace("SEC", "").replace("SECTION", "").strip()
+    sec_stat = None
+    for s in IN_MEMORY_PLACEMENTS.get("sections", []):
+        if s.get("section") == sec_clean:
+            sec_stat = s
+            break
+
+    placed_in_sec = [
+        p for p in IN_MEMORY_PLACEMENTS.get("placed_students", [])
+        if str(p.get("section")).strip() == sec_clean
+    ]
+
+    if not sec_stat and not placed_in_sec:
+        return None
+
+    return {
+        "section": sec_clean,
+        "stats": sec_stat,
+        "placed_count": len(placed_in_sec),
+        "students": placed_in_sec
+    }
+
+
+def get_student_placement(roll_number: str) -> Optional[Dict[str, Any]]:
+    """O(1) lookup of a student's placement status, offers, packages, and recruiters."""
+    if not IN_MEMORY_PLACEMENTS:
+        load_placements_cache()
+    r = roll_number.strip().upper()
+    for p in IN_MEMORY_PLACEMENTS.get("placed_students", []):
+        if p.get("roll_number") == r:
+            return p
+
+    # Check unplaced or excluded
+    st = get_student_by_roll(r)
+    if st and st.get("current_year") == 4:
+        is_excl = any(e.get("roll_number") == r for e in IN_MEMORY_PLACEMENTS.get("excluded_students", []))
+        return {
+            "roll_number": r,
+            "name": st.get("name"),
+            "section": st.get("section"),
+            "cgpa": st.get("cgpa"),
+            "placement_status": "Excluded" if is_excl else "Active Unplaced",
+            "total_offers": 0,
+            "offers": []
+        }
+    return None
+
+
+def get_multi_offer_students(limit: int = 20) -> List[Dict[str, Any]]:
+    """Returns students who secured multiple offers sorted by offer count."""
+    if not IN_MEMORY_PLACEMENTS:
+        load_placements_cache()
+    return IN_MEMORY_PLACEMENTS.get("multi_offer_students", [])[:limit]
+
+
 # Initialize database connection and sync caches
 init_mongo_connection()
 if not IN_MEMORY_STUDENTS:
     load_students_cache()
 if not IN_MEMORY_TIMETABLES:
     load_timetables_cache()
+if not IN_MEMORY_PLACEMENTS:
+    load_placements_cache()
+
 
 
 

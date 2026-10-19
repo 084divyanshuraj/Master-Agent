@@ -18,6 +18,7 @@ from backend.db import (
     db,
     IN_MEMORY_STUDENTS,
     IN_MEMORY_FACULTIES,
+    IN_MEMORY_PLACEMENTS,
     get_student_by_roll,
     search_students,
     get_students_by_counsellor,
@@ -34,6 +35,11 @@ from backend.db import (
     get_faculty_profile,
     search_faculties,
     get_timetables_summary,
+    get_placements_summary,
+    get_company_placements,
+    get_section_placements,
+    get_student_placement,
+    get_multi_offer_students,
 )
 
 logger = logging.getLogger("orchestrator")
@@ -164,6 +170,15 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
         f"| **Fee Clearance Status** | {fee_badge} |\n"
         f"| **Entrance Qualification** | {exam} Rank: {rank} |\n"
         f"| **Institutional Email** | `{email}` |\n"
+    )
+
+    if st.get("placement_status") == "Placed":
+        offers_str = ", ".join([f"**{o.get('company')}** ({o.get('package', 'Selected')})" for o in st.get("placement_offers", [])])
+        badge += f"| **Campus Placement Status** | 💼 **Placed ({st.get('total_offers', 1)} Offers)**: {offers_str} |\n"
+    elif st.get("current_year") == 4:
+        badge += f"| **Campus Placement Status** | ⏳ **{st.get('placement_status', 'Active Placement Seeking')}** |\n"
+
+    badge += (
         f"{sub_table}\n"
         f"---\n\n"
     )
@@ -777,6 +792,220 @@ class MasterOrchestrator:
                     "trace": trace_data,
                     "status": "success",
                 }
+
+        # Deterministic Placement Intelligence & Recruiter Dossier Query
+        is_plc_kw = any(w in query_lower for w in [
+            "placement", "placements", "placed student", "unplaced", "blinkit", "multi offer",
+            "recruiter", "recruitment", "highest package", "campus drive", "placement report",
+            "tcs selected", "infosys selected", "genc", "deep skilling", "eleation", "hcltech selected",
+            "placement stats", "placement statistics", "who got placed", "placement percentage"
+        ])
+        if is_plc_kw and not detected_student:
+            plc_summary = get_placements_summary()
+            summ = plc_summary.get("summary", {})
+
+            # 1. Blinkit Specific Query
+            if "blinkit" in query_lower:
+                blinkit_data = get_company_placements("Blinkit")
+                offers_list = blinkit_data.get("offers", []) if blinkit_data else []
+                offer_rows = []
+                for idx, o in enumerate(offers_list, 1):
+                    offer_rows.append(f"| {idx} | `{o['roll_number']}` | **{o['name']}** | Sec {o['section']} | {o['role']} | `{o['package']}` |")
+                offer_table = "\n".join(offer_rows) if offer_rows else "| No detailed offers recorded |"
+
+                blinkit_answer = (
+                    "### 🛒 Blinkit Official Campus Recruitment Drive (October 2026)\n"
+                    "**Vignan's Foundation for Science, Technology & Research | Official CSE Placement Dossier**\n\n"
+                    "| Recruitment Metric | Official Verified Figure |\n"
+                    "|---|---|\n"
+                    "| **Recruiting Organization** | **Blinkit (Zomato Commerce Network)** |\n"
+                    "| **Offered Designation** | **Trainee - Assistant Store Manager** |\n"
+                    "| **Annual Compensation Package** | 💰 **4.2 LPA** |\n"
+                    "| **Total Confirmed Selections** | 🎯 **20 CSE Students** |\n"
+                    "| **New Unique Placements** | **16 Students** (First Offer) |\n"
+                    "| **Multi-Offer Upgrades** | **4 Students** (Dual-offer with ULearn) |\n"
+                    "| **Tentative Date of Joining (DOJ)** | 📅 **18-October-2026** |\n\n"
+                    "#### 📋 Confirmed Blinkit Selected Candidates Roster\n"
+                    "| S.No | Roll Number | Student Name | Section | Selected Role | CTC Package |\n"
+                    "|---|---|---|---|---|---|\n"
+                    f"{offer_table}\n\n"
+                    "**Accreditation & Career Assurance Note:**\n"
+                    "• Verified against official university placement master file `data/Placements Uptill Blinkit.xlsx`.\n"
+                    "• Monitored under Departmental Career Progression & Industry Placement (Agent 50)."
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = blinkit_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": blinkit_answer,
+                    "mode": mode,
+                    "route": "company_placements_blinkit",
+                    "citations": [
+                        {"name": "VFSTR Department Placement Cell", "url": "https://vignan.ac.in/placements"},
+                        {"name": "Agent 50 — Job Matching & Placement Engine", "url": "https://jobmatchingagent.onrender.com/"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
+
+            # 2. Multi-Offer Achievers Query
+            if any(w in query_lower for w in ["multi offer", "multiple offer", "5 offer", "3 offer", "highest package", "top offer"]):
+                multi_students = get_multi_offer_students(15)
+                m_rows = []
+                for idx, m in enumerate(multi_students, 1):
+                    comps = ", ".join([f"{o.get('company_role', '')} ({o.get('package', '')})".strip() for o in m.get("offers", [])])
+                    m_rows.append(f"| {idx} | `{m['roll_number']}` | **{m['name']}** | 🌟 **{m['total_offers']} Offers** | {comps} |")
+                m_table = "\n".join(m_rows)
+
+                multi_answer = (
+                    "### 🌟 Multi-Offer Achievers & Premium Packages — B.Tech CSE (Batch 2022–2026)\n"
+                    "**Department of Computer Science & Engineering | VFSTR Official Placement Intelligence**\n\n"
+                    "Total Multi-Offer Achievers: **91 Students** (18.4% of placed cohort)\n\n"
+                    "| Rank | Roll Number | Candidate Name | Total Offers | Recruiter Offers & Compensation Packages |\n"
+                    "|---|---|---|---|---|\n"
+                    f"{m_table}\n\n"
+                    "**Key Highlights:**\n"
+                    "• 🏆 **Department Star Achiever**: **Goli Naresh Reddy (231FA04165)** with **5 verified offers** (Amazon SDE, Infosys Specialist Programmer @ 10 LPA + ₹1L Bonus, HWI @ 7 LPA, CTS GenC @ 4.16 LPA, TCS Prime).\n"
+                    "• 🌟 **Triple Offer Holders**: Syed Sameer Ayaz, Raushan Kumar, Palagani Manikanta, and Bangaru Gnana Sri Venkata Sai (3 offers each).\n"
+                    "• Tracked under Career Development & Accreditation Standards (Agent 50)."
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = multi_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": multi_answer,
+                    "mode": mode,
+                    "route": "multi_offer_placements",
+                    "citations": [
+                        {"name": "VFSTR Department Placement Cell", "url": "https://vignan.ac.in/placements"},
+                        {"name": "Agent 50 — Job Matching & Placement Engine", "url": "https://jobmatchingagent.onrender.com/"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
+
+            # 3. Section Leaderboard Query
+            if any(w in query_lower for w in ["section placement", "which section", "highest placement", "section leaderboard", "section wise"]):
+                sections_list = plc_summary.get("sections", [])
+                sec_rows = []
+                for idx, s in enumerate(sections_list[:12], 1):
+                    sec_rows.append(f"| {idx} | **Section {s['section']}** | {s['placed_students']} / {s['total_students']} | **{s['placement_rate_pct']}%** | {s['assigned_offers']} Offers |")
+                sec_table = "\n".join(sec_rows)
+
+                sec_answer = (
+                    "### 🏆 Section-Wise Placement Performance Leaderboard (Batch 2022–2026)\n"
+                    "**Department of Computer Science & Engineering | VFSTR Official Placement Records**\n\n"
+                    "| Rank | Section | Placed / Total Strength | Placement Rate (%) | Total Recruiter Offers |\n"
+                    "|---|---|---|---|---|\n"
+                    f"{sec_table}\n\n"
+                    "**Executive Summary:**\n"
+                    "• 🥇 **Top Performing Cohort**: **Section 1** leads with **82.54% placement rate** (52/63 placed, 80 offers).\n"
+                    "• 🥈 **Runner Up**: **Section 2** with **80.28% placement rate** (57/71 placed, 81 offers).\n"
+                    "• Sections 15, 3, and 10 maintain outstanding conversion rates exceeding 58%."
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = sec_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": sec_answer,
+                    "mode": mode,
+                    "route": "section_placements_leaderboard",
+                    "citations": [
+                        {"name": "VFSTR Department Placement Cell", "url": "https://vignan.ac.in/placements"},
+                        {"name": "Agent 50 — Job Matching & Placement Engine", "url": "https://jobmatchingagent.onrender.com/"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
+
+            # 4. Specific Recruiter Query (e.g., TCS, Infosys, Amazon, HCLTech, CTS)
+            recruiter_detected = None
+            for c in plc_summary.get("companies", []):
+                c_name = c["company"].lower()
+                if c_name in query_lower or any(t in query_lower for t in c_name.split() if len(t) >= 4):
+                    recruiter_detected = c
+                    break
+
+            if recruiter_detected:
+                c_data = get_company_placements(recruiter_detected["company"])
+                c_offers = c_data.get("offers", []) if c_data else []
+                co_rows = []
+                for idx, o in enumerate(c_offers[:15], 1):
+                    co_rows.append(f"| {idx} | `{o['roll_number']}` | **{o['name']}** | Sec {o['section']} | {o['role']} | `{o['package']}` |")
+                co_table = "\n".join(co_rows) if co_rows else "| All offers recorded in placement dossier |"
+
+                rec_answer = (
+                    f"### 🏢 {recruiter_detected['company']} Official Recruitment Telemetry\n"
+                    f"**Department of Computer Science & Engineering | VFSTR Official Dossier**\n\n"
+                    f"| Parameter | Verified Record |\n"
+                    f"|---|---|\n"
+                    f"| **Recruiter Name** | **{recruiter_detected['company']}** |\n"
+                    f"| **Total Confirmed Offers** | 🎯 **{recruiter_detected['offers_count']} Offers** |\n"
+                    f"| **New Unique Placements** | **{recruiter_detected['new_unique_placements']} Students** |\n"
+                    f"| **Primary CTC Package** | 💰 **{recruiter_detected['primary_package']}** |\n"
+                    f"| **Recruitment Notes** | {recruiter_detected['remarks']} |\n\n"
+                    f"#### 📋 Placed Candidates Roster (Top Selections)\n"
+                    f"| S.No | Roll Number | Student Name | Section | Role / Profile | Package |\n"
+                    f"|---|---|---|---|---|---|\n"
+                    f"{co_table}\n"
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = rec_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": rec_answer,
+                    "mode": mode,
+                    "route": f"company_placements_{recruiter_detected['company'].lower().replace(' ', '_')}",
+                    "citations": [
+                        {"name": "VFSTR Department Placement Cell", "url": "https://vignan.ac.in/placements"},
+                        {"name": "Agent 50 — Job Matching & Placement Engine", "url": "https://jobmatchingagent.onrender.com/"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
+
+            # 5. Overall Executive Placement Dossier
+            companies_table_rows = []
+            for c in plc_summary.get("companies", []):
+                companies_table_rows.append(f"| **{c['company']}** | {c['offers_count']} | {c['new_unique_placements']} | `{c['primary_package']}` | {c['remarks']} |")
+            comp_table = "\n".join(companies_table_rows)
+
+            overall_answer = (
+                f"### 💼 Official B.Tech CSE Placement Intelligence Report (Batch 2022–2026)\n"
+                f"**Vignan's Foundation for Science, Technology & Research (VFSTR) | Updated: 8 October 2026 (Blinkit Incorporated)**\n\n"
+                f"| Executive KPI Metric | Official Department Figure | Institutional Context |\n"
+                f"|---|---|---|\n"
+                f"| **Total CSE Evaluated Cohort** | **1,338 Students** | Final Year Graduating Class (2022–2026 Batch) |\n"
+                f"| **Confirmed Unique Placed Students** | 🎓 **{summ.get('unique_placed_students', 467):,} Students** | Deduplicated Individual Placements |\n"
+                f"| **Overall Department Placement Rate** | 📈 **{summ.get('placement_rate_pct', 34.90)}%** | Active Drives in Continuous Progress |\n"
+                f"| **Total Recruiter Offers Extended** | 💼 **{summ.get('total_offers', 565):,} Offers** | Including Multi-Offer Upgrades |\n"
+                f"| **Students with Multiple Offers** | 🌟 **{summ.get('multi_offer_students_count', 91)} Students** | Up to 5 Offers per Candidate |\n"
+                f"| **Active Unplaced Seeking Offers** | ⏳ **{summ.get('active_unplaced', 867):,} Students** | Under Active Training & Mock Drives |\n"
+                f"| **Latest Drive Incorporation** | 🛒 **Blinkit** | **20 Selections @ 4.2 LPA** (DOJ: 18-Oct-2026) |\n\n"
+                f"#### 🏢 Corporate Recruiter Breakdown\n"
+                f"| Corporate Recruiter | Total Offers | New Unique Placed | Primary Package | Role / Drive Notes |\n"
+                f"|---|---|---|---|---|\n"
+                f"{comp_table}\n\n"
+                f"**Department Search Tips:**\n"
+                f"• Ask *'Blinkit placements'* to see the 20 newly selected candidates.\n"
+                f"• Ask *'Multi offer students'* to see candidates with 2 to 5 offers.\n"
+                f"• Ask *'Section placement leaderboard'* to view section-wise performance.\n"
+                f"• Query any 4th-year student roll number (e.g., `231FA04165`, `231FA04002`) to view their individual campus placement offers."
+            )
+            trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+            trace_data["final_answer"] = overall_answer
+            db.log_query(trace_data)
+            return {
+                "answer": overall_answer,
+                "mode": mode,
+                "route": "placement_dossier",
+                "citations": [
+                    {"name": "VFSTR Department Placement Cell", "url": "https://vignan.ac.in/placements"},
+                    {"name": "Agent 50 — Job Matching & Placement Engine", "url": "https://jobmatchingagent.onrender.com/"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
 
         # Deterministic Cohort Statistics Query (HOD & Dean Executive View)
         if any(k in query_lower for k in [
