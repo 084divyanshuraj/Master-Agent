@@ -36,9 +36,9 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 PUBLIC_DATA_DIR = os.path.join(BASE_DIR, "public", "data")
 
 TT_FILES = [
-    (2, "2nd yt TT (1) (3). 9TH JULY)(3).xlsx", "2024–2028 Batch"),
-    (3, "3rd yr UPDATED TT (1) (2) 9TH JULY..xlsx", "2023–2027 Batch"),
-    (4, "4th yr TT 17TH JULY(1).xlsx", "2022–2026 Batch"),
+    (2, "2nd yt TT (1) (3). 9TH JULY)(3).xlsx", "2024–2028 Batch", "R25"),
+    (3, "3rd yr UPDATED TT (1) (2) 9TH JULY..xlsx", "2023–2027 Batch", "C24"),
+    (4, "4th yr TT 17TH JULY(1).xlsx", "2022–2026 Batch", "C22"),
 ]
 
 FACULTY_XLS_FILE = "CSE faculty list.xls"
@@ -101,13 +101,13 @@ def ingest_timetables():
     raw_timetable_faculties: Dict[str, Dict[str, Any]] = {}
 
     # 1. PARSE SECTION TIMETABLES ACROSS YEARS 2, 3, 4
-    for year, fname, batch_desc in TT_FILES:
+    for year, fname, batch_desc, reg_code in TT_FILES:
         fpath = os.path.join(DATA_DIR, fname)
         if not os.path.exists(fpath):
             logger.warning(f"Timetable file not found: {fpath}")
             continue
 
-        logger.info(f"Parsing Year {year} Timetable from {fname}...")
+        logger.info(f"Parsing Year {year} ({reg_code} Regulation) Timetable from {fname}...")
         wb = openpyxl.load_workbook(fpath, data_only=True)
         all_timetables[str(year)] = {}
 
@@ -120,7 +120,8 @@ def ingest_timetables():
 
             section_info = {
                 "year": year,
-                "batch": batch_desc,
+                "batch": f"{batch_desc} ({reg_code} Regulation)",
+                "regulation": reg_code,
                 "section": sec_key,
                 "sheet": sname,
                 "room": "",

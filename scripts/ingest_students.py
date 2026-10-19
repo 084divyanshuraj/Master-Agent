@@ -414,6 +414,7 @@ def ingest_students() -> List[Dict[str, Any]]:
                 "name": name,
                 "branch": clean_str(sh.cell_value(r, 3)).upper() or "CSE",
                 "current_year": curr_year,
+                "regulation": "R25" if curr_year == 2 else ("C24" if curr_year == 3 else "C22"),
                 "semester": semester,
                 "section": section,
                 "gender": clean_str(sh.cell_value(r, 7)).upper(),

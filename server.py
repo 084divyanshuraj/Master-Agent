@@ -50,6 +50,7 @@ from backend.db import (
     get_section_placements,
     get_student_placement,
     get_multi_offer_students,
+    get_regulations_summary,
 )
 
 load_dotenv()
@@ -563,6 +564,13 @@ async def get_student_placement_endpoint(roll_number: str):
             detail=f"Placement telemetry for student '{roll_number.upper()}' not found."
         )
     return plc
+
+
+@app.get("/api/regulations")
+@app.get("/regulations")
+async def get_regulations_endpoint():
+    """Returns official curriculum regulations matrix across active B.Tech CSE cohorts (R25, C24, C22)."""
+    return get_regulations_summary()
 
 
 class ReportExportRequest(BaseModel):

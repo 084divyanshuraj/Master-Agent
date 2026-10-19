@@ -1,6 +1,6 @@
 {
   "summary": {
-    "report_title": "BATCH 2022–26 CSE FULL PLACEMENT REPORT (BLINKIT UPDATED)",
+    "report_title": "BATCH 2022–26 CSE FULL PLACEMENT REPORT (C22 REGULATION - BLINKIT UPDATED)",
     "report_date": "8 October 2026",
     "latest_update": "Blinkit incorporated: 20 confirmed CSE selections for Trainee - Assistant Store Manager at 4.2 LPA (16 new unique, 4 multi-offer through ULearn). Tentative DOJ: 18-10-2026.",
     "total_cse_students": 1338,
@@ -74,7 +74,9 @@
         "package": "Internship (PPO Track)",
         "comment": "6-month SDE internship track"
       }
-    ]
+    ],
+    "regulation": "C22",
+    "cohort_batch": "2022–2026 Batch (C22 Regulation)"
   },
   "companies": [
     {
@@ -1971,7 +1973,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04112",
@@ -1995,7 +1998,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04112@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04165",
@@ -2063,7 +2067,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04169",
@@ -2087,7 +2092,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04245",
@@ -2111,7 +2117,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04251",
@@ -2146,7 +2153,8 @@
           "joining_bonus": "₹75,000",
           "notes": "29 Sep 2026 SPDSE Result"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04333",
@@ -2192,7 +2200,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04498",
@@ -2227,7 +2236,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04510",
@@ -2251,7 +2261,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: aakshayguptha@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04570",
@@ -2275,7 +2286,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: renukadevikota09@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04596",
@@ -2310,7 +2322,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04611",
@@ -2334,7 +2347,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04635",
@@ -2369,7 +2383,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04651",
@@ -2393,7 +2408,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04657",
@@ -2428,7 +2444,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04658",
@@ -2452,7 +2469,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04717",
@@ -2487,7 +2505,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04826",
@@ -2522,7 +2541,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04827",
@@ -2546,7 +2566,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04833",
@@ -2581,7 +2602,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04892",
@@ -2616,7 +2638,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04893",
@@ -2640,7 +2663,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04895",
@@ -2664,7 +2688,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04898",
@@ -2699,7 +2724,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04902",
@@ -2723,7 +2749,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04902@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04914",
@@ -2747,7 +2774,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04976",
@@ -2782,7 +2810,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04979",
@@ -2806,7 +2835,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04983",
@@ -2841,7 +2871,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A59",
@@ -2865,7 +2896,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A70",
@@ -2889,7 +2921,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04a70@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B48",
@@ -2924,7 +2957,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B54",
@@ -2948,7 +2982,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B98",
@@ -2983,7 +3018,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C21",
@@ -3007,7 +3043,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04c21@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C26",
@@ -3031,7 +3068,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C91",
@@ -3055,7 +3093,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: dashingraan175@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C99",
@@ -3079,7 +3118,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D02",
@@ -3103,7 +3143,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D07",
@@ -3138,7 +3179,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D27",
@@ -3173,7 +3215,8 @@
           "joining_bonus": "₹75,000",
           "notes": "29 Sep 2026 SPDSE Result"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D78",
@@ -3208,7 +3251,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D88",
@@ -3232,7 +3276,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: balaganisrilakshmi22@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E54",
@@ -3256,7 +3301,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04e54@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F45",
@@ -3291,7 +3337,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F64",
@@ -3315,7 +3362,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F87",
@@ -3350,7 +3398,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G03",
@@ -3374,7 +3423,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: vivekmuskang03@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G08",
@@ -3409,7 +3459,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G32",
@@ -3455,7 +3506,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G53",
@@ -3479,7 +3531,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G72",
@@ -3503,7 +3556,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04001",
@@ -3527,7 +3581,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04001@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04008",
@@ -3551,7 +3606,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04013",
@@ -3575,7 +3631,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04016",
@@ -3599,7 +3656,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: amruthadarsi1707@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04017",
@@ -3623,7 +3681,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04030",
@@ -3647,7 +3706,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04040",
@@ -3671,7 +3731,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04042",
@@ -3695,7 +3756,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04173",
@@ -3719,7 +3781,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04174",
@@ -3743,7 +3806,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04179",
@@ -3767,7 +3831,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04246",
@@ -3791,7 +3856,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04266",
@@ -3815,7 +3881,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04269",
@@ -3850,7 +3917,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04269@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04329",
@@ -3874,7 +3942,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04341",
@@ -3909,7 +3978,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04422",
@@ -3944,7 +4014,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04422@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04425",
@@ -3979,7 +4050,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04431",
@@ -4014,7 +4086,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04507",
@@ -4038,7 +4111,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04518",
@@ -4062,7 +4136,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04518@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04521",
@@ -4086,7 +4161,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04656",
@@ -4110,7 +4186,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: immadisettycharishmasri@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04692",
@@ -4134,7 +4211,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04692@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04754",
@@ -4158,7 +4236,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04816",
@@ -4182,7 +4261,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04862",
@@ -4206,7 +4286,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04896",
@@ -4241,7 +4322,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04905",
@@ -4265,7 +4347,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04919",
@@ -4300,7 +4383,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A73",
@@ -4324,7 +4408,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A77",
@@ -4348,7 +4433,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C62",
@@ -4372,7 +4458,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: bhavana012phb@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E04",
@@ -4396,7 +4483,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E62",
@@ -4420,7 +4508,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E69",
@@ -4444,7 +4533,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F53",
@@ -4468,7 +4558,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04f53@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F58",
@@ -4503,7 +4594,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F81",
@@ -4527,7 +4619,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 21; source mobile 6301561060"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G20",
@@ -4551,7 +4644,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G44",
@@ -4575,7 +4669,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04032",
@@ -4599,7 +4694,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04182",
@@ -4623,7 +4719,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04182@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04253",
@@ -4647,7 +4744,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 23; source mobile 8341384278"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04342",
@@ -4671,7 +4769,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04351",
@@ -4695,7 +4794,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04412",
@@ -4719,7 +4819,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04438",
@@ -4743,7 +4844,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04445",
@@ -4767,7 +4869,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04522",
@@ -4802,7 +4905,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04566",
@@ -4826,7 +4930,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04758",
@@ -4850,7 +4955,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04758@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04911",
@@ -4885,7 +4991,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04937",
@@ -4920,7 +5027,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 4; source mobile 8919415146"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A24",
@@ -4944,7 +5052,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A65",
@@ -4968,7 +5077,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A76",
@@ -4992,7 +5102,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A88",
@@ -5016,7 +5127,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B57",
@@ -5040,7 +5152,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B70",
@@ -5075,7 +5188,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C46",
@@ -5099,7 +5213,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 31; source mobile 9392541441"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C66",
@@ -5123,7 +5238,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04c66@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D48",
@@ -5147,7 +5263,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F07",
@@ -5171,7 +5288,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F89",
@@ -5195,7 +5313,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G41",
@@ -5219,7 +5338,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 7; source mobile 8298141946"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G75",
@@ -5243,7 +5363,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: vnomeswari@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04029",
@@ -5267,7 +5388,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: popuribindu517@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04033",
@@ -5291,7 +5413,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04033@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04043",
@@ -5315,7 +5438,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04119",
@@ -5339,7 +5463,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: hemaswibhavirisetty@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04120",
@@ -5363,7 +5488,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04123",
@@ -5387,7 +5513,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04123@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04208",
@@ -5411,7 +5538,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04281",
@@ -5435,7 +5563,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04281@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04415",
@@ -5470,7 +5599,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04423",
@@ -5494,7 +5624,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04528",
@@ -5518,7 +5649,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04548",
@@ -5542,7 +5674,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 6; source mobile 6281478916"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04695",
@@ -5566,7 +5699,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04820",
@@ -5590,7 +5724,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04945",
@@ -5614,7 +5749,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A08",
@@ -5638,7 +5774,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A22",
@@ -5662,7 +5799,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E92",
@@ -5686,7 +5824,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F03",
@@ -5710,7 +5849,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G47",
@@ -5734,7 +5874,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04225",
@@ -5758,7 +5899,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04230",
@@ -5782,7 +5924,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04525",
@@ -5806,7 +5949,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04942",
@@ -5830,7 +5974,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A17",
@@ -5854,7 +5999,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G73",
@@ -5878,7 +6024,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 15; source mobile 8309875568"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04369",
@@ -5902,7 +6049,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 16; source mobile 6281809098"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04370",
@@ -5926,7 +6074,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: keerthiikkurthi@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04388",
@@ -5950,7 +6099,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04441",
@@ -5974,7 +6124,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04441@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04450",
@@ -5998,7 +6149,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04473",
@@ -6022,7 +6174,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04473@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04489",
@@ -6046,7 +6199,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04569",
@@ -6070,7 +6224,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04788",
@@ -6094,7 +6249,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04873",
@@ -6118,7 +6274,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04888",
@@ -6142,7 +6299,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04900",
@@ -6166,7 +6324,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: reshmamadhuri01@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04981",
@@ -6201,7 +6360,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A86",
@@ -6225,7 +6385,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B90",
@@ -6249,7 +6410,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C20",
@@ -6273,7 +6435,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C25",
@@ -6297,7 +6460,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D16",
@@ -6321,7 +6485,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04d16@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D34",
@@ -6345,7 +6510,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E49",
@@ -6369,7 +6535,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04e49@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F85",
@@ -6393,7 +6560,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04087",
@@ -6428,7 +6596,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04092",
@@ -6463,7 +6632,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04094",
@@ -6487,7 +6657,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04109",
@@ -6522,7 +6693,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04138",
@@ -6546,7 +6718,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04187",
@@ -6570,7 +6743,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04334",
@@ -6594,7 +6768,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04347",
@@ -6629,7 +6804,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04409",
@@ -6664,7 +6840,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: gurramsivamani743@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04421",
@@ -6688,7 +6865,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04451",
@@ -6712,7 +6890,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: bindusri264@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04480",
@@ -6758,7 +6937,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04495",
@@ -6782,7 +6962,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04497",
@@ -6806,7 +6987,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04509",
@@ -6830,7 +7012,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04517",
@@ -6854,7 +7037,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04517@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04751",
@@ -6878,7 +7062,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04752",
@@ -6902,7 +7087,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04759",
@@ -6926,7 +7112,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04835",
@@ -6950,7 +7137,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04844",
@@ -6974,7 +7162,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: poojitha73965@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04925",
@@ -6998,7 +7187,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04931",
@@ -7022,7 +7212,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04974",
@@ -7046,7 +7237,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04992",
@@ -7070,7 +7262,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A51",
@@ -7094,7 +7287,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A52",
@@ -7129,7 +7323,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A56",
@@ -7153,7 +7348,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B25",
@@ -7177,7 +7373,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04b25@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B50",
@@ -7201,7 +7398,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: sasankkolluuru@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C43",
@@ -7225,7 +7423,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C59",
@@ -7249,7 +7448,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C88",
@@ -7273,7 +7473,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C97",
@@ -7297,7 +7498,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D97",
@@ -7321,7 +7523,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E27",
@@ -7345,7 +7548,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E30",
@@ -7369,7 +7573,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E40",
@@ -7393,7 +7598,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04e40@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E88",
@@ -7417,7 +7623,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04e88@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F54",
@@ -7441,7 +7648,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F55",
@@ -7465,7 +7673,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G15",
@@ -7489,7 +7698,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: leelapavanigadde@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G22",
@@ -7524,7 +7734,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04025",
@@ -7548,7 +7759,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04025@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04129",
@@ -7572,7 +7784,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04462",
@@ -7596,7 +7809,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04562",
@@ -7631,7 +7845,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04580",
@@ -7655,7 +7870,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04597",
@@ -7679,7 +7895,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: gopupreethi0@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04621",
@@ -7703,7 +7920,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04621@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04630",
@@ -7727,7 +7945,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04641",
@@ -7751,7 +7970,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: cpiyush275@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04719",
@@ -7775,7 +7995,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04744",
@@ -7799,7 +8020,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04748",
@@ -7823,7 +8045,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04771",
@@ -7847,7 +8070,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04959",
@@ -7871,7 +8095,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B03",
@@ -7906,7 +8131,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C67",
@@ -7930,7 +8156,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04c67@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D72",
@@ -7954,7 +8181,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D75",
@@ -7978,7 +8206,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: kumaraayush1505@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E02",
@@ -8002,7 +8231,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E19",
@@ -8026,7 +8256,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 32; source mobile 8247858524"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E33",
@@ -8050,7 +8281,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E34",
@@ -8074,7 +8306,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04e34@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E43",
@@ -8098,7 +8331,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E78",
@@ -8122,7 +8356,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E81",
@@ -8146,7 +8381,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: karthikyarra358@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F17",
@@ -8181,7 +8417,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F30",
@@ -8205,7 +8442,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F51",
@@ -8229,7 +8467,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F98",
@@ -8253,7 +8492,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 22; source mobile 9963487724"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G01",
@@ -8277,7 +8517,8 @@
           "joining_bonus": null,
           "notes": "Conditional offer"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04067",
@@ -8301,7 +8542,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04599",
@@ -8325,7 +8567,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04648",
@@ -8349,7 +8592,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04787",
@@ -8373,7 +8617,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04951",
@@ -8397,7 +8642,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04956",
@@ -8421,7 +8667,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04956@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A11",
@@ -8445,7 +8692,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D60",
@@ -8469,7 +8717,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E28",
@@ -8493,7 +8742,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F37",
@@ -8517,7 +8767,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 37; source mobile 9608327265"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F78",
@@ -8541,7 +8792,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04723",
@@ -8565,7 +8817,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04783",
@@ -8589,7 +8842,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: gousebajishaik4611@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E90",
@@ -8613,7 +8867,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F01",
@@ -8637,7 +8892,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F06",
@@ -8661,7 +8917,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 19; source mobile 7989528748"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04452",
@@ -8685,7 +8942,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04913",
@@ -8720,7 +8978,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C29",
@@ -8744,7 +9003,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04c29@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04006",
@@ -8768,7 +9028,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: srujanareddynulaka972@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04085",
@@ -8803,7 +9064,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04091",
@@ -8838,7 +9100,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04096",
@@ -8873,7 +9136,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04097",
@@ -8897,7 +9161,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04131",
@@ -8921,7 +9186,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: yadavallyjyoshna200609@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04164",
@@ -8956,7 +9222,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04168",
@@ -8980,7 +9247,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04176",
@@ -9015,7 +9283,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04222",
@@ -9050,7 +9319,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04244",
@@ -9085,7 +9355,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04252",
@@ -9109,7 +9380,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04331",
@@ -9144,7 +9416,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04487",
@@ -9179,7 +9452,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04488",
@@ -9203,7 +9477,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04492",
@@ -9238,7 +9513,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04512",
@@ -9262,7 +9538,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04541",
@@ -9286,7 +9563,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04575",
@@ -9310,7 +9588,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: None"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04598",
@@ -9334,7 +9613,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04638",
@@ -9358,7 +9638,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 12; source mobile 8328182450"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04652",
@@ -9393,7 +9674,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04673",
@@ -9417,7 +9699,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04688",
@@ -9441,7 +9724,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04742",
@@ -9465,7 +9749,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04812",
@@ -9489,7 +9774,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04819",
@@ -9524,7 +9810,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04899",
@@ -9559,7 +9846,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04903",
@@ -9583,7 +9871,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04903@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04904",
@@ -9607,7 +9896,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04973",
@@ -9631,7 +9921,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04975",
@@ -9666,7 +9957,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A54",
@@ -9690,7 +9982,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A80",
@@ -9714,7 +10007,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A82",
@@ -9738,7 +10032,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B35",
@@ -9762,7 +10057,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B36",
@@ -9808,7 +10104,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B45",
@@ -9843,7 +10140,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C22",
@@ -9867,7 +10165,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C34",
@@ -9891,7 +10190,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: yakshasowmyavuyyuru@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C41",
@@ -9926,7 +10226,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: srinikhigaddipati@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D01",
@@ -9950,7 +10251,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: rishithaachanta27@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D23",
@@ -9985,7 +10287,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D80",
@@ -10020,7 +10323,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E11",
@@ -10044,7 +10348,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E14",
@@ -10068,7 +10373,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E59",
@@ -10103,7 +10409,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E63",
@@ -10127,7 +10434,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04e63gadde@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E70",
@@ -10151,7 +10459,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E75",
@@ -10175,7 +10484,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F68",
@@ -10210,7 +10520,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 36; source mobile 9297617565"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F77",
@@ -10234,7 +10545,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G31",
@@ -10258,7 +10570,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G40",
@@ -10293,7 +10606,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G42",
@@ -10328,7 +10642,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G48",
@@ -10352,7 +10667,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G93",
@@ -10376,7 +10692,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04053",
@@ -10400,7 +10717,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04167",
@@ -10424,7 +10742,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04167@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04261",
@@ -10448,7 +10767,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04332",
@@ -10472,7 +10792,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04343",
@@ -10507,7 +10828,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04374",
@@ -10531,7 +10853,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04406",
@@ -10555,7 +10878,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04436",
@@ -10579,7 +10903,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04442",
@@ -10603,7 +10928,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04446",
@@ -10638,7 +10964,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04464",
@@ -10662,7 +10989,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04476",
@@ -10686,7 +11014,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04505",
@@ -10710,7 +11039,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04516",
@@ -10734,7 +11064,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04516@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04523",
@@ -10758,7 +11089,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04523@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04533",
@@ -10782,7 +11114,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04534",
@@ -10806,7 +11139,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04577",
@@ -10841,7 +11175,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04587",
@@ -10865,7 +11200,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04589",
@@ -10889,7 +11225,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04603",
@@ -10913,7 +11250,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04613",
@@ -10937,7 +11275,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04662",
@@ -10972,7 +11311,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04662@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04747",
@@ -10996,7 +11336,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04747@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04760",
@@ -11020,7 +11361,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04760@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04780",
@@ -11044,7 +11386,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04829",
@@ -11068,7 +11411,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04830",
@@ -11092,7 +11436,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04830@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04837",
@@ -11116,7 +11461,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04839",
@@ -11140,7 +11486,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04842",
@@ -11164,7 +11511,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04863",
@@ -11188,7 +11536,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04871",
@@ -11223,7 +11572,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04897",
@@ -11247,7 +11597,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C17",
@@ -11282,7 +11633,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C32",
@@ -11306,7 +11658,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: srinayana59@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C60",
@@ -11341,7 +11694,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D62",
@@ -11365,7 +11719,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D90",
@@ -11400,7 +11755,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F57",
@@ -11435,7 +11791,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 38; source mobile 8092731451"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F97",
@@ -11459,7 +11816,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G25",
@@ -11483,7 +11841,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G39",
@@ -11507,7 +11866,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G83",
@@ -11531,7 +11891,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04581",
@@ -11555,7 +11916,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04590",
@@ -11579,7 +11941,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04710",
@@ -11603,7 +11966,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04764",
@@ -11627,7 +11991,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04786",
@@ -11651,7 +12016,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04796",
@@ -11675,7 +12041,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04855",
@@ -11699,7 +12066,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04855@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04859",
@@ -11723,7 +12091,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04859@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04865",
@@ -11747,7 +12116,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04868",
@@ -11771,7 +12141,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: None"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04891",
@@ -11795,7 +12166,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D21",
@@ -11819,7 +12191,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: gopalamvinay4@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G37",
@@ -11843,7 +12216,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04049",
@@ -11867,7 +12241,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source row 133 carried wrong Reg No 231FA04094; corrected to 231FA04049 KESAMSETTY SIVA NAGA DEEPIKA NAIDU based on user confirmation; source email: deepikakesamsetty@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04198",
@@ -11891,7 +12266,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04237",
@@ -11915,7 +12291,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04350",
@@ -11939,7 +12316,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 30; source mobile 6281418268"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04453",
@@ -11963,7 +12341,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04745",
@@ -11987,7 +12366,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04875",
@@ -12011,7 +12391,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04875@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A47",
@@ -12035,7 +12416,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B01",
@@ -12059,7 +12441,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B86",
@@ -12083,7 +12466,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: mk2356388@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04310",
@@ -12107,7 +12491,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04807",
@@ -12142,7 +12527,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04840",
@@ -12166,7 +12552,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B27",
@@ -12190,7 +12577,8 @@
           "joining_bonus": null,
           "notes": "Conditional offer"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G05",
@@ -12225,7 +12613,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G36",
@@ -12260,7 +12649,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "221FA04532",
@@ -12284,7 +12674,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: vyshnavipavuluri@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04002",
@@ -12319,7 +12710,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04007",
@@ -12343,7 +12735,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04186",
@@ -12367,7 +12760,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04206",
@@ -12391,7 +12785,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: yalamandalaakhila@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04335",
@@ -12415,7 +12810,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04336",
@@ -12439,7 +12835,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: bhargavireddy3021@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04503",
@@ -12463,7 +12860,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04503@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04585",
@@ -12487,7 +12885,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04620",
@@ -12511,7 +12910,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04653",
@@ -12535,7 +12935,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04815",
@@ -12559,7 +12960,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04860",
@@ -12594,7 +12996,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: Chanikyachowdary8866@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04957",
@@ -12618,7 +13021,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: asathwik834@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A32",
@@ -12642,7 +13046,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A58",
@@ -12666,7 +13071,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B56",
@@ -12690,7 +13096,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B69",
@@ -12714,7 +13121,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B82",
@@ -12738,7 +13146,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C31",
@@ -12762,7 +13171,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C58",
@@ -12786,7 +13196,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: gutupalliharika@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C74",
@@ -12821,7 +13232,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C77",
@@ -12845,7 +13257,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: yeletibhavyasri@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C85",
@@ -12869,7 +13282,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C93",
@@ -12893,7 +13307,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: vemulaharshith1476@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D04",
@@ -12917,7 +13332,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04d04@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E03",
@@ -12941,7 +13357,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E57",
@@ -12965,7 +13382,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E68",
@@ -12989,7 +13407,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E73",
@@ -13013,7 +13432,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04e73@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F76",
@@ -13037,7 +13457,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G65",
@@ -13061,7 +13482,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04279",
@@ -13085,7 +13507,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: eshwarkothapalli5@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04328",
@@ -13109,7 +13532,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04506",
@@ -13133,7 +13557,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: lakshmisimhadri17@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04515",
@@ -13157,7 +13582,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04660",
@@ -13181,7 +13607,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04681",
@@ -13205,7 +13632,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04711",
@@ -13229,7 +13657,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04711@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04736",
@@ -13253,7 +13682,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04738",
@@ -13277,7 +13707,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04885",
@@ -13301,7 +13732,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A04",
@@ -13325,7 +13757,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: kartheeknallamopu2006@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A46",
@@ -13349,7 +13782,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04B65",
@@ -13384,7 +13818,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E09",
@@ -13408,7 +13843,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E66",
@@ -13432,7 +13868,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04e66@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E67",
@@ -13467,7 +13904,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E83",
@@ -13491,7 +13929,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: gallaapoorva896@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F09",
@@ -13515,7 +13954,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F18",
@@ -13539,7 +13979,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04f18@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F43",
@@ -13563,7 +14004,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F44",
@@ -13587,7 +14029,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G45",
@@ -13611,7 +14054,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04g45@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04G78",
@@ -13635,7 +14079,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04078",
@@ -13659,7 +14104,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 26; source mobile 6303298644"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04456",
@@ -13683,7 +14129,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: haranagasai4747@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04763",
@@ -13707,7 +14154,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04988",
@@ -13731,7 +14179,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04993",
@@ -13755,7 +14204,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: 231fa04993@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A87",
@@ -13779,7 +14229,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A91",
@@ -13803,7 +14254,8 @@
           "joining_bonus": null,
           "notes": "ULearn final selection; source email: bakka.pavithra@gmail.com"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04C94",
@@ -13827,7 +14279,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 18; source mobile 9182556637"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D08",
@@ -13851,7 +14304,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D19",
@@ -13875,7 +14329,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - React"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D31",
@@ -13910,7 +14365,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D32",
@@ -13934,7 +14390,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D35",
@@ -13969,7 +14426,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 20; source mobile 9959408182"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D37",
@@ -13993,7 +14451,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D41",
@@ -14017,7 +14476,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D47",
@@ -14041,7 +14501,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D50",
@@ -14065,7 +14526,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D56",
@@ -14089,7 +14551,8 @@
           "joining_bonus": null,
           "notes": "Blinkit selected; tentative DOJ 18-10-2026; source OCR row 2; source mobile 8885271517"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D81",
@@ -14113,7 +14576,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04D84",
@@ -14137,7 +14601,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E08",
@@ -14161,7 +14626,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04E89",
@@ -14185,7 +14651,8 @@
           "joining_bonus": null,
           "notes": null
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04F80",
@@ -14209,7 +14676,8 @@
           "joining_bonus": null,
           "notes": "Dotnet - Angular"
         }
-      ]
+      ],
+      "regulation": "C22"
     },
     {
       "roll_number": "231FA04A64",
@@ -14233,7 +14701,8 @@
           "joining_bonus": null,
           "notes": "Package not available in current source"
         }
-      ]
+      ],
+      "regulation": "C22"
     }
   ],
   "all_offers": [

@@ -27,6 +27,57 @@ IN_MEMORY_FACULTIES: List[Dict[str, Any]] = []
 IN_MEMORY_PLACEMENTS: Dict[str, Any] = {}
 MAX_LOG_HISTORY = 100
 
+# Official Vignan University CSE Academic Regulations Mapping
+YEAR_REGULATION_MAP: Dict[int, str] = {
+    2: "R25",  # II Year (2024–2028 Batch)
+    3: "C24",  # III Year (2023–2027 Batch)
+    4: "C22",  # IV Year (2022–2026 Batch)
+}
+
+
+def get_regulation_for_year(year: int) -> str:
+    """Returns official curriculum regulation code for a given academic year."""
+    try:
+        y = int(year)
+        return YEAR_REGULATION_MAP.get(y, "R25")
+    except Exception:
+        return "R25"
+
+
+def get_regulations_summary() -> Dict[str, Any]:
+    """Returns official VFSTR Department of CSE Academic Regulations matrix."""
+    return {
+        "university": "Vignan's Foundation for Science, Technology & Research (VFSTR)",
+        "department": "Computer Science & Engineering",
+        "active_regulations": [
+            {
+                "year": 2,
+                "cohort": "2024–2028 Batch",
+                "regulation": "R25",
+                "scheme_name": "R25 Academic Curriculum",
+                "key_features": "Revised 2024-25 syllabus, integrated theory-lab courses (e.g. DS-25CS201, DBMS-25CS203), continuous evaluation",
+                "attendance_threshold": "75% Mandatory (65%–74.9% Condonation band)",
+            },
+            {
+                "year": 3,
+                "cohort": "2023–2027 Batch",
+                "regulation": "C24",
+                "scheme_name": "C24 CBCS Specialization Scheme",
+                "key_features": "Choice-Based Credit System, department specialization tracks (AI/ML, Cloud, Security), industry internships",
+                "attendance_threshold": "75% Mandatory (65%–74.9% Condonation band)",
+            },
+            {
+                "year": 4,
+                "cohort": "2022–2026 Batch",
+                "regulation": "C22",
+                "scheme_name": "C22 Graduating Curriculum",
+                "key_features": "Major Capstone Project, Semester-8 fast-track internship & campus placement drive eligibility",
+                "attendance_threshold": "75% Mandatory (65%–74.9% Condonation band)",
+            },
+        ]
+    }
+
+
 mongo_client = None
 mongo_db = None
 is_mongo_connected = False
@@ -659,10 +710,14 @@ def get_student_academic_profile(roll_number: str) -> Optional[Dict[str, Any]]:
         else:
             standing = "Remedial Coaching Required"
 
+    curr_yr = st.get("current_year", 2)
+    reg_code = st.get("regulation") or get_regulation_for_year(curr_yr)
+
     return {
         "roll_number": st.get("roll_number"),
         "name": st.get("name"),
-        "current_year": st.get("current_year"),
+        "current_year": curr_yr,
+        "regulation": reg_code,
         "section": st.get("section"),
         "counsellor": st.get("counsellor"),
         "cgpa": cgpa,
@@ -686,10 +741,14 @@ def get_year_cgpa_stats(year: int = 2) -> Dict[str, Any]:
     evaluated = [s for s in students if isinstance(s.get("cgpa"), (int, float)) and s.get("cgpa") > 0]
     total_enrolled = len(students)
     total_evaluated = len(evaluated)
+    reg_code = get_regulation_for_year(year)
+    cohort_str = "2024–2028 (R25 Regulation)" if year == 2 else ("2023–2027 (C24 Regulation)" if year == 3 else "2022–2026 (C22 Regulation)")
 
     if total_evaluated == 0:
         return {
             "year": year,
+            "regulation": reg_code,
+            "cohort_batch": cohort_str,
             "total_enrolled": total_enrolled,
             "total_evaluated": 0,
             "average_cgpa": 0.0,
@@ -715,6 +774,8 @@ def get_year_cgpa_stats(year: int = 2) -> Dict[str, Any]:
 
     return {
         "year": year,
+        "regulation": reg_code,
+        "cohort_batch": cohort_str,
         "total_enrolled": total_enrolled,
         "total_evaluated": total_evaluated,
         "average_cgpa": avg_cgpa,
@@ -942,9 +1003,9 @@ def get_timetables_summary() -> Dict[str, Any]:
     return {
         "total_sections": len(IN_MEMORY_TIMETABLES),
         "total_faculties": len(IN_MEMORY_FACULTIES),
-        "year_2": {"sections_count": len(y2_secs), "sections": sorted(y2_secs, key=lambda x: int(x) if x.isdigit() else 0)},
-        "year_3": {"sections_count": len(y3_secs), "sections": sorted(y3_secs, key=lambda x: int(x) if x.isdigit() else 0)},
-        "year_4": {"sections_count": len(y4_secs), "sections": sorted(y4_secs, key=lambda x: int(x) if x.isdigit() else 0)},
+        "year_2": {"regulation": "R25", "batch": "2024–2028 (R25 Regulation)", "sections_count": len(y2_secs), "sections": sorted(y2_secs, key=lambda x: int(x) if x.isdigit() else 0)},
+        "year_3": {"regulation": "C24", "batch": "2023–2027 (C24 Regulation)", "sections_count": len(y3_secs), "sections": sorted(y3_secs, key=lambda x: int(x) if x.isdigit() else 0)},
+        "year_4": {"regulation": "C22", "batch": "2022–2026 (C22 Regulation)", "sections_count": len(y4_secs), "sections": sorted(y4_secs, key=lambda x: int(x) if x.isdigit() else 0)},
     }
 
 

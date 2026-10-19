@@ -40,6 +40,9 @@ from backend.db import (
     get_section_placements,
     get_student_placement,
     get_multi_offer_students,
+    YEAR_REGULATION_MAP,
+    get_regulation_for_year,
+    get_regulations_summary,
 )
 
 logger = logging.getLogger("orchestrator")
@@ -151,6 +154,7 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
     tt = get_section_timetable(year, str(sec)) if (year and sec) else None
     room_str = f"Room {tt['room']}" if (tt and tt.get("room")) else "Department Classroom"
     ct_str = tt.get("class_teacher") if (tt and tt.get("class_teacher")) else "Department Faculty"
+    reg_code = st.get("regulation") or get_regulation_for_year(year)
 
     badge = (
         f"### 🎓 VFSTR Student Institutional Profile Verified\n"
@@ -159,6 +163,7 @@ def format_student_institutional_badge(st: Dict[str, Any]) -> str:
         f"| **Student Name** | **{name}** |\n"
         f"| **Registration No (Roll)** | `{roll}` |\n"
         f"| **Program & Cohort** | B.Tech CSE — Year {year}, Section {sec} ({hostel_stat}) |\n"
+        f"| **Academic Regulation** | 📜 **{reg_code} Regulation** |\n"
         f"| **Section Class Teacher** | **{ct_str}** |\n"
         f"| **Assigned Classroom** | **{room_str}** |\n"
         f"| **Assigned Faculty Counsellor** | **{counsellor}** |\n"
@@ -311,6 +316,65 @@ class MasterOrchestrator:
                 "citations": [
                     {"name": "Departmental Student Registry", "url": "https://vignan.ac.in/academics/cse"},
                     {"name": "Agent 45 — Student Mentoring System", "url": "https://agent-hackathon.onrender.com/login"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
+
+        # Deterministic Student Academic Regulation Query
+        if detected_student and any(w in query_lower for w in ["regulation", "regulations", "r25", "c24", "c22", "curriculum regulation", "syllabus regulation", "which regulation", "what regulation"]):
+            roll = detected_student.get("roll_number")
+            name = detected_student.get("name")
+            year = detected_student.get("current_year", 2)
+            sec = detected_student.get("section", "1")
+            reg = detected_student.get("regulation") or get_regulation_for_year(year)
+            reg_names = {
+                "R25": "R25 Academic Curriculum (Revised Outcome-Based Education OBE Scheme)",
+                "C24": "C24 CBCS Specialization Scheme (Choice-Based Credit System)",
+                "C22": "C22 Graduating Curriculum (Major Capstone & Fast-Track Placement Drive Scheme)",
+            }
+            batch_names = {
+                2: "2024–2028 Batch (II Year)",
+                3: "2023–2027 Batch (III Year)",
+                4: "2022–2026 Batch (IV Year)",
+            }
+            scheme_name = reg_names.get(reg, f"{reg} Regulation")
+            batch_str = batch_names.get(year, f"Year {year}")
+
+            student_reg_answer = (
+                f"### 📜 Official Academic Regulation Record: {name}\n"
+                f"**Department of Computer Science & Engineering | VFSTR Academic Affairs & Examination Directorate**\n\n"
+                f"| Regulation & Curriculum Parameter | Official Institutional Specification |\n"
+                f"|---|---|\n"
+                f"| **Student Name** | **{name}** |\n"
+                f"| **Registration No (Roll)** | `{roll}` |\n"
+                f"| **Current Academic Cohort** | B.Tech CSE — Year {year}, Section {sec} ({batch_str}) |\n"
+                f"| **Enforced Academic Regulation** | 📜 **{reg} Regulation** |\n"
+                f"| **Curriculum Framework** | **{scheme_name}** |\n"
+                f"| **Attendance Requirement** | 75% Mandatory (65.0%–74.99% Medical Condonation Band, <65% Detention) |\n"
+                f"| **Evaluation Ratio** | 60% Continuous Internal Evaluation (CIE) : 40% Semester-End Exam (SEE) |\n"
+                f"| **Degree Duration Policy** | $N + 2$ Maximum Permissible Years (VFSTR Academic Clause 2.4) |\n\n"
+                f"#### 🏛️ Department of CSE Regulation Matrix across Active Cohorts\n"
+                f"| Year / Cohort | Academic Batch | Enforced Regulation | Scheme Scope & Core Focus |\n"
+                f"|---|---|---|---|\n"
+                f"| **II Year** | 2024–2028 Batch | 📜 **R25 Regulation** | OBE Framework, Integrated Theory-Lab Courses, Continuous Assessment |\n"
+                f"| **III Year** | 2023–2027 Batch | 📜 **C24 Regulation** | Choice-Based Credit System (CBCS), AI/ML & Cyber Tracks, Summer Internships |\n"
+                f"| **IV Year** | 2022–2026 Batch | 📜 **C22 Regulation** | Capstone Major Project (12 Credits), Fast-Track Corporate Placements (565 Offers) |\n\n"
+                f"**Academic Compliance Note:**\n"
+                f"• All course credits and grade calculations adhere strictly to the **{reg} Regulation** syllabus book.\n"
+                f"• Monitored under Academic Operations (Agent 01), Course Outcome (Agent 08), and Accreditation Cell (Agent 09)."
+            )
+            trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+            trace_data["final_answer"] = student_reg_answer
+            db.log_query(trace_data)
+            return {
+                "answer": student_reg_answer,
+                "mode": mode,
+                "route": "student_academic_regulation",
+                "citations": [
+                    {"name": "VFSTR Academic Regulations Directorate", "url": "https://vignan.ac.in/academics"},
+                    {"name": "Agent 01 — Academic Operations", "url": "https://agent-hackathon.onrender.com/login"},
+                    {"name": "Agent 08 — Course Outcome Engine", "url": "https://courseoutcome.onrender.com/"}
                 ],
                 "trace": trace_data,
                 "status": "success",
@@ -1007,6 +1071,118 @@ class MasterOrchestrator:
                 "status": "success",
             }
 
+        # Deterministic Academic Regulations Matrix Query (R25, C24, C22)
+        is_reg_kw = any(w in query_lower for w in [
+            "regulation", "regulations", "r25", "c24", "c22", "r-25", "c-24", "c-22",
+            "academic regulation", "curriculum regulation", "syllabus regulation",
+            "which regulation", "what regulation"
+        ])
+        if is_reg_kw and not detected_student:
+            target_year = None
+            if any(k in query_lower for k in ["2nd year", "year 2", "ii year", "second year", "2nd yr", "r25", "r-25"]) and not any(k in query_lower for k in ["3rd", "4th", "iii", "iv", "c24", "c22"]):
+                target_year = 2
+            elif any(k in query_lower for k in ["3rd year", "year 3", "iii year", "third year", "3rd yr", "c24", "c-24"]) and not any(k in query_lower for k in ["2nd", "4th", "ii", "iv", "r25", "c22"]):
+                target_year = 3
+            elif any(k in query_lower for k in ["4th year", "year 4", "iv year", "fourth year", "final year", "4th yr", "c22", "c-22"]) and not any(k in query_lower for k in ["2nd", "3rd", "ii", "iii", "r25", "c24"]):
+                target_year = 4
+
+            y2_count = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 2)
+            y3_count = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 3)
+            y4_count = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 4)
+
+            if target_year:
+                reg_code = YEAR_REGULATION_MAP[target_year]
+                year_roman = {2: "II", 3: "III", 4: "IV"}[target_year]
+                batch_str = {2: "2024–2028 Batch", 3: "2023–2027 Batch", 4: "2022–2026 Batch"}[target_year]
+                enrolled_count = {2: y2_count, 3: y3_count, 4: y4_count}[target_year]
+
+                details_map = {
+                    2: (
+                        "• **Curriculum Framework:** Revised Outcome-Based Education (OBE) syllabus with integrated theory-cum-practical courses.\n"
+                        "• **Course Code Structure:** Standardized `25` series (e.g., `DS-25CS201`, `DBMS-25CS203`, `DAA-25CS205`, `OS-25CS207`).\n"
+                        "• **Evaluation Scheme:** 60% Continuous Internal Evaluation (CIE) + 40% Semester-End Examination (SEE).\n"
+                        "• **Laboratory Component:** In-course continuous programming lab assessments (Java, Python, DBMS).\n"
+                        "• **Attendance Mandate:** Mandatory $\ge 75\%$ overall attendance; 65.0%–74.99% condonation band upon Medical Board recommendation; $<65\%$ results in immediate semester detention."
+                    ),
+                    3: (
+                        "• **Curriculum Framework:** Choice-Based Credit System (CBCS) with departmental specialization tracks.\n"
+                        "• **Specialization Verticals:** Artificial Intelligence & Machine Learning (AI/ML), Cloud Computing & DevOps, Cybersecurity & Forensics.\n"
+                        "• **Industrial Exposure:** Mandatory 6-to-8 week summer internship after 6th semester with 2 academic credits.\n"
+                        "• **Professional Electives:** Choice of open electives across inter-disciplinary departments (ECE, Management, BioTech).\n"
+                        "• **Attendance Mandate:** Mandatory $\ge 75\%$ overall attendance; 65.0%–74.99% condonation band; $<65\%$ semester detention."
+                    ),
+                    4: (
+                        "• **Curriculum Framework:** Final-Year Capstone and Corporate Fast-Track Placement Curriculum.\n"
+                        "• **Major Project (Capstone):** 12 Academic Credits dedicated to industry-sponsored or faculty-guided research projects.\n"
+                        "• **Fast-Track Placement Eligibility:** Semester-8 full-time corporate internship waiver for students securing placement offers (565 offers recorded, e.g., Blinkit @ 4.2 LPA, TCS Prime, Amazon SDE).\n"
+                        "• **Degree Completion Clause:** N+2 maximum allowable completion window for clearance of arrears.\n"
+                        "• **Attendance Mandate:** Mandatory $\ge 75\%$ aggregate attendance to issue hall tickets for semester-end project viva."
+                    ),
+                }
+                features = details_map[target_year]
+
+                reg_answer = (
+                    f"### 📜 Official B.Tech CSE {year_roman} Year Academic Regulation: {reg_code}\n"
+                    f"**Department of Computer Science & Engineering | VFSTR Academic Affairs & Examination Directorate**\n\n"
+                    f"| Regulation Parameter | Official Departmental Specification |\n"
+                    f"|---|---|\n"
+                    f"| **Academic Year & Level** | B.Tech CSE — Year {year_roman} ({batch_str}) |\n"
+                    f"| **Enforced Regulation** | 📜 **{reg_code} Regulation** |\n"
+                    f"| **Total Enrolled Strength** | **{enrolled_count:,} Students** across 20 Sections |\n"
+                    f"| **Evaluation Scheme** | 60% CIE (Continuous Internal) : 40% SEE (Semester-End Exam) |\n"
+                    f"| **Attendance Requirement** | **75.0% Mandatory** (Condonation Band: 65.0%–74.99%, Detention: <65.0%) |\n"
+                    f"| **Accreditation Benchmarking** | NAAC 'A+' | NBA Tier-1 Outcome-Based Education (OBE) |\n\n"
+                    f"#### 🎯 Key Features of {reg_code} Regulation\n"
+                    f"{features}\n\n"
+                    f"#### 🏛️ Master Department Regulation Framework across All Years\n"
+                    f"| Year / Level | Academic Cohort | Enforced Regulation | Core Scheme & Delivery Mode |\n"
+                    f"|---|---|---|---|\n"
+                    f"| **II Year** | 2024–2028 Batch | 📜 **R25 Regulation** | Revised OBE Framework, Integrated Theory-Lab Courses, Continuous Assessment |\n"
+                    f"| **III Year** | 2023–2027 Batch | 📜 **C24 Regulation** | Choice-Based Credit System (CBCS), AI/ML & Cyber Tracks, Summer Internships |\n"
+                    f"| **IV Year** | 2022–2026 Batch | 📜 **C22 Regulation** | Capstone Major Project (12 Credits), Fast-Track Corporate Placements (565 Offers) |\n\n"
+                    f"**Regulatory Governance:**\n"
+                    f"• Formally approved by Academic Council and Board of Studies (BOS) in Computer Science & Engineering.\n"
+                    f"• Synchronized under Academic Operations (Agent 01), Course Outcome (Agent 08), and Accreditation Cell (Agent 09)."
+                )
+            else:
+                reg_answer = (
+                    "### 📜 Official B.Tech CSE Academic Regulations Master Matrix\n"
+                    "**Vignan's Foundation for Science, Technology & Research (VFSTR) | Department of Computer Science & Engineering**\n\n"
+                    "| Academic Year | Cohort Batch | Enforced Regulation | Enrolled Strength | Curriculum Scheme & Focus |\n"
+                    "|---|---|---|---|---|\n"
+                    f"| **II Year** | 2024–2028 Batch | 📜 **R25 Regulation** | **{y2_count:,} Students** (Sec 1–20) | Revised OBE Syllabus, Integrated Theory-Practical Courses, Continuous Lab Assessment |\n"
+                    f"| **III Year** | 2023–2027 Batch | 📜 **C24 Regulation** | **{y3_count:,} Students** (Sec 1–20) | Choice-Based Credit System (CBCS), Specialization Verticals (AI/ML, Cloud, Security), Internships |\n"
+                    f"| **IV Year** | 2022–2026 Batch | 📜 **C22 Regulation** | **{y4_count:,} Students** (Sec 1–20) | 12-Credit Capstone Project, Fast-Track Corporate Placement Waiver (565 Offers extended) |\n\n"
+                    "#### 📋 Uniform University Academic & Examination Standards\n"
+                    "| Standardized Clause | Departmental Regulation Specification |\n"
+                    "|---|---|\n"
+                    "| **Mandatory Attendance** | **75.0% Overall Aggregate** required in every semester to appear for Semester-End Examinations (SEE). |\n"
+                    "| **Condonation Window** | **65.0% to 74.99%** condonable on genuine medical / university duty grounds upon VC approval (Clause 4.3). |\n"
+                    "| **Detention Clause** | Aggregate attendance **< 65.0%** results in mandatory semester detention; student must repeat the semester. |\n"
+                    "| **Evaluation Ratio** | **60% Continuous Internal Evaluation (CIE)** : **40% Semester-End Examination (SEE)**. |\n"
+                    "| **Degree Duration** | Maximum degree completion limit is **$N + 2$ years** (6 years for 4-year B.Tech program). |\n\n"
+                    "**Accreditation & Quality Assurance:**\n"
+                    "• Curriculum aligned with National Board of Accreditation (NBA Tier-1) and UGC Model Curriculum.\n"
+                    "• Monitored across Academic Operations (Agent 01), Course Outcome (Agent 08), and Accreditation Cell (Agent 09)."
+                )
+
+            trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+            trace_data["final_answer"] = reg_answer
+            db.log_query(trace_data)
+            return {
+                "answer": reg_answer,
+                "mode": mode,
+                "route": "academic_regulations",
+                "citations": [
+                    {"name": "VFSTR Academic Regulations Directorate", "url": "https://vignan.ac.in/academics"},
+                    {"name": "Agent 01 — Academic Operations", "url": "https://agent-hackathon.onrender.com/login"},
+                    {"name": "Agent 08 — Course Outcome Engine", "url": "https://courseoutcome.onrender.com/"},
+                    {"name": "Agent 09 — Accreditation Dossier", "url": "https://vignan-accreditation-agent-rmibobgo5lojrogjovrz7z.streamlit.app/"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
+
         # Deterministic Cohort Statistics Query (HOD & Dean Executive View)
         if any(k in query_lower for k in [
             "cohort stat", "student stat", "total student in cse", "how many students in cse",
@@ -1028,9 +1204,9 @@ class MasterOrchestrator:
                 f"| Institutional Metric | Verified Figure | Departmental Status |\n"
                 f"|---|---|---|\n"
                 f"| **Total Enrolled Students** | **{tot:,}** | 100% Ingested in Master Agent Registry |\n"
-                f"| **II Year (2024–2028 Batch)** | **{y2:,}** | Sections 1 to 20 (R22/R24 Curriculum) |\n"
-                f"| **III Year (2023–2027 Batch)** | **{y3:,}** | Sections 1 to 20 (Specialization Electives) |\n"
-                f"| **IV Year (2022–2026 Batch)** | **{y4:,}** | Sections 1 to 20 (Major Projects & Placement) |\n"
+                f"| **II Year (2024–2028 Batch)** | **{y2:,}** | Sections 1 to 20 (📜 **R25 Regulation**) |\n"
+                f"| **III Year (2023–2027 Batch)** | **{y3:,}** | Sections 1 to 20 (📜 **C24 Regulation**) |\n"
+                f"| **IV Year (2022–2026 Batch)** | **{y4:,}** | Sections 1 to 20 (📜 **C22 Regulation**) |\n"
                 f"| **Faculty Mentoring Capacity** | **{mentors} Mentors** | Strict 1:20 Mentor-Mentee Ratio Compliant |\n"
                 f"| **Attendance Detention Risks** | **{det}** | Flagged below mandatory 75% threshold (Agent 11) |\n"
                 f"| **Pending Fee Clearance** | **{fees}** | Dues monitored across tuition & hostel heads (Agent 40) |\n\n"
