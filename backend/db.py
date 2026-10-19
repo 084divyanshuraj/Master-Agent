@@ -44,35 +44,191 @@ def get_regulation_for_year(year: int) -> str:
         return "R25"
 
 
+# Detailed Course Structure & Curricula extracted from Official PDF Syllabus Books
+OFFICIAL_CURRICULUM_COURSES: Dict[str, Dict[str, List[Dict[str, Any]]]] = {
+    "R25": {
+        "year_2_sem_1": [
+            {"code": "25MT204", "title": "Probability and Statistics", "l": 3, "t": 0, "p": 2, "credits": 4, "category": "Basic Sciences"},
+            {"code": "25MT205", "title": "Discrete Mathematical Structures", "l": 2, "t": 2, "p": 0, "credits": 3, "category": "Basic Sciences"},
+            {"code": "25CS201", "title": "Data Structures", "l": 2, "t": 2, "p": 2, "credits": 4, "category": "Basic Engineering"},
+            {"code": "25CS202", "title": "Web Technology", "l": 0, "t": 2, "p": 2, "credits": 2, "category": "Professional Core-1"},
+            {"code": "25CS203", "title": "Database Management Systems", "l": 2, "t": 2, "p": 2, "credits": 4, "category": "Professional Core-2"},
+            {"code": "25CS204", "title": "Object-Oriented Programming through JAVA", "l": 2, "t": 2, "p": 2, "credits": 4, "category": "Professional Core-3"},
+            {"code": "25CS205", "title": "Digital Logic Design", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Professional Core-4"},
+        ],
+        "year_2_sem_2": [
+            {"code": "25MT203", "title": "Optimization Techniques", "l": 2, "t": 2, "p": 0, "credits": 3, "category": "Basic Sciences"},
+            {"code": "25CS801", "title": "Industry – Interface (I2) Course", "l": 0, "t": 2, "p": 0, "credits": 1, "category": "Dept. Elective-1"},
+            {"code": "OPEN-EL1", "title": "Open Elective-1", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Open Elective-1"},
+            {"code": "25CS206", "title": "Computer Organization and Architecture", "l": 2, "t": 2, "p": 0, "credits": 3, "category": "Professional Core-5"},
+            {"code": "25CS207", "title": "Design and Analysis of Algorithms", "l": 2, "t": 2, "p": 2, "credits": 4, "category": "Professional Core-6"},
+            {"code": "25CS208", "title": "Operating Systems", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Professional Core-7"},
+            {"code": "25CS209", "title": "Computer Networks", "l": 3, "t": 0, "p": 2, "credits": 4, "category": "Professional Core-8"},
+            {"code": "25CS210", "title": "Design Thinking and Engineering Orientation", "l": 0, "t": 0, "p": 2, "credits": 1, "category": "Basic Engineering"},
+            {"code": "25CS211", "title": "Field Project", "l": 0, "t": 0, "p": 2, "credits": 1, "category": "Project"},
+        ]
+    },
+    "C24": {
+        "year_3_sem_1": [
+            {"code": "22TP301", "title": "Soft Skills Laboratory", "l": 0, "t": 0, "p": 2, "credits": 1, "category": "Humanities"},
+            {"code": "24CS301", "title": "Optimization Techniques", "l": 2, "t": 2, "p": 0, "credits": 3, "category": "Basic Sciences"},
+            {"code": "24CS302", "title": "Artificial Intelligence", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Professional Core"},
+            {"code": "24CS303", "title": "Computer Networks", "l": 2, "t": 2, "p": 2, "credits": 4, "category": "Professional Core"},
+            {"code": "24CS304", "title": "Mobile Application Development", "l": 0, "t": 2, "p": 2, "credits": 2, "category": "Professional Core"},
+            {"code": "DEPT-EL1", "title": "Department Elective-1", "l": 3, "t": 0, "p": 2, "credits": 4, "category": "Department Elective"},
+            {"code": "OPEN-EL2", "title": "Open Elective-2", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Open Elective"},
+            {"code": "24EN301", "title": "Professional Communication Skills", "l": 0, "t": 0, "p": 2, "credits": 1, "category": "Humanities"},
+        ],
+        "year_3_sem_2": [
+            {"code": "24CS305", "title": "Computing Ethics", "l": 1, "t": 2, "p": 0, "credits": 2, "category": "Humanities"},
+            {"code": "24TP301", "title": "Quantitative Aptitude & Logical Reasoning", "l": 1, "t": 2, "p": 0, "credits": 2, "category": "Humanities"},
+            {"code": "24CS306", "title": "Machine Learning", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Professional Core"},
+            {"code": "22CS407", "title": "Cryptography and Network Security", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Professional Core"},
+            {"code": "DEPT-EL2", "title": "Department Elective-2", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Department Elective"},
+            {"code": "DEPT-EL3", "title": "Department Elective-3", "l": 3, "t": 0, "p": 2, "credits": 4, "category": "Department Elective"},
+            {"code": "OPEN-EL3", "title": "Open Elective-3", "l": 2, "t": 0, "p": 2, "credits": 3, "category": "Open Elective"},
+            {"code": "24CS307", "title": "Inter Departmental Project", "l": 0, "t": 0, "p": 2, "credits": 1, "category": "Project"},
+        ]
+    },
+    "C22": {
+        "year_4_sem_1": [
+            {"code": "24CS401", "title": "Software Project Management", "l": 2, "t": 2, "p": 0, "credits": 3, "category": "Professional Core"},
+            {"code": "24CS402", "title": "Parallel & Distributed Computing", "l": 2, "t": 2, "p": 0, "credits": 3, "category": "Professional Core"},
+            {"code": "24CS403", "title": "Privacy and Intrusion Detection", "l": 2, "t": 2, "p": 0, "credits": 3, "category": "Professional Core"},
+            {"code": "DEPT-EL4", "title": "Department Elective-4", "l": 3, "t": 0, "p": 2, "credits": 4, "category": "Department Elective"},
+            {"code": "DEPT-EL5", "title": "Department Elective-5", "l": 3, "t": 0, "p": 2, "credits": 4, "category": "Department Elective"},
+            {"code": "DEPT-EL6", "title": "Department Elective-6", "l": 3, "t": 0, "p": 2, "credits": 4, "category": "Department Elective"},
+        ],
+        "year_4_sem_2": [
+            {"code": "22CS404", "title": "Semester-Long Corporate Internship / Capstone Project", "l": 0, "t": 2, "p": 22, "credits": 12, "category": "Project"},
+        ]
+    }
+}
+
+
+def get_regulation_courses(year: int, semester: Optional[int] = None) -> List[Dict[str, Any]]:
+    """Returns official course lists for a given year and semester."""
+    reg = get_regulation_for_year(year)
+    reg_data = OFFICIAL_CURRICULUM_COURSES.get(reg, {})
+    if semester:
+        key = f"year_{year}_sem_{semester}"
+        return reg_data.get(key, [])
+    # Return all semesters for that year
+    all_courses = []
+    for k, courses in reg_data.items():
+        if f"year_{year}" in k:
+            all_courses.extend(courses)
+    return all_courses
+
+
 def get_regulations_summary() -> Dict[str, Any]:
-    """Returns official VFSTR Department of CSE Academic Regulations matrix."""
+    """Returns official VFSTR Department of CSE Academic Regulations matrix extracted from syllabus books."""
     return {
         "university": "Vignan's Foundation for Science, Technology & Research (VFSTR)",
+        "accreditation": "NAAC 'A+' Grade | NBA Tier-1 Compliant | UGC Section 3",
         "department": "Computer Science & Engineering",
+        "total_degree_credits": {
+            "regular_btech": 161,
+            "btech_honours": 181,
+            "minor_specialization": 20,
+            "add_on_diploma": 20,
+        },
+        "evaluation_system": {
+            "ratio": "60:40",
+            "formative_assessment_cie": {
+                "total_marks": 60,
+                "min_passing_pct": 35.0,
+                "min_passing_marks": 21,
+                "failure_grade": "R (Repeat Course)",
+            },
+            "summative_assessment_see": {
+                "total_marks": 40,
+                "min_passing_pct": 35.0,
+                "min_passing_marks": 14,
+                "failure_grade": "I (Incomplete)",
+            },
+            "min_passing_grade_point": 4.0,
+        },
+        "attendance_policy": {
+            "mandatory_threshold_pct": 75.0,
+            "condonation_range": "65.0% to 74.99%",
+            "condonation_basis": "Ill-health (medical certificates), sports/cultural representation, social obligations, placement drives",
+            "approving_authority": "Scrutiny Committee constituted by the Vice-Chancellor (Clause 4.b)",
+            "detention_clause": "Attendance < 65.0% results in mandatory 'R' grade and semester debarment (Clause 4.e)",
+            "review_frequency": "Every 4 weeks with parental communication",
+        },
+        "grading_scale": [
+            {"relative_points_range": ">= 9.50", "category": "Outstanding", "letter_grade": "O", "points": 10},
+            {"relative_points_range": "8.50 to 9.49", "category": "Excellent", "letter_grade": "S", "points": 9},
+            {"relative_points_range": "7.00 to 8.49", "category": "Very Good", "letter_grade": "A", "points": 8},
+            {"relative_points_range": "6.00 to 6.99", "category": "Good", "letter_grade": "B", "points": 7},
+            {"relative_points_range": "5.00 to 5.99", "category": "Fair", "letter_grade": "C", "points": 6},
+            {"relative_points_range": "4.00 to 4.99", "category": "Marginal", "letter_grade": "M", "points": 4},
+            {"relative_points_range": "Transitional", "category": "Repeat (Failed CIE or Attendance)", "letter_grade": "R", "points": 0},
+            {"relative_points_range": "Transitional", "category": "Incomplete (Failed SEE)", "letter_grade": "I", "points": 0},
+        ],
+        "award_of_class": [
+            {"cgpa_range": ">= 8.00", "division": "First Class with Distinction"},
+            {"cgpa_range": "6.50 to 7.99", "division": "First Class"},
+            {"cgpa_range": "6.00 to 6.49", "division": "Second Class"},
+            {"cgpa_range": "< 6.00", "division": "Pass Class"},
+        ],
         "active_regulations": [
             {
                 "year": 2,
                 "cohort": "2024–2028 Batch",
                 "regulation": "R25",
-                "scheme_name": "R25 Academic Curriculum",
-                "key_features": "Revised 2024-25 syllabus, integrated theory-lab courses (e.g. DS-25CS201, DBMS-25CS203), continuous evaluation",
-                "attendance_threshold": "75% Mandatory (65%–74.9% Condonation band)",
+                "scheme_name": "R25 / C25 Outcome-Based Education (OBE) Curriculum",
+                "syllabus_source_pdf": "data/R25 C25 CSE Course Structure & Syllabus.pdf (212 Pages)",
+                "semester_credits": {"sem_1": 24, "sem_2": 23, "year_total": 47},
+                "key_features": "Revised 2024-25 syllabus, 25-series codes, integrated theory-practical courses (e.g. DS-25CS201, DBMS-25CS203, OOP Java 25CS204), continuous coding labs",
+                "attendance_threshold": "75.0% Mandatory (65.0%–74.99% Condonation band)",
+                "courses_preview": [
+                    "25CS201: Data Structures (4 Cr)",
+                    "25CS202: Web Technology (2 Cr)",
+                    "25CS203: DBMS (4 Cr)",
+                    "25CS204: OOP through JAVA (4 Cr)",
+                    "25CS205: Digital Logic Design (3 Cr)",
+                    "25CS206: Computer Organization & Architecture (3 Cr)",
+                    "25CS207: Design & Analysis of Algorithms (4 Cr)",
+                    "25CS208: Operating Systems (3 Cr)",
+                    "25CS209: Computer Networks (4 Cr)"
+                ]
             },
             {
                 "year": 3,
                 "cohort": "2023–2027 Batch",
                 "regulation": "C24",
                 "scheme_name": "C24 CBCS Specialization Scheme",
-                "key_features": "Choice-Based Credit System, department specialization tracks (AI/ML, Cloud, Security), industry internships",
-                "attendance_threshold": "75% Mandatory (65%–74.9% Condonation band)",
+                "syllabus_source_pdf": "data/R22C24 Syllabus book 01-08-2026.pdf (133 Pages)",
+                "semester_credits": {"sem_1": 21, "sem_2": 21, "year_total": 42},
+                "key_features": "Choice-Based Credit System, AI/ML specialization track (24CS302 AI, 24CS306 Machine Learning), Cloud & Mobile App Dev (24CS304), mandatory summer internships",
+                "attendance_threshold": "75.0% Mandatory (65.0%–74.99% Condonation band)",
+                "courses_preview": [
+                    "24CS301: Optimization Techniques (3 Cr)",
+                    "24CS302: Artificial Intelligence (3 Cr)",
+                    "24CS303: Computer Networks (4 Cr)",
+                    "24CS304: Mobile Application Development (2 Cr)",
+                    "24CS306: Machine Learning (3 Cr)",
+                    "22CS407: Cryptography & Network Security (3 Cr)",
+                    "24CS307: Inter Departmental Project (1 Cr)"
+                ]
             },
             {
                 "year": 4,
                 "cohort": "2022–2026 Batch",
                 "regulation": "C22",
-                "scheme_name": "C22 Graduating Curriculum",
-                "key_features": "Major Capstone Project, Semester-8 fast-track internship & campus placement drive eligibility",
-                "attendance_threshold": "75% Mandatory (65%–74.9% Condonation band)",
+                "scheme_name": "R22 Graduating Curriculum (In Compliance with NEP 2020)",
+                "syllabus_source_pdf": "data/R-22 syllabus book(01-08-2026).pdf (238 Pages)",
+                "semester_credits": {"sem_1": 21, "sem_2": 12, "year_total": 33},
+                "key_features": "Major Capstone Project (12 Credits dedicated in Sem 8), full-time corporate internship waiver for students securing placement offers (565 offers, Blinkit, TCS, Amazon)",
+                "attendance_threshold": "75.0% Mandatory (65.0%–74.99% Condonation band)",
+                "courses_preview": [
+                    "24CS401: Software Project Management (3 Cr)",
+                    "24CS402: Parallel & Distributed Computing (3 Cr)",
+                    "24CS403: Privacy and Intrusion Detection (3 Cr)",
+                    "22CS404 / 22CS405: 12-Credit Semester-Long Capstone Project / Corporate Internship"
+                ]
             },
         ]
     }

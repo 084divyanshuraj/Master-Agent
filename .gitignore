@@ -67,6 +67,7 @@ $RECYCLE.BIN/
 *.log.*
 logs/
 scratch/
+scratch_*
 temp/
 tmp/
 .tempmediaStorage/

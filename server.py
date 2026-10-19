@@ -51,6 +51,7 @@ from backend.db import (
     get_student_placement,
     get_multi_offer_students,
     get_regulations_summary,
+    get_regulation_courses,
 )
 
 load_dotenv()
@@ -571,6 +572,24 @@ async def get_student_placement_endpoint(roll_number: str):
 async def get_regulations_endpoint():
     """Returns official curriculum regulations matrix across active B.Tech CSE cohorts (R25, C24, C22)."""
     return get_regulations_summary()
+
+
+@app.get("/api/regulations/courses")
+@app.get("/regulations/courses")
+async def get_regulation_courses_endpoint(year: Optional[int] = None, semester: Optional[int] = None):
+    """Returns official course lists for a given year and semester."""
+    if year:
+        return {
+            "year": year,
+            "semester": semester,
+            "courses": get_regulation_courses(year, semester)
+        }
+    # Return all courses across Years 2, 3, 4
+    return {
+        "year_2_courses": get_regulation_courses(2),
+        "year_3_courses": get_regulation_courses(3),
+        "year_4_courses": get_regulation_courses(4),
+    }
 
 
 class ReportExportRequest(BaseModel):

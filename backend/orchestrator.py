@@ -43,6 +43,8 @@ from backend.db import (
     YEAR_REGULATION_MAP,
     get_regulation_for_year,
     get_regulations_summary,
+    get_regulation_courses,
+    OFFICIAL_CURRICULUM_COURSES,
 )
 
 logger = logging.getLogger("orchestrator")
@@ -1071,19 +1073,24 @@ class MasterOrchestrator:
                 "status": "success",
             }
 
-        # Deterministic Academic Regulations Matrix Query (R25, C24, C22)
+        # Deterministic Academic Regulations Matrix & Syllabus Book Query (R25, C24, C22)
         is_reg_kw = any(w in query_lower for w in [
             "regulation", "regulations", "r25", "c24", "c22", "r-25", "c-24", "c-22",
             "academic regulation", "curriculum regulation", "syllabus regulation",
-            "which regulation", "what regulation"
-        ])
+            "which regulation", "what regulation", "course structure", "syllabus book",
+            "syllabus", "curriculum", "courses in", "subjects in", "subject list",
+            "grading system", "passing marks", "evaluation scheme", "cie see",
+            "formative assessment", "summative assessment", "degree credits", "161 credits",
+            "relative grading", "award of class", "r grade", "condonation rule",
+            "attendance regulation", "honours degree", "minor specialization"
+        ]) or any(c in query_lower for c in ["25cs", "24cs", "25mt", "24mt", "22tp"])
         if is_reg_kw and not detected_student:
             target_year = None
-            if any(k in query_lower for k in ["2nd year", "year 2", "ii year", "second year", "2nd yr", "r25", "r-25"]) and not any(k in query_lower for k in ["3rd", "4th", "iii", "iv", "c24", "c22"]):
+            if any(k in query_lower for k in ["2nd year", "year 2", "ii year", "second year", "2nd yr", "r25", "r-25", "25cs", "25mt"]) and not any(k in query_lower for k in ["3rd", "4th", "iii", "iv", "c24", "c22"]):
                 target_year = 2
-            elif any(k in query_lower for k in ["3rd year", "year 3", "iii year", "third year", "3rd yr", "c24", "c-24"]) and not any(k in query_lower for k in ["2nd", "4th", "ii", "iv", "r25", "c22"]):
+            elif any(k in query_lower for k in ["3rd year", "year 3", "iii year", "third year", "3rd yr", "c24", "c-24", "24cs3", "22tp3"]) and not any(k in query_lower for k in ["2nd", "4th", "ii", "iv", "r25", "c22"]):
                 target_year = 3
-            elif any(k in query_lower for k in ["4th year", "year 4", "iv year", "fourth year", "final year", "4th yr", "c22", "c-22"]) and not any(k in query_lower for k in ["2nd", "3rd", "ii", "iii", "r25", "c24"]):
+            elif any(k in query_lower for k in ["4th year", "year 4", "iv year", "fourth year", "final year", "4th yr", "c22", "c-22", "24cs4", "22cs4"]) and not any(k in query_lower for k in ["2nd", "3rd", "ii", "iii", "r25", "c24"]):
                 target_year = 4
 
             y2_count = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 2)
@@ -1095,27 +1102,51 @@ class MasterOrchestrator:
                 year_roman = {2: "II", 3: "III", 4: "IV"}[target_year]
                 batch_str = {2: "2024–2028 Batch", 3: "2023–2027 Batch", 4: "2022–2026 Batch"}[target_year]
                 enrolled_count = {2: y2_count, 3: y3_count, 4: y4_count}[target_year]
+                src_pdf = {
+                    2: "data/R25 C25 CSE Course Structure & Syllabus.pdf (212 Pages)",
+                    3: "data/R22C24 Syllabus book 01-08-2026.pdf (133 Pages)",
+                    4: "data/R-22 syllabus book(01-08-2026).pdf (238 Pages)",
+                }[target_year]
+
+                reg_courses = OFFICIAL_CURRICULUM_COURSES.get(reg_code, {})
+                sem_tables_md = []
+                for sem_key, c_list in reg_courses.items():
+                    sem_title = sem_key.replace(f"year_{target_year}_", "").replace("_", " ").title()
+                    sem_credits_sum = sum(c["credits"] for c in c_list)
+                    rows = []
+                    for c in c_list:
+                        ltp = f"{c['l']}-{c['t']}-{c['p']}"
+                        rows.append(f"| `{c['code']}` | **{c['title']}** | {ltp} | **{c['credits']}** | {c['category']} |")
+                    t_str = (
+                        f"##### 📚 {year_roman} Year {sem_title} ({sem_credits_sum} Credits)\n"
+                        f"| Course Code | Course Title | L-T-P | Credits | Course Category |\n"
+                        f"|---|---|---|---|---|\n"
+                        + "\n".join(rows)
+                    )
+                    sem_tables_md.append(t_str)
+
+                course_matrix_str = "\n\n".join(sem_tables_md)
 
                 details_map = {
                     2: (
                         "• **Curriculum Framework:** Revised Outcome-Based Education (OBE) syllabus with integrated theory-cum-practical courses.\n"
-                        "• **Course Code Structure:** Standardized `25` series (e.g., `DS-25CS201`, `DBMS-25CS203`, `DAA-25CS205`, `OS-25CS207`).\n"
-                        "• **Evaluation Scheme:** 60% Continuous Internal Evaluation (CIE) + 40% Semester-End Examination (SEE).\n"
-                        "• **Laboratory Component:** In-course continuous programming lab assessments (Java, Python, DBMS).\n"
-                        "• **Attendance Mandate:** Mandatory $\ge 75\%$ overall attendance; 65.0%–74.99% condonation band upon Medical Board recommendation; $<65\%$ results in immediate semester detention."
+                        "• **Course Code Structure:** Standardized `25` series (e.g., `DS-25CS201`, `DBMS-25CS203`, `DAA-25CS207`, `OS-25CS208`).\n"
+                        "• **Evaluation Scheme (Clause 5.1):** 60% Continuous Internal Evaluation (CIE) + 40% Semester-End Examination (SEE).\n"
+                        "• **Min Pass Marks (Clause 5.2):** Min 35% in CIE (21/60 marks) AND Min 35% in SEE (14/40 marks); Grade $\ge 4.0$.\n"
+                        "• **Attendance Mandate (Clause 4):** Mandatory $\ge 75\%$ aggregate attendance; 65.0%–74.99% condonation band upon VC committee approval; $<65\%$ results in mandatory 'R' (Repeat) detention."
                     ),
                     3: (
                         "• **Curriculum Framework:** Choice-Based Credit System (CBCS) with departmental specialization tracks.\n"
-                        "• **Specialization Verticals:** Artificial Intelligence & Machine Learning (AI/ML), Cloud Computing & DevOps, Cybersecurity & Forensics.\n"
-                        "• **Industrial Exposure:** Mandatory 6-to-8 week summer internship after 6th semester with 2 academic credits.\n"
-                        "• **Professional Electives:** Choice of open electives across inter-disciplinary departments (ECE, Management, BioTech).\n"
-                        "• **Attendance Mandate:** Mandatory $\ge 75\%$ overall attendance; 65.0%–74.99% condonation band; $<65\%$ semester detention."
+                        "• **Specialization Verticals:** Artificial Intelligence & Machine Learning (`24CS302 AI`, `24CS306 ML`), Cloud & Mobile App Dev (`24CS304`), Cybersecurity (`22CS407 CNS`).\n"
+                        "• **Industrial Exposure:** Mandatory 6-to-8 week summer internship with academic credits.\n"
+                        "• **Evaluation Scheme (Clause 5.1):** 60% Formative Assessment (CIE) : 40% Summative Assessment (SEE).\n"
+                        "• **Attendance Mandate (Clause 4):** Mandatory $\ge 75\%$ overall attendance; 65.0%–74.99% condonation band; $<65\%$ semester detention in 'R' grade."
                     ),
                     4: (
-                        "• **Curriculum Framework:** Final-Year Capstone and Corporate Fast-Track Placement Curriculum.\n"
-                        "• **Major Project (Capstone):** 12 Academic Credits dedicated to industry-sponsored or faculty-guided research projects.\n"
-                        "• **Fast-Track Placement Eligibility:** Semester-8 full-time corporate internship waiver for students securing placement offers (565 offers recorded, e.g., Blinkit @ 4.2 LPA, TCS Prime, Amazon SDE).\n"
-                        "• **Degree Completion Clause:** N+2 maximum allowable completion window for clearance of arrears.\n"
+                        "• **Curriculum Framework:** Final-Year Capstone and Corporate Fast-Track Placement Curriculum (NEP 2020 Compliant).\n"
+                        "• **Major Project (Capstone):** 12 Academic Credits dedicated to corporate internship / research capstone in Semester 8 (`22CS404 / 22CS405`).\n"
+                        "• **Fast-Track Placement Eligibility:** Full-time corporate internship waiver for students securing placement offers (565 offers recorded, e.g., Blinkit @ 4.2 LPA, TCS Prime, Amazon SDE).\n"
+                        "• **Degree Completion Window:** N+2 maximum allowable completion window for clearance of arrears.\n"
                         "• **Attendance Mandate:** Mandatory $\ge 75\%$ aggregate attendance to issue hall tickets for semester-end project viva."
                     ),
                 }
@@ -1124,16 +1155,20 @@ class MasterOrchestrator:
                 reg_answer = (
                     f"### 📜 Official B.Tech CSE {year_roman} Year Academic Regulation: {reg_code}\n"
                     f"**Department of Computer Science & Engineering | VFSTR Academic Affairs & Examination Directorate**\n\n"
-                    f"| Regulation Parameter | Official Departmental Specification |\n"
+                    f"| Regulation Parameter | Official Institutional Specification |\n"
                     f"|---|---|\n"
                     f"| **Academic Year & Level** | B.Tech CSE — Year {year_roman} ({batch_str}) |\n"
                     f"| **Enforced Regulation** | 📜 **{reg_code} Regulation** |\n"
                     f"| **Total Enrolled Strength** | **{enrolled_count:,} Students** across 20 Sections |\n"
-                    f"| **Evaluation Scheme** | 60% CIE (Continuous Internal) : 40% SEE (Semester-End Exam) |\n"
-                    f"| **Attendance Requirement** | **75.0% Mandatory** (Condonation Band: 65.0%–74.99%, Detention: <65.0%) |\n"
+                    f"| **Official Syllabus Dossier** | 📑 `{src_pdf}` |\n"
+                    f"| **Evaluation Ratio (Clause 5.1)** | **60% Formative (CIE) : 40% Summative (SEE)** |\n"
+                    f"| **Qualifying Cutoffs (Clause 5.2)** | **CIE: $\ge 21/60$ marks (35%)** \| **SEE: $\ge 14/40$ marks (35%)** \| Min 4.0 Grade |\n"
+                    f"| **Attendance Mandate (Clause 4)** | **75.0% Mandatory** (Condonation Band: 65.0%–74.99%, Detention: <65.0%) |\n"
                     f"| **Accreditation Benchmarking** | NAAC 'A+' | NBA Tier-1 Outcome-Based Education (OBE) |\n\n"
                     f"#### 🎯 Key Features of {reg_code} Regulation\n"
                     f"{features}\n\n"
+                    f"#### 📋 Official Course Curriculum Structure ({reg_code})\n"
+                    f"{course_matrix_str}\n\n"
                     f"#### 🏛️ Master Department Regulation Framework across All Years\n"
                     f"| Year / Level | Academic Cohort | Enforced Regulation | Core Scheme & Delivery Mode |\n"
                     f"|---|---|---|---|\n"
@@ -1141,27 +1176,43 @@ class MasterOrchestrator:
                     f"| **III Year** | 2023–2027 Batch | 📜 **C24 Regulation** | Choice-Based Credit System (CBCS), AI/ML & Cyber Tracks, Summer Internships |\n"
                     f"| **IV Year** | 2022–2026 Batch | 📜 **C22 Regulation** | Capstone Major Project (12 Credits), Fast-Track Corporate Placements (565 Offers) |\n\n"
                     f"**Regulatory Governance:**\n"
-                    f"• Formally approved by Academic Council and Board of Studies (BOS) in Computer Science & Engineering.\n"
+                    f"• Formally extracted and verified from official departmental syllabus workbooks.\n"
                     f"• Synchronized under Academic Operations (Agent 01), Course Outcome (Agent 08), and Accreditation Cell (Agent 09)."
                 )
             else:
                 reg_answer = (
                     "### 📜 Official B.Tech CSE Academic Regulations Master Matrix\n"
-                    "**Vignan's Foundation for Science, Technology & Research (VFSTR) | Department of Computer Science & Engineering**\n\n"
+                    "**Vignan's Foundation for Science, Technology & Research (VFSTR) | Department of Computer Science & Engineering**\n"
+                    "*Verified against official syllabus books: `R25 C25 CSE Syllabus (212 p)`, `R22C24 Syllabus (133 p)`, `R-22 Regulations (238 p)`*\n\n"
                     "| Academic Year | Cohort Batch | Enforced Regulation | Enrolled Strength | Curriculum Scheme & Focus |\n"
                     "|---|---|---|---|---|\n"
-                    f"| **II Year** | 2024–2028 Batch | 📜 **R25 Regulation** | **{y2_count:,} Students** (Sec 1–20) | Revised OBE Syllabus, Integrated Theory-Practical Courses, Continuous Lab Assessment |\n"
+                    f"| **II Year** | 2024–2028 Batch | 📜 **R25 Regulation** | **{y2_count:,} Students** (Sec 1–20) | Revised OBE Syllabus, Integrated Theory-Practical Courses (25CS Series), Continuous Lab Assessment |\n"
                     f"| **III Year** | 2023–2027 Batch | 📜 **C24 Regulation** | **{y3_count:,} Students** (Sec 1–20) | Choice-Based Credit System (CBCS), Specialization Verticals (AI/ML, Cloud, Security), Internships |\n"
                     f"| **IV Year** | 2022–2026 Batch | 📜 **C22 Regulation** | **{y4_count:,} Students** (Sec 1–20) | 12-Credit Capstone Project, Fast-Track Corporate Placement Waiver (565 Offers extended) |\n\n"
-                    "#### 📋 Uniform University Academic & Examination Standards\n"
-                    "| Standardized Clause | Departmental Regulation Specification |\n"
-                    "|---|---|\n"
-                    "| **Mandatory Attendance** | **75.0% Overall Aggregate** required in every semester to appear for Semester-End Examinations (SEE). |\n"
-                    "| **Condonation Window** | **65.0% to 74.99%** condonable on genuine medical / university duty grounds upon VC approval (Clause 4.3). |\n"
-                    "| **Detention Clause** | Aggregate attendance **< 65.0%** results in mandatory semester detention; student must repeat the semester. |\n"
-                    "| **Evaluation Ratio** | **60% Continuous Internal Evaluation (CIE)** : **40% Semester-End Examination (SEE)**. |\n"
-                    "| **Degree Duration** | Maximum degree completion limit is **$N + 2$ years** (6 years for 4-year B.Tech program). |\n\n"
-                    "**Accreditation & Quality Assurance:**\n"
+                    "#### 📊 Official VFSTR Degree & Evaluation Architecture\n"
+                    "| Statutory Parameter | Institutional Specification | Academic Clause Reference |\n"
+                    "|---|---|---|\n"
+                    "| **Total Degree Credits** | **161 Credits (Regular B.Tech)** \| **181 Credits (Research Honours)** | Clause 1.4 & Clause 9.2 |\n"
+                    "| **Evaluation Model** | **60% Formative (CIE) : 40% Summative (SEE)** | Clause 5.1 (Marks distribution) |\n"
+                    "| **Internal (CIE) Cutoff** | **$\ge 35\%$ (Min 21 out of 60 marks)** | Failure leads to 'R' (Repeat) Grade |\n"
+                    "| **End-Exam (SEE) Cutoff** | **$\ge 35\%$ (Min 14 out of 40 marks)** | Failure leads to 'I' (Incomplete) Grade |\n"
+                    "| **Overall Passing Grade** | **Min 4.0 Grade Point** on a 10.0 relative scale | Clause 5.2 |\n"
+                    "| **Mandatory Attendance** | **75.0% Overall Aggregate** of L, T, P sessions | Clause 4.0 |\n"
+                    "| **Medical Condonation** | **65.0% to 74.99%** condonable upon VC Scrutiny Committee approval | Clause 4.b |\n"
+                    "| **Mandatory Detention** | **< 65.0%** results in immediate semester detention in 'R' grade | Clause 4.e |\n"
+                    "| **Degree Completion Limit** | **$N + 2$ years** (6 years max for 4-year B.Tech program) | Clause 1.3 |\n\n"
+                    "#### 🏆 Official Letter Grading Scale (Table 9) & Award of Class (Table 10)\n"
+                    "| Relative Points Range (P) | Performance Category | Letter Grade (G) | Grade Points | Award of Class (CGPA) |\n"
+                    "|---|---|---|---|---|\n"
+                    "| **$P \ge 9.50$** | 🌟 Outstanding | **O** | **10** | **CGPA $\ge 8.00$**: First Class with Distinction |\n"
+                    "| **$8.50 \le P < 9.50$** | ✨ Excellent | **S** | **9** | **$6.50 \le \text{CGPA} < 8.00$**: First Class |\n"
+                    "| **$7.00 \le P < 8.50$** | ✅ Very Good | **A** | **8** | **$6.00 \le \text{CGPA} < 6.50$**: Second Class |\n"
+                    "| **$6.00 \le P < 7.00$** | ⚠️ Good | **B** | **7** | **$\text{CGPA} < 6.00$**: Pass Class |\n"
+                    "| **$5.00 \le P < 6.00$** | 📋 Fair | **C** | **6** | — |\n"
+                    "| **$4.00 \le P < 5.00$** | ⚠️ Marginal | **M** | **4** | — |\n"
+                    "| **Transitional Grade** | 🚨 Repeat (Failed CIE or Attendance) | **R** | **0** | Mandatory re-registration |\n"
+                    "| **Transitional Grade** | ⏳ Incomplete (Failed SEE) | **I** | **0** | Re-appear in Supplementary Exam |\n\n"
+                    "**Quality Assurance Seal:**\n"
                     "• Curriculum aligned with National Board of Accreditation (NBA Tier-1) and UGC Model Curriculum.\n"
                     "• Monitored across Academic Operations (Agent 01), Course Outcome (Agent 08), and Accreditation Cell (Agent 09)."
                 )
