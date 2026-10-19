@@ -605,13 +605,91 @@ class MasterOrchestrator:
                         "status": "success",
                     }
 
-        # Deterministic Faculty Directory & Course Allocation Query
-        is_fac_kw = any(w in query_lower for w in ["faculty directory", "faculty list", "cse faculties", "faculty members", "who teaches", "classes of", "faculty contact", "teacher of", "who is teaching"])
+        # Deterministic Faculty Directory, Leadership & Course Allocation Query
+        is_fac_kw = any(w in query_lower for w in [
+            "faculty directory", "faculty list", "cse faculties", "faculty members", "who teaches",
+            "classes of", "faculty contact", "teacher of", "who is teaching", "faculty", "faculties",
+            "hod", "head of department", "dean", "deputy hod", "phani kumar", "krishna kishore",
+            "umadevi", "deva kumar", "yakobu", "siva prasad", "emp id", "employee id", "counsellor list"
+        ])
         if is_fac_kw and not detected_student:
+            # 1. Check for specific Department Leadership queries (HOD / Dean)
+            is_hod_query = any(w in query_lower for w in ["who is the hod", "hod of cse", "cse hod", "head of the department", "head of department", "deputy hod", "department heads"])
+            is_dean_query = any(w in query_lower for w in ["who is the dean", "dean of soci", "dean soci", "soci dean", "school of computing dean"])
+
+            if is_hod_query:
+                hod_answer = (
+                    "### 👔 Official Department Leadership — Computer Science & Engineering\n"
+                    "**Vignan's Foundation for Science, Technology & Research (VFSTR) | Official Registry**\n\n"
+                    "| Leadership Role | Official Name | Employee ID | Designation | Official Contact |\n"
+                    "|---|---|---|---|---|\n"
+                    "| 🏛️ **Head of Department (HOD)** | **Dr. S V Phani Kumar** | `675` | Professor & HOD | `9912514034` |\n"
+                    "| 📋 **Deputy HOD** | **Dr. M. Umadevi** | `02342` | Assoc. Prof. & Deputy HoD | `9603329592` |\n"
+                    "| 📋 **Deputy HOD** | **Dr. S. Deva Kumar** | `189` | Assoc. Prof. & Deputy HoD | `9959949221` |\n"
+                    "| 📋 **Deputy HOD** | **Dr. Jhansi Lakshmi P.** | `01702` | Assoc. Prof. & Deputy HoD | `8500719259` |\n"
+                    "| 🎯 **Training HOD** | **Dr. D. Yakobu** | `714` | Assoc. Prof. & Training HoD | `9912012626` |\n\n"
+                    "**Administrative Governance:**\n"
+                    "• Department operations governed under Vignan AI Master Agent Architecture.\n"
+                    "• Full faculty workload tracked in real-time under Agent 03 (Faculty Workload Engine)."
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = hod_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": hod_answer,
+                    "mode": mode,
+                    "route": "department_leadership",
+                    "citations": [
+                        {"name": "Departmental Leadership Registry", "url": "https://vignan.ac.in/academics/cse"},
+                        {"name": "Agent 01 — Academic Operations", "url": "https://agent-hackathon.onrender.com/login"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
+
+            if is_dean_query:
+                dean_answer = (
+                    "### 🎓 School Leadership — School of Computing & Informatics (SOCI)\n"
+                    "**Vignan's Foundation for Science, Technology & Research (VFSTR) | Official Registry**\n\n"
+                    "| Leadership Role | Official Name | Employee ID | Official Designation | Contact Number |\n"
+                    "|---|---|---|---|---|\n"
+                    "| 🏛️ **Dean, SOCI** | **Prof. Dr. K.V.Krishna Kishore** | `163` | Professor & Dean SOCI | `9490647678` |\n\n"
+                    "**Jurisdiction & Strategic Oversight:**\n"
+                    "• Oversees Department of Computer Science & Engineering, IT, AI & Data Science.\n"
+                    "• Supervises accreditation standards under NAAC A+ and NBA Tier-1 compliances."
+                )
+                trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
+                trace_data["final_answer"] = dean_answer
+                db.log_query(trace_data)
+                return {
+                    "answer": dean_answer,
+                    "mode": mode,
+                    "route": "dean_profile",
+                    "citations": [
+                        {"name": "VFSTR Deans & Leadership Registry", "url": "https://vignan.ac.in/academics"},
+                        {"name": "Agent 09 — Accreditation Dossier", "url": "https://vignan-accreditation-agent-rmibobgo5lojrogjovrz7z.streamlit.app/"}
+                    ],
+                    "trace": trace_data,
+                    "status": "success",
+                }
+
+            # 2. Check for individual Faculty Profile Match
             matched_fac = None
             for f in IN_MEMORY_FACULTIES:
-                f_clean = re.sub(r'^(dr\.|mr\.|mrs\.|ms\.)\s*', '', f["name"].lower()).strip()
+                # Match by Emp ID
+                emp_str = str(f.get("emp_id", "")).strip()
+                if emp_str and emp_str.lower() in query_lower:
+                    matched_fac = f
+                    break
+
+                # Match by cleaned name
+                f_clean = re.sub(r'^(prof\.|dr\.|mr\.|mrs\.|ms\.)\s*', '', f["name"].lower()).strip()
+                f_clean_tokens = [t for t in re.split(r'[\.\,\s\-_]+', f_clean) if len(t) >= 4]
                 if len(f_clean) >= 4 and f_clean in query_lower:
+                    matched_fac = f
+                    break
+                # Match by unique significant name tokens (e.g. "phani kumar", "krishna kishore", "umadevi", "yakobu")
+                if len(f_clean_tokens) >= 2 and all(t in query_lower for t in f_clean_tokens):
                     matched_fac = f
                     break
 
@@ -623,6 +701,9 @@ class MasterOrchestrator:
 
                 ct_str = ", ".join(matched_fac.get("class_teacher_of", [])) or "None (Course Faculty)"
                 phone_str = f"`{matched_fac['phone']}`" if matched_fac.get("phone") else "Recorded in Department Directory"
+                emp_str = f"`{matched_fac.get('emp_id', 'N/A')}`"
+                desig_str = matched_fac.get("designation", "Faculty Member")
+                mentees_count = matched_fac.get("mentees_count", 0)
 
                 fac_answer = (
                     f"### 👨‍🏫 Official Faculty Profile: {matched_fac['name']}\n"
@@ -630,8 +711,12 @@ class MasterOrchestrator:
                     f"| Academic Parameter | Official Departmental Record |\n"
                     f"|---|---|\n"
                     f"| **Faculty Name** | **{matched_fac['name']}** |\n"
-                    f"| **Official Contact Number** | {phone_str} |\n"
+                    f"| **Employee ID** | {emp_str} |\n"
+                    f"| **Official Designation** | 🎖️ **{desig_str}** |\n"
+                    f"| **Department** | {matched_fac.get('department', 'Computer Science & Engineering')} |\n"
+                    f"| **Official Contact Number** | 📞 {phone_str} |\n"
                     f"| **Class Teacher Responsibility** | 🏛️ **{ct_str}** |\n"
+                    f"| **Assigned Mentee Capacity** | 🤝 **{mentees_count} Student Mentees** |\n"
                     f"| **Total Section Allocations** | **{len(matched_fac.get('courses', []))} Course Allocations** |\n\n"
                     f"#### 📚 Course Teaching Allocations\n"
                     f"| Year & Section | Assigned Course / Laboratory Component |\n"
@@ -655,27 +740,28 @@ class MasterOrchestrator:
                     "trace": trace_data,
                     "status": "success",
                 }
-            elif any(w in query_lower for w in ["faculty directory", "faculty list", "cse faculties", "faculty members"]):
+            elif any(w in query_lower for w in ["faculty directory", "faculty list", "cse faculties", "faculty members", "faculties"]):
                 summ = get_timetables_summary()
-                top_fac = IN_MEMORY_FACULTIES[:12]
+                # Prioritize top official CSE faculty with leadership first
+                top_fac = IN_MEMORY_FACULTIES[:14]
                 fac_rows = []
                 for f in top_fac:
                     ph = f.get('phone') or 'Department Direct'
-                    ct = f.get('class_teacher_of', [])
-                    ct_d = f"CT: {ct[0]}" if ct else "Faculty"
+                    desig = f.get('designation', 'Faculty')
                     c_count = len(f.get('courses', []))
-                    fac_rows.append(f"| **{f['name']}** | `{ph}` | {ct_d} | {c_count} Courses |")
+                    emp_code = f.get('emp_id', '')
+                    fac_rows.append(f"| **{f['name']}** | `{emp_code}` | {desig} | `{ph}` | {c_count} Courses |")
                 fac_table = "\n".join(fac_rows)
 
                 dir_answer = (
                     f"### 👨‍🏫 Official VFSTR CSE Department — Faculty Directory\n"
                     f"**Department of Computer Science & Engineering | Verified Academic Registry**\n\n"
-                    f"Total Registered Faculty Members: **{summ['total_faculties']} Faculty Members** | Sections Covered: **60 Sections across Years II, III, IV**\n\n"
-                    f"| Faculty Name | Contact Number | Role / Class Teacher | Allocations |\n"
-                    f"|---|---|---|---|\n"
+                    f"Total Registered Faculty Members: **157 Official Faculty & Teaching Associates** ({summ['total_faculties']} Total Unified) | Sections Covered: **60 Sections across Years II, III, IV**\n\n"
+                    f"| Faculty Name | Emp ID | Designation | Contact Number | Allocations |\n"
+                    f"|---|---|---|---|---|\n"
                     f"{fac_table}\n\n"
                     f"**Search Tip:**\n"
-                    f"• Query any faculty member by name (e.g., *'Classes of Dr. Satish Kumar Satti'* or *'Contact of Dr. P. Siva Prasad'*) to view their complete teaching schedule and phone number."
+                    f"• Query any faculty member by name or Emp ID (e.g., *'Classes of Dr. S V Phani Kumar'*, *'Emp ID 675'*, or *'Contact of Dr. M. Umadevi'*) to view their complete teaching schedule and phone number."
                 )
                 trace_data["total_time_ms"] = int((time.time() - start_time) * 1000)
                 trace_data["final_answer"] = dir_answer

@@ -6,6 +6,7 @@ Supports MongoDB Atlas persistence with automatic in-memory fallback.
 import os
 import time
 import json
+import re
 import logging
 import hashlib
 import secrets
@@ -48,24 +49,61 @@ def _verify_password(stored_hash: str, password: str) -> bool:
 
 
 def seed_default_users():
-    """Seeds default demo staff credentials into MongoDB and memory."""
+    """Seeds official department leadership and demo credentials into MongoDB and memory."""
     demo_users = [
+        # Official Professor & HOD CSE (Dr. S V Phani Kumar - Emp ID: 675)
         {
-            "name": "Dr. K. V. Rao",
-            "rollNumber": "VFSTR-HOD-CSE-01",
-            "email": "kvrao@vignan.ac.in",
+            "name": "Dr. S V Phani Kumar",
+            "rollNumber": "675",
+            "email": "675@vignan.ac.in",
             "role": "hod",
             "department": "CSE",
             "password": "vignan123",
         },
         {
-            "name": "Dr. M. S. Naidu",
-            "rollNumber": "VFSTR-DEAN-ACAD-04",
-            "email": "msnaidu@vignan.ac.in",
-            "role": "dean",
-            "department": "ACADEMICS",
+            "name": "Dr. S V Phani Kumar",
+            "rollNumber": "VFSTR-HOD-CSE-01",
+            "email": "svphanikumar@vignan.ac.in",
+            "role": "hod",
+            "department": "CSE",
             "password": "vignan123",
         },
+        # Official Professor & Dean SOCI (Prof. Dr. K.V.Krishna Kishore - Emp ID: 163)
+        {
+            "name": "Prof. Dr. K.V.Krishna Kishore",
+            "rollNumber": "163",
+            "email": "163@vignan.ac.in",
+            "role": "dean",
+            "department": "SOCI",
+            "password": "vignan123",
+        },
+        {
+            "name": "Prof. Dr. K.V.Krishna Kishore",
+            "rollNumber": "VFSTR-DEAN-ACAD-04",
+            "email": "kvkrishnakishore@vignan.ac.in",
+            "role": "dean",
+            "department": "SOCI",
+            "password": "vignan123",
+        },
+        # Official Deputy HOD CSE (Dr. M. Umadevi - Emp ID: 02342)
+        {
+            "name": "Dr. M. Umadevi",
+            "rollNumber": "02342",
+            "email": "02342@vignan.ac.in",
+            "role": "deputy_hod",
+            "department": "CSE",
+            "password": "vignan123",
+        },
+        # Official Deputy HOD CSE (Dr. S. Deva Kumar - Emp ID: 189)
+        {
+            "name": "Dr. S. Deva Kumar",
+            "rollNumber": "189",
+            "email": "189@vignan.ac.in",
+            "role": "deputy_hod",
+            "department": "CSE",
+            "password": "vignan123",
+        },
+        # Controller of Examinations
         {
             "name": "Prof. S. R. Murthy",
             "rollNumber": "VFSTR-COE-ADM-12",
@@ -94,7 +132,7 @@ def seed_default_users():
             try:
                 mongo_db["users"].update_one(
                     {"rollNumber": emp},
-                    {"$setOnInsert": doc},
+                    {"$set": doc},
                     upsert=True
                 )
             except Exception as e:
@@ -807,27 +845,83 @@ def get_student_timetable(roll_number: str) -> Optional[Dict[str, Any]]:
 
 
 def get_faculty_profile(faculty_name: str) -> Optional[Dict[str, Any]]:
-    """Searches faculty directory for exact or fuzzy match, returning courses and sections taught."""
+    """Searches faculty directory by name, employee ID, designation, or phone number."""
     if not faculty_name:
         return None
-    q = faculty_name.strip().upper()
+    q = faculty_name.strip()
+    q_upper = q.upper()
+
+    # 1. Leadership alias lookups
+    if any(q_upper == k for k in ["HOD", "HEAD OF DEPARTMENT", "HOD CSE", "CSE HOD", "CURRENT HOD"]):
+        for f in IN_MEMORY_FACULTIES:
+            desig = f.get("designation", "").upper()
+            if "HOD" in desig and "DEPUTY" not in desig:
+                return f
+
+    if any(q_upper == k for k in ["DEAN", "DEAN SOCI", "SOCI DEAN", "DEAN OF SOCI"]):
+        for f in IN_MEMORY_FACULTIES:
+            if "DEAN" in f.get("designation", "").upper():
+                return f
+
+    # 2. Exact Employee ID lookup
     for f in IN_MEMORY_FACULTIES:
-        if q in f.get("name", "").upper():
+        if str(f.get("emp_id", "")).strip().upper() == q_upper:
             return f
+
+    # 3. Direct or Substring Name lookup
+    for f in IN_MEMORY_FACULTIES:
+        if q_upper in f.get("name", "").upper():
+            return f
+
+    # 4. Normalized Name lookup (ignoring titles and punctuation)
+    norm_q = re.sub(r"^(prof\.|dr\.|mr\.|mrs\.|ms\.)\s*", "", q, flags=re.IGNORECASE).strip().lower()
+    norm_q_clean = re.sub(r"[\.\,\s\-_]+", "", norm_q)
+    if len(norm_q_clean) >= 3:
+        for f in IN_MEMORY_FACULTIES:
+            f_norm = re.sub(r"^(prof\.|dr\.|mr\.|mrs\.|ms\.)\s*", "", f.get("name", ""), flags=re.IGNORECASE)
+            f_clean = re.sub(r"[\.\,\s\-_]+", "", f_norm).lower()
+            if norm_q_clean in f_clean or f_clean in norm_q_clean:
+                return f
+
+    # 5. Phone lookup
+    phone_clean = re.sub(r"[^0-9]", "", q)
+    if len(phone_clean) >= 10:
+        for f in IN_MEMORY_FACULTIES:
+            if f.get("phone") == phone_clean:
+                return f
+
+    # 6. MongoDB fallback
+    if is_mongo_connected and mongo_db is not None:
+        try:
+            doc = mongo_db["faculties"].find_one({
+                "$or": [
+                    {"emp_id": q},
+                    {"name": {"$regex": re.escape(q), "$options": "i"}},
+                    {"phone": phone_clean if len(phone_clean) >= 10 else q}
+                ]
+            }, {"_id": 0})
+            if doc:
+                return doc
+        except Exception as e:
+            logger.error(f"MongoDB faculty query error: {e}")
+
     return None
 
 
-def search_faculties(query: str, limit: int = 20) -> List[Dict[str, Any]]:
-    """Searches faculty directory by name, course taught, or phone number."""
+def search_faculties(query: str, limit: int = 30) -> List[Dict[str, Any]]:
+    """Searches official faculty directory by name, employee ID, designation, course, or phone number."""
     if not query:
         return IN_MEMORY_FACULTIES[:limit]
     q = query.strip().upper()
+    phone_q = re.sub(r"[^0-9]", "", query)
     res = []
     for f in IN_MEMORY_FACULTIES:
+        emp_match = q == str(f.get("emp_id", "")).strip().upper()
         name_match = q in f.get("name", "").upper()
-        phone_match = q in f.get("phone", "")
+        desig_match = q in f.get("designation", "").upper()
+        phone_match = (len(phone_q) >= 4 and phone_q in f.get("phone", ""))
         course_match = any(q in c.get("subject", "").upper() for c in f.get("courses", []))
-        if name_match or phone_match or course_match:
+        if emp_match or name_match or desig_match or phone_match or course_match:
             res.append(f)
             if len(res) >= limit:
                 break

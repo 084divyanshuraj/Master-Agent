@@ -376,9 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (quickHodBtn) {
     quickHodBtn.addEventListener('click', () => {
       switchAuthTab('signin');
-      loginEmployeeCode.value = 'VFSTR-HOD-CSE-01';
+      loginEmployeeCode.value = '675';
       loginPassword.value = 'vignan123';
-      bujiGreetingText.innerHTML = `Welcome, <strong>Dr. K. V. Rao (HoD CSE)</strong>! Pre-filled demo credentials: <code>vignan123</code>. Click below to enter.`;
+      bujiGreetingText.innerHTML = `Welcome, <strong>Dr. S. V. Phani Kumar (Professor & HOD CSE)</strong>! Pre-filled credentials (Emp ID: <code>675</code>): <code>vignan123</code>. Click below to enter.`;
       triggerInputEffect(loginEmployeeCode);
       triggerInputEffect(loginPassword);
       hideAuthAlert();
@@ -388,9 +388,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (quickDeanBtn) {
     quickDeanBtn.addEventListener('click', () => {
       switchAuthTab('signin');
-      loginEmployeeCode.value = 'VFSTR-DEAN-ACAD-04';
+      loginEmployeeCode.value = '163';
       loginPassword.value = 'vignan123';
-      bujiGreetingText.innerHTML = `Welcome, Dean <strong>Dr. M. S. Naidu</strong>! Full university academic audit logs and credit databases are accessible.`;
+      bujiGreetingText.innerHTML = `Welcome, Dean <strong>Prof. Dr. K. V. Krishna Kishore (Dean SOCI)</strong>! Full university academic audit logs and credit databases are accessible.`;
       triggerInputEffect(loginEmployeeCode);
       triggerInputEffect(loginPassword);
       hideAuthAlert();
