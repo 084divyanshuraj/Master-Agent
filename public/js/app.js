@@ -67,13 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnVoiceInput = document.getElementById('btnVoiceInput');
   const micIconNormal = document.getElementById('micIconNormal');
   const micWaveAnim = document.getElementById('micWaveAnim');
-  const btnToggleVoiceMode = document.getElementById('btnToggleVoiceMode');
   const quickPromptChips = document.querySelectorAll('.chip-suggestion-btn');
   
-  // Voice Interaction State (Speech-to-Text & Text-to-Speech)
-  let autoVoiceEnabled = localStorage.getItem('vignan_auto_voice') !== 'false';
+  // Voice Interaction State (Speech-to-Text & On-Demand Text-to-Speech)
   let isSpeechRecognitionActive = false;
   let recognitionInstance = null;
+  let currentUtterance = null;
   
   // Agent Drawer Modal Elements
   const agentDrawerModal = document.getElementById('agentDrawerModal');
@@ -924,33 +923,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   function initVoiceInteraction() {
-    // 1. Initialize Auto-Voice Mode Toggle Button
-    if (btnToggleVoiceMode) {
-      if (autoVoiceEnabled) {
-        btnToggleVoiceMode.classList.remove('muted');
-        btnToggleVoiceMode.textContent = '🔊 Auto-Voice: ON';
-      } else {
-        btnToggleVoiceMode.classList.add('muted');
-        btnToggleVoiceMode.textContent = '🔈 Auto-Voice: OFF';
-      }
-
-      btnToggleVoiceMode.addEventListener('click', () => {
-        autoVoiceEnabled = !autoVoiceEnabled;
-        if (autoVoiceEnabled) {
-          btnToggleVoiceMode.classList.remove('muted');
-          btnToggleVoiceMode.textContent = '🔊 Auto-Voice: ON';
-          showToast('Voice of Buji auto-speech enabled.', 'info');
-        } else {
-          stopSpeechSynthesis();
-          btnToggleVoiceMode.classList.add('muted');
-          btnToggleVoiceMode.textContent = '🔈 Auto-Voice: OFF';
-          showToast('Voice auto-speech muted.', 'info');
-        }
-        localStorage.setItem('vignan_auto_voice', autoVoiceEnabled ? 'true' : 'false');
-      });
-    }
-
-    // 2. Initialize Speech Recognition (STT Microphone)
+    // Initialize Speech Recognition (STT Microphone)
     if (!SpeechRecognition) {
       if (btnVoiceInput) {
         btnVoiceInput.addEventListener('click', () => {
@@ -1042,6 +1015,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function cleanMarkdownForSpeech(md) {
     if (!md) return '';
     let text = md;
+    // Strip HTML tags (<p>, <br>, <strong>, etc.)
+    text = text.replace(/<[^>]+>/g, ' ');
     // Strip markdown tables entirely
     text = text.replace(/\|[^\n]+\|/g, ' ');
     text = text.replace(/\|---[^\n]+\|/g, ' ');
@@ -1059,16 +1034,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Normalize spaces
     text = text.replace(/\s+/g, ' ').trim();
 
-    // Take first 3 concise sentences so speech is pleasant and not overwhelmingly long
+    // Take first 4-5 concise sentences (up to 450 chars) for a pleasant spoken summary
     const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-    const speechSummary = sentences.slice(0, 3).join(' ');
-    return speechSummary || text.slice(0, 260);
+    const speechSummary = sentences.slice(0, 5).join(' ');
+    return speechSummary || text.slice(0, 450);
   }
 
   function stopSpeechSynthesis() {
     if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
+      try {
+        window.speechSynthesis.cancel();
+      } catch (e) {}
     }
+    currentUtterance = null;
     document.querySelectorAll('.btn-speak-report.speaking').forEach(b => {
       b.classList.remove('speaking');
       const label = b.querySelector('.speak-btn-text');
@@ -1078,22 +1056,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function speakText(rawText, btnElement = null) {
     if (!window.speechSynthesis) {
+      showToast('Speech synthesis not supported in this browser.', 'error');
       return;
     }
 
-    // Toggle off if currently speaking from this button
+    // Toggle off if currently speaking from this exact button
     if (window.speechSynthesis.speaking && btnElement && btnElement.classList.contains('speaking')) {
       stopSpeechSynthesis();
       return;
     }
 
+    // Stop any existing speech playback
     stopSpeechSynthesis();
 
     const clean = cleanMarkdownForSpeech(rawText);
-    if (!clean) return;
+    if (!clean) {
+      showToast('No readable text found to read aloud.', 'info');
+      return;
+    }
+
+    try {
+      window.speechSynthesis.resume();
+    } catch(e) {}
 
     const utterance = new SpeechSynthesisUtterance(clean);
-    utterance.rate = 1.02;
+    currentUtterance = utterance;
+    utterance.rate = 1.0;
     utterance.pitch = 1.0;
     utterance.lang = 'en-IN';
 
@@ -1112,6 +1100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     utterance.onend = () => {
+      currentUtterance = null;
       if (btnElement) {
         btnElement.classList.remove('speaking');
         const label = btnElement.querySelector('.speak-btn-text');
@@ -1119,7 +1108,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    utterance.onerror = () => {
+    utterance.onerror = (err) => {
+      currentUtterance = null;
       if (btnElement) {
         btnElement.classList.remove('speaking');
         const label = btnElement.querySelector('.speak-btn-text');
@@ -2434,12 +2424,6 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
 
     chatMessagesScroll.appendChild(assistantRow);
     scrollChatToBottom();
-
-    // Auto-Voice Speech Synthesis (Voice of Buji)
-    if (autoVoiceEnabled && data.answer) {
-      const speakBtn = msgBody ? msgBody.querySelector('.btn-speak-report') : null;
-      speakText(data.answer, speakBtn);
-    }
   }
 
   function renderAssistantResponse(query, isScoped) {
@@ -2523,12 +2507,6 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
 
     chatMessagesScroll.appendChild(assistantRow);
     scrollChatToBottom();
-
-    // Auto-Voice Speech Synthesis (Voice of Buji)
-    if (autoVoiceEnabled && answerHtml) {
-      const speakBtn = msgBody ? msgBody.querySelector('.btn-speak-report') : null;
-      speakText(answerHtml, speakBtn);
-    }
   }
 
   // =========================================================================
