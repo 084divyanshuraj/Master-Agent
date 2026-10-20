@@ -716,11 +716,26 @@ class AuditDB:
 db = AuditDB()
 
 
+def _find_data_file(*parts: str) -> Optional[str]:
+    """Finds a data file across standard candidate directories in local and serverless environments."""
+    rel = os.path.join(*parts)
+    candidates = [
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), rel),
+        os.path.join(os.getcwd(), rel),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", rel),
+        os.path.join("/var/task", rel) if os.path.exists("/var/task") else None,
+    ]
+    for c in candidates:
+        if c and os.path.exists(c):
+            return c
+    return None
+
+
 def load_students_cache():
     """Loads all student records from public/data/students.json into memory and MongoDB."""
     global IN_MEMORY_STUDENTS
-    students_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "public", "data", "students.json")
-    if os.path.exists(students_path):
+    students_path = _find_data_file("public", "data", "students.json")
+    if students_path and os.path.exists(students_path):
         try:
             with open(students_path, "r", encoding="utf-8") as f:
                 records = json.load(f)
@@ -743,7 +758,7 @@ def load_students_cache():
         except Exception as ex:
             logger.error(f"Error loading students.json: {ex}")
     else:
-        logger.warning(f"students.json not found at {students_path}")
+        logger.warning(f"students.json not found in candidate paths")
 
 
 def get_student_by_roll(roll_number: str) -> Optional[Dict[str, Any]]:
@@ -1025,11 +1040,10 @@ def get_slow_learners(year: Optional[int] = None, section: Optional[str] = None)
 def load_timetables_cache():
     """Loads all section timetables and departmental faculty directory into memory."""
     global IN_MEMORY_TIMETABLES, IN_MEMORY_FACULTIES
-    base_dir = os.path.dirname(os.path.dirname(__file__))
-    tt_path = os.path.join(base_dir, "public", "data", "timetables.json")
-    fac_path = os.path.join(base_dir, "public", "data", "faculties.json")
+    tt_path = _find_data_file("public", "data", "timetables.json")
+    fac_path = _find_data_file("public", "data", "faculties.json")
 
-    if os.path.exists(tt_path):
+    if tt_path and os.path.exists(tt_path):
         try:
             with open(tt_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
@@ -1043,7 +1057,7 @@ def load_timetables_cache():
         except Exception as ex:
             logger.error(f"Error loading timetables.json: {ex}")
 
-    if os.path.exists(fac_path):
+    if fac_path and os.path.exists(fac_path):
         try:
             with open(fac_path, "r", encoding="utf-8") as f:
                 IN_MEMORY_FACULTIES = json.load(f)
@@ -1184,6 +1198,10 @@ def get_all_deo_faculties(search: Optional[str] = None) -> Dict[str, Any]:
     Returns full list of faculty members for the DEO Management Console,
     enriched with activation status and login account state.
     """
+    global IN_MEMORY_FACULTIES
+    if not IN_MEMORY_FACULTIES:
+        load_timetables_cache()
+
     faculties = []
     activated_count = 0
     pending_count = 0
@@ -1257,6 +1275,10 @@ def add_deo_faculty(
     department: str = "Computer Science & Engineering",
 ) -> Dict[str, Any]:
     """Adds a new faculty member into the official directory as DEO with an activation token."""
+    global IN_MEMORY_FACULTIES
+    if not IN_MEMORY_FACULTIES:
+        load_timetables_cache()
+
     clean_emp = str(emp_id).strip().upper()
     clean_name = name.strip()
 
@@ -1314,6 +1336,10 @@ def regenerate_deo_token(emp_id: str) -> Dict[str, Any]:
     Generates a fresh 6-digit security token for a faculty member.
     If the faculty was already activated, resets their existing password so they must re-verify.
     """
+    global IN_MEMORY_FACULTIES
+    if not IN_MEMORY_FACULTIES:
+        load_timetables_cache()
+
     clean_emp = str(emp_id).strip().upper()
     target_faculty = None
     for f in IN_MEMORY_FACULTIES:
@@ -1393,6 +1419,10 @@ def verify_faculty_for_activation(emp_id: str, name: str, token: Optional[str] =
     that their provided name matches official records,
     AND that their DEO Security Token matches.
     """
+    global IN_MEMORY_FACULTIES
+    if not IN_MEMORY_FACULTIES:
+        load_timetables_cache()
+
     clean_emp = str(emp_id).strip().upper()
     clean_input_name = name.strip().lower()
 
@@ -1568,9 +1598,8 @@ def get_timetables_summary() -> Dict[str, Any]:
 def load_placements_cache():
     """Loads official department placement dossier into memory cache."""
     global IN_MEMORY_PLACEMENTS
-    base_dir = os.path.dirname(os.path.dirname(__file__))
-    plc_path = os.path.join(base_dir, "public", "data", "placements.json")
-    if os.path.exists(plc_path):
+    plc_path = _find_data_file("public", "data", "placements.json")
+    if plc_path and os.path.exists(plc_path):
         try:
             with open(plc_path, "r", encoding="utf-8") as f:
                 IN_MEMORY_PLACEMENTS = json.load(f)

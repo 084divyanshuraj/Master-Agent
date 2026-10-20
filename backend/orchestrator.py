@@ -51,6 +51,14 @@ logger = logging.getLogger("orchestrator")
 logger.setLevel(logging.INFO)
 
 AGENTS_FILE_PATH = os.path.join(os.path.dirname(__file__), "..", "public", "data", "agents.json")
+if not os.path.exists(AGENTS_FILE_PATH):
+    for _c in [
+        os.path.join(os.getcwd(), "public", "data", "agents.json"),
+        os.path.join("/var/task", "public", "data", "agents.json") if os.path.exists("/var/task") else None,
+    ]:
+        if _c and os.path.exists(_c):
+            AGENTS_FILE_PATH = _c
+            break
 MODEL_FAST = os.getenv("GROQ_MODEL_FAST", "openai/gpt-oss-20b")
 MODEL_SYNTHESIS = os.getenv("GROQ_MODEL_SYNTHESIS", "openai/gpt-oss-120b")
 
