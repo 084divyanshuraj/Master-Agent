@@ -6,9 +6,9 @@
   <title>Vignan's University — Master Agent Enterprise Portal</title>
   <meta name="description" content="Official Master Agent Orchestration Portal for Vignan's Foundation for Science, Technology & Research — Unified Intelligence & Departmental Data Access.">
   
-  <link rel="stylesheet" href="styles/theme.css?v=9">
-  <link rel="stylesheet" href="styles/login.css?v=9">
-  <link rel="stylesheet" href="styles/chat.css?v=9">
+  <link rel="stylesheet" href="styles/theme.css?v=11">
+  <link rel="stylesheet" href="styles/login.css?v=11">
+  <link rel="stylesheet" href="styles/chat.css?v=11">
   
   <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="assets/vignan university logo.jiff">
@@ -353,6 +353,9 @@
         </div>
         
         <div class="chat-nav-right">
+          <button id="btnToggleVoiceMode" class="btn-voice-mode-toggle" title="Toggle Auto-Voice Output (Voice of Buji)">
+            🔊 Auto-Voice: ON
+          </button>
           <button id="btnExportSessionReport" class="btn-report-export-nav" title="Download Official Master Agent Executive Report & Audit Dossier">
             📄 Export Report
           </button>
@@ -423,6 +426,17 @@
           <div class="chat-input-wrapper">
             <input type="text" id="chatPromptInput" class="chat-prompt-input" placeholder="Ask a question for the university agents (e.g., timetable, research grants, attendance analysis)...">
           </div>
+          <button id="btnVoiceInput" class="btn-voice-input" title="Speak to Buji (Voice Input)" type="button">
+            <svg id="micIconNormal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+              <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+            </svg>
+            <div id="micWaveAnim" class="mic-wave-container" style="display: none;">
+              <span class="mic-wave-bar"></span>
+              <span class="mic-wave-bar"></span>
+              <span class="mic-wave-bar"></span>
+            </div>
+          </button>
           <button id="btnSendChat" class="btn-send-chat" title="Send Query">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
               <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
@@ -611,6 +625,6 @@
     </div>
   </footer>
 
-  <script src="js/app.js?v=10"></script>
+  <script src="js/app.js?v=11"></script>
 </body>
 </html>

@@ -64,7 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatMessagesScroll = document.getElementById('chatMessagesScroll');
   const chatPromptInput = document.getElementById('chatPromptInput');
   const btnSendChat = document.getElementById('btnSendChat');
+  const btnVoiceInput = document.getElementById('btnVoiceInput');
+  const micIconNormal = document.getElementById('micIconNormal');
+  const micWaveAnim = document.getElementById('micWaveAnim');
+  const btnToggleVoiceMode = document.getElementById('btnToggleVoiceMode');
   const quickPromptChips = document.querySelectorAll('.chip-suggestion-btn');
+  
+  // Voice Interaction State (Speech-to-Text & Text-to-Speech)
+  let autoVoiceEnabled = localStorage.getItem('vignan_auto_voice') !== 'false';
+  let isSpeechRecognitionActive = false;
+  let recognitionInstance = null;
   
   // Agent Drawer Modal Elements
   const agentDrawerModal = document.getElementById('agentDrawerModal');
@@ -910,6 +919,221 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
+  // Voice Interaction Mode (Speech-to-Text & Text-to-Speech)
+  // =========================================================================
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  function initVoiceInteraction() {
+    // 1. Initialize Auto-Voice Mode Toggle Button
+    if (btnToggleVoiceMode) {
+      if (autoVoiceEnabled) {
+        btnToggleVoiceMode.classList.remove('muted');
+        btnToggleVoiceMode.textContent = '🔊 Auto-Voice: ON';
+      } else {
+        btnToggleVoiceMode.classList.add('muted');
+        btnToggleVoiceMode.textContent = '🔈 Auto-Voice: OFF';
+      }
+
+      btnToggleVoiceMode.addEventListener('click', () => {
+        autoVoiceEnabled = !autoVoiceEnabled;
+        if (autoVoiceEnabled) {
+          btnToggleVoiceMode.classList.remove('muted');
+          btnToggleVoiceMode.textContent = '🔊 Auto-Voice: ON';
+          showToast('Voice of Buji auto-speech enabled.', 'info');
+        } else {
+          stopSpeechSynthesis();
+          btnToggleVoiceMode.classList.add('muted');
+          btnToggleVoiceMode.textContent = '🔈 Auto-Voice: OFF';
+          showToast('Voice auto-speech muted.', 'info');
+        }
+        localStorage.setItem('vignan_auto_voice', autoVoiceEnabled ? 'true' : 'false');
+      });
+    }
+
+    // 2. Initialize Speech Recognition (STT Microphone)
+    if (!SpeechRecognition) {
+      if (btnVoiceInput) {
+        btnVoiceInput.addEventListener('click', () => {
+          showToast('Speech recognition is not supported in this browser. Please use Chrome or Edge.', 'error');
+        });
+      }
+      return;
+    }
+
+    recognitionInstance = new SpeechRecognition();
+    recognitionInstance.lang = 'en-IN';
+    recognitionInstance.continuous = false;
+    recognitionInstance.interimResults = true;
+
+    recognitionInstance.onstart = () => {
+      isSpeechRecognitionActive = true;
+      if (btnVoiceInput) {
+        btnVoiceInput.classList.add('recording');
+        if (micIconNormal) micIconNormal.style.display = 'none';
+        if (micWaveAnim) micWaveAnim.style.display = 'flex';
+      }
+      chatPromptInput.placeholder = '🎙️ Listening... Speak your university query now...';
+      showToast('Listening... Speak your university query now.', 'info');
+    };
+
+    recognitionInstance.onresult = (event) => {
+      let interimTranscript = '';
+      let finalTranscript = '';
+
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+        } else {
+          interimTranscript += event.results[i][0].transcript;
+        }
+      }
+
+      const currentText = (finalTranscript || interimTranscript).trim();
+      if (currentText) {
+        chatPromptInput.value = currentText;
+      }
+    };
+
+    recognitionInstance.onerror = (event) => {
+      console.warn('Speech recognition error:', event.error);
+      stopSpeechRecognition();
+      if (event.error === 'not-allowed') {
+        showToast('Microphone access denied. Please allow microphone permissions in your browser.', 'error');
+      } else if (event.error !== 'no-speech') {
+        showToast(`Voice capture error: ${event.error}`, 'error');
+      }
+    };
+
+    recognitionInstance.onend = () => {
+      stopSpeechRecognition();
+      const captured = chatPromptInput.value.trim();
+      if (captured) {
+        showToast('Voice query captured! Dispatching to Master Agent...', 'success');
+        handleUserSendMessage();
+      }
+    };
+
+    if (btnVoiceInput) {
+      btnVoiceInput.addEventListener('click', () => {
+        if (isSpeechRecognitionActive) {
+          recognitionInstance.stop();
+        } else {
+          stopSpeechSynthesis();
+          try {
+            recognitionInstance.start();
+          } catch (e) {
+            console.warn('Could not start recognition:', e);
+          }
+        }
+      });
+    }
+  }
+
+  function stopSpeechRecognition() {
+    isSpeechRecognitionActive = false;
+    if (btnVoiceInput) {
+      btnVoiceInput.classList.remove('recording');
+      if (micIconNormal) micIconNormal.style.display = 'block';
+      if (micWaveAnim) micWaveAnim.style.display = 'none';
+    }
+    chatPromptInput.placeholder = 'Ask a question for the university agents (e.g., timetable, research grants, attendance analysis)...';
+  }
+
+  function cleanMarkdownForSpeech(md) {
+    if (!md) return '';
+    let text = md;
+    // Strip markdown tables entirely
+    text = text.replace(/\|[^\n]+\|/g, ' ');
+    text = text.replace(/\|---[^\n]+\|/g, ' ');
+    // Strip code blocks and inline code
+    text = text.replace(/```[\s\S]*?```/g, ' ');
+    text = text.replace(/`([^`]+)`/g, '$1');
+    // Strip links [text](url) -> text
+    text = text.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+    // Strip headers, bold, italics, bullets
+    text = text.replace(/^#+\s+/gm, ' ');
+    text = text.replace(/[*_~]/g, ' ');
+    text = text.replace(/^[\s\-*•]+\s*/gm, ' ');
+    // Strip emojis
+    text = text.replace(/[\u{1F300}-\u{1F9FF}]/gu, '');
+    // Normalize spaces
+    text = text.replace(/\s+/g, ' ').trim();
+
+    // Take first 3 concise sentences so speech is pleasant and not overwhelmingly long
+    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+    const speechSummary = sentences.slice(0, 3).join(' ');
+    return speechSummary || text.slice(0, 260);
+  }
+
+  function stopSpeechSynthesis() {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    document.querySelectorAll('.btn-speak-report.speaking').forEach(b => {
+      b.classList.remove('speaking');
+      const label = b.querySelector('.speak-btn-text');
+      if (label) label.textContent = 'Read Aloud';
+    });
+  }
+
+  function speakText(rawText, btnElement = null) {
+    if (!window.speechSynthesis) {
+      return;
+    }
+
+    // Toggle off if currently speaking from this button
+    if (window.speechSynthesis.speaking && btnElement && btnElement.classList.contains('speaking')) {
+      stopSpeechSynthesis();
+      return;
+    }
+
+    stopSpeechSynthesis();
+
+    const clean = cleanMarkdownForSpeech(rawText);
+    if (!clean) return;
+
+    const utterance = new SpeechSynthesisUtterance(clean);
+    utterance.rate = 1.02;
+    utterance.pitch = 1.0;
+    utterance.lang = 'en-IN';
+
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v => v.lang.includes('en-IN')) ||
+                           voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US')) ||
+                           voices[0];
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
+
+    if (btnElement) {
+      btnElement.classList.add('speaking');
+      const label = btnElement.querySelector('.speak-btn-text');
+      if (label) label.textContent = 'Stop Reading';
+    }
+
+    utterance.onend = () => {
+      if (btnElement) {
+        btnElement.classList.remove('speaking');
+        const label = btnElement.querySelector('.speak-btn-text');
+        if (label) label.textContent = 'Read Aloud';
+      }
+    };
+
+    utterance.onerror = () => {
+      if (btnElement) {
+        btnElement.classList.remove('speaking');
+        const label = btnElement.querySelector('.speak-btn-text');
+        if (label) label.textContent = 'Read Aloud';
+      }
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Initialize Voice Interaction
+  initVoiceInteraction();
+
+  // =========================================================================
   // 7. Chat Messaging & Simulated Master Agent Pipeline Execution
   // =========================================================================
   btnSendChat.addEventListener('click', handleUserSendMessage);
@@ -928,6 +1152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function handleUserSendMessage() {
+    stopSpeechSynthesis();
     const text = chatPromptInput.value.trim();
     if (!text) return;
 
@@ -1829,6 +2054,12 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
           </svg>
           <span>Copy Text</span>
         </button>
+        <button type="button" class="btn-report-action btn-speak-report" title="Read Aloud with Voice of Buji">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+          <span class="speak-btn-text">Read Aloud</span>
+        </button>
       </div>
     `;
 
@@ -1863,6 +2094,15 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
       const plainText = generateReportText(reportItem, false);
       copyTextToClipboard(plainText, 'Report copied to clipboard!');
     });
+
+    // Speak / Read Aloud action
+    const speakBtn = bar.querySelector('.btn-speak-report');
+    if (speakBtn) {
+      speakBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        speakText(reportItem.answer, speakBtn);
+      });
+    }
 
     return bar;
   }
@@ -2194,6 +2434,12 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
 
     chatMessagesScroll.appendChild(assistantRow);
     scrollChatToBottom();
+
+    // Auto-Voice Speech Synthesis (Voice of Buji)
+    if (autoVoiceEnabled && data.answer) {
+      const speakBtn = msgBody ? msgBody.querySelector('.btn-speak-report') : null;
+      speakText(data.answer, speakBtn);
+    }
   }
 
   function renderAssistantResponse(query, isScoped) {
@@ -2277,6 +2523,12 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
 
     chatMessagesScroll.appendChild(assistantRow);
     scrollChatToBottom();
+
+    // Auto-Voice Speech Synthesis (Voice of Buji)
+    if (autoVoiceEnabled && answerHtml) {
+      const speakBtn = msgBody ? msgBody.querySelector('.btn-speak-report') : null;
+      speakText(answerHtml, speakBtn);
+    }
   }
 
   // =========================================================================
