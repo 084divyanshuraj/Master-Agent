@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('networkCanvas');
   
   // Auth Tabs & Alert Banner
-  const tabBtnSignIn = document.getElementById('tabBtnSignIn');
-  const tabBtnRegister = document.getElementById('tabBtnRegister');
+  const tabBtnFaculty = document.getElementById('tabBtnFaculty');
+  const tabBtnDeo = document.getElementById('tabBtnDeo');
   const authAlert = document.getElementById('authAlert');
 
   // Sign In Form Elements
@@ -22,30 +22,61 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginPassword = document.getElementById('loginPassword');
   const toggleLoginPwd = document.getElementById('toggleLoginPwd');
   const submitLoginBtn = document.getElementById('submitLoginBtn');
-  const linkToRegister = document.getElementById('linkToRegister');
+  const linkToActivate = document.getElementById('linkToActivate');
 
-  // Register Form Elements
-  const registerForm = document.getElementById('registerForm');
-  const regFullName = document.getElementById('regFullName');
-  const regEmployeeCode = document.getElementById('regEmployeeCode');
-  const regEmail = document.getElementById('regEmail');
-  const regUserRole = document.getElementById('regUserRole');
-  const regDepartment = document.getElementById('regDepartment');
-  const regPassword = document.getElementById('regPassword');
-  const toggleRegPwd = document.getElementById('toggleRegPwd');
-  const submitRegisterBtn = document.getElementById('submitRegisterBtn');
-  const linkToSignIn = document.getElementById('linkToSignIn');
+  // Faculty Activation Form Elements
+  const facultyActivateForm = document.getElementById('facultyActivateForm');
+  const activateEmpCode = document.getElementById('activateEmpCode');
+  const activateFullName = document.getElementById('activateFullName');
+  const btnVerifyFaculty = document.getElementById('btnVerifyFaculty');
+  const activatePasswordArea = document.getElementById('activatePasswordArea');
+  const verifiedIdentityBox = document.getElementById('verifiedIdentityBox');
+  const verifiedFacultyDetails = document.getElementById('verifiedFacultyDetails');
+  const activateNewPassword = document.getElementById('activateNewPassword');
+  const activateConfirmPassword = document.getElementById('activateConfirmPassword');
+  const btnSubmitActivation = document.getElementById('btnSubmitActivation');
+  const linkBackToSignIn = document.getElementById('linkBackToSignIn');
+
+  // DEO Admin Form Elements
+  const deoLoginForm = document.getElementById('deoLoginForm');
+  const deoOperatorCode = document.getElementById('deoOperatorCode');
+  const deoOperatorPassword = document.getElementById('deoOperatorPassword');
+  const toggleDeoPwd = document.getElementById('toggleDeoPwd');
+  const submitDeoBtn = document.getElementById('submitDeoBtn');
 
   // Mascot & Demo Buttons
   const quickDemoSection = document.getElementById('quickDemoSection');
   const quickHodBtn = document.getElementById('quickHodBtn');
   const quickDeanBtn = document.getElementById('quickDeanBtn');
-  const quickExamBtn = document.getElementById('quickExamBtn');
+  const quickDeoBtn = document.getElementById('quickDeoBtn');
   
   // Views
   const loginSection = document.getElementById('loginSection');
+  const deoSection = document.getElementById('deoSection');
   const chamberSection = document.getElementById('chamberSection');
   const chatSection = document.getElementById('chatSection');
+
+  // DEO Console Elements
+  const deoOperatorDisplay = document.getElementById('deoOperatorDisplay');
+  const btnDeoToChambers = document.getElementById('btnDeoToChambers');
+  const btnDeoLogout = document.getElementById('btnDeoLogout');
+  const btnChamberReturnDeo = document.getElementById('btnChamberReturnDeo');
+  const deoStatTotal = document.getElementById('deoStatTotal');
+  const deoStatActivated = document.getElementById('deoStatActivated');
+  const deoStatPending = document.getElementById('deoStatPending');
+  const deoFacultySearch = document.getElementById('deoFacultySearch');
+  const deoStatusFilter = document.getElementById('deoStatusFilter');
+  const btnOpenAddFacultyModal = document.getElementById('btnOpenAddFacultyModal');
+  const deoFacultyTableBody = document.getElementById('deoFacultyTableBody');
+  const deoAddFacultyModal = document.getElementById('deoAddFacultyModal');
+  const btnCloseAddFacultyModal = document.getElementById('btnCloseAddFacultyModal');
+  const btnCancelAddFacultyModal = document.getElementById('btnCancelAddFacultyModal');
+  const deoAddFacultyForm = document.getElementById('deoAddFacultyForm');
+  const newFacEmpId = document.getElementById('newFacEmpId');
+  const newFacDesignation = document.getElementById('newFacDesignation');
+  const newFacName = document.getElementById('newFacName');
+  const newFacEmail = document.getElementById('newFacEmail');
+  const newFacPhone = document.getElementById('newFacPhone');
   
   const userWelcomeBadge = document.getElementById('userWelcomeBadge');
   const btnBackToLogin = document.getElementById('btnBackToLogin');
@@ -333,27 +364,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function switchAuthTab(tab) {
     hideAuthAlert();
-    if (tab === 'signin') {
-      if (tabBtnSignIn) tabBtnSignIn.classList.add('active');
-      if (tabBtnRegister) tabBtnRegister.classList.remove('active');
+    if (tab === 'faculty' || tab === 'signin') {
+      if (tabBtnFaculty) tabBtnFaculty.classList.add('active');
+      if (tabBtnDeo) tabBtnDeo.classList.remove('active');
       if (signInForm) signInForm.style.display = 'flex';
-      if (registerForm) registerForm.style.display = 'none';
+      if (facultyActivateForm) facultyActivateForm.style.display = 'none';
+      if (deoLoginForm) deoLoginForm.style.display = 'none';
       if (quickDemoSection) quickDemoSection.style.display = 'flex';
       bujiGreetingText.innerHTML = originalGreeting;
-    } else {
-      if (tabBtnRegister) tabBtnRegister.classList.add('active');
-      if (tabBtnSignIn) tabBtnSignIn.classList.remove('active');
-      if (registerForm) registerForm.style.display = 'flex';
+    } else if (tab === 'deo') {
+      if (tabBtnDeo) tabBtnDeo.classList.add('active');
+      if (tabBtnFaculty) tabBtnFaculty.classList.remove('active');
+      if (deoLoginForm) deoLoginForm.style.display = 'flex';
       if (signInForm) signInForm.style.display = 'none';
+      if (facultyActivateForm) facultyActivateForm.style.display = 'none';
+      if (quickDemoSection) quickDemoSection.style.display = 'flex';
+      bujiGreetingText.innerHTML = `Welcome Operator! Enter your <strong>Department DEO credentials</strong> to manage the faculty roster and provision credentials.`;
+    } else if (tab === 'activate') {
+      if (tabBtnFaculty) tabBtnFaculty.classList.remove('active');
+      if (tabBtnDeo) tabBtnDeo.classList.remove('active');
+      if (facultyActivateForm) facultyActivateForm.style.display = 'flex';
+      if (signInForm) signInForm.style.display = 'none';
+      if (deoLoginForm) deoLoginForm.style.display = 'none';
       if (quickDemoSection) quickDemoSection.style.display = 'none';
-      bujiGreetingText.innerHTML = `"New to Vignan University's Master Agent Portal? Register your faculty or administrative department profile below to access departmental endpoints."`;
+      bujiGreetingText.innerHTML = `"New Faculty? Enter your official <strong>Employee ID</strong> and <strong>Full Name</strong> as registered by the DEO to verify and create your password."`;
     }
   }
 
-  if (tabBtnSignIn) tabBtnSignIn.addEventListener('click', () => switchAuthTab('signin'));
-  if (tabBtnRegister) tabBtnRegister.addEventListener('click', () => switchAuthTab('register'));
-  if (linkToRegister) linkToRegister.addEventListener('click', (e) => { e.preventDefault(); switchAuthTab('register'); });
-  if (linkToSignIn) linkToSignIn.addEventListener('click', (e) => { e.preventDefault(); switchAuthTab('signin'); });
+  if (tabBtnFaculty) tabBtnFaculty.addEventListener('click', () => switchAuthTab('faculty'));
+  if (tabBtnDeo) tabBtnDeo.addEventListener('click', () => switchAuthTab('deo'));
+  if (linkToActivate) linkToActivate.addEventListener('click', (e) => { e.preventDefault(); switchAuthTab('activate'); });
+  if (linkBackToSignIn) linkBackToSignIn.addEventListener('click', (e) => { e.preventDefault(); switchAuthTab('faculty'); });
 
   // Password visibility toggles
   if (toggleLoginPwd && loginPassword) {
@@ -363,10 +404,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (toggleRegPwd && regPassword) {
-    toggleRegPwd.addEventListener('click', () => {
-      regPassword.type = regPassword.type === 'password' ? 'text' : 'password';
-      toggleRegPwd.textContent = regPassword.type === 'password' ? '👁️' : '🙈';
+  if (toggleDeoPwd && deoOperatorPassword) {
+    toggleDeoPwd.addEventListener('click', () => {
+      deoOperatorPassword.type = deoOperatorPassword.type === 'password' ? 'text' : 'password';
+      toggleDeoPwd.textContent = deoOperatorPassword.type === 'password' ? '👁️' : '🙈';
     });
   }
 
@@ -383,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (quickHodBtn) {
     quickHodBtn.addEventListener('click', () => {
-      switchAuthTab('signin');
+      switchAuthTab('faculty');
       loginEmployeeCode.value = '675';
       loginPassword.value = 'vignan123';
       bujiGreetingText.innerHTML = `Welcome, <strong>Dr. S. V. Phani Kumar (Professor & HOD CSE)</strong>! Pre-filled credentials (Emp ID: <code>675</code>): <code>vignan123</code>. Click below to enter.`;
@@ -395,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (quickDeanBtn) {
     quickDeanBtn.addEventListener('click', () => {
-      switchAuthTab('signin');
+      switchAuthTab('faculty');
       loginEmployeeCode.value = '163';
       loginPassword.value = 'vignan123';
       bujiGreetingText.innerHTML = `Welcome, Dean <strong>Prof. Dr. K. V. Krishna Kishore (Dean SOCI)</strong>! Full university academic audit logs and credit databases are accessible.`;
@@ -405,14 +446,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (quickExamBtn) {
-    quickExamBtn.addEventListener('click', () => {
-      switchAuthTab('signin');
-      loginEmployeeCode.value = 'VFSTR-COE-ADM-12';
-      loginPassword.value = 'vignan123';
-      bujiGreetingText.innerHTML = `Welcome, <strong>Prof. S. R. Murthy</strong>! Controller of Examinations records and grading endpoints are synchronized.`;
-      triggerInputEffect(loginEmployeeCode);
-      triggerInputEffect(loginPassword);
+  if (quickDeoBtn) {
+    quickDeoBtn.addEventListener('click', () => {
+      switchAuthTab('deo');
+      deoOperatorCode.value = 'DEO1_CSE';
+      deoOperatorPassword.value = 'DEO_password';
+      bujiGreetingText.innerHTML = `DEO Operator credentials pre-filled (<code>DEO1_CSE</code>). Click below to enter the DEO Management Console.`;
+      triggerInputEffect(deoOperatorCode);
+      triggerInputEffect(deoOperatorPassword);
       hideAuthAlert();
     });
   }
@@ -429,14 +470,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }).catch(err => console.warn('Could not sync user session to MongoDB Atlas:', err));
 
     loginSection.style.display = 'none';
-    chamberSection.style.display = 'block';
+
+    if (userData.role === 'deo') {
+      if (deoSection) deoSection.style.display = 'block';
+      if (chamberSection) chamberSection.style.display = 'none';
+      if (chatSection) chatSection.style.display = 'none';
+      if (deoOperatorDisplay) deoOperatorDisplay.textContent = userData.rollNumber || 'DEO1_CSE';
+      if (btnChamberReturnDeo) btnChamberReturnDeo.style.display = 'inline-flex';
+      loadDeoFaculties();
+    } else {
+      if (chamberSection) chamberSection.style.display = 'block';
+      if (deoSection) deoSection.style.display = 'none';
+      if (btnChamberReturnDeo) btnChamberReturnDeo.style.display = 'none';
+    }
 
     const roleMap = {
       hod: 'Head of Department',
       faculty: 'Faculty Member',
       dean: 'Dean / Directorate',
       admin: 'Operations Staff',
-      exam: 'Examination Cell'
+      exam: 'Examination Cell',
+      deo: 'Department Data Entry Operator (DEO)'
     };
     const roleLabel = roleMap[userData.role] || (userData.role ? userData.role.toUpperCase() : 'FACULTY');
     userWelcomeBadge.innerHTML = `Authorized Staff: <strong>${escapeHtml(userData.name || 'Faculty Member')}</strong> (${escapeHtml(userData.department || 'CSE')}) &bull; ${roleLabel}`;
@@ -444,8 +498,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 5. Live Form Authentication (Sign In & Register against MongoDB Atlas)
+  // 5. Live Authentication (Faculty Login, First-Time Activation, & DEO Portal)
   // =========================================================================
+
+  // A. Faculty Sign In
   if (signInForm) {
     signInForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -465,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:0.25;"></circle>
           <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
         </svg>
-        <span>Verifying with MongoDB Atlas...</span>
+        <span>Verifying with University Registry...</span>
       `;
 
       try {
@@ -491,10 +547,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             `;
-          }, 400);
+          }, 350);
         } else {
           const errMsg = data.detail || data.message || 'Authentication failed. Please verify credentials.';
           showAuthAlert(errMsg, 'error');
+          if (data.needs_activation) {
+            activateEmpCode.value = employeeCodeVal;
+          }
           submitLoginBtn.disabled = false;
           submitLoginBtn.innerHTML = `
             <span>Access University Intelligence</span>
@@ -516,75 +575,182 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Register Form Handler
-  if (registerForm) {
-    registerForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  // B. Faculty Verification (First-Time Activation Step 1)
+  if (btnVerifyFaculty) {
+    btnVerifyFaculty.addEventListener('click', async () => {
       hideAuthAlert();
+      const empVal = activateEmpCode.value.trim();
+      const nameVal = activateFullName.value.trim();
 
-      const nameVal = regFullName.value.trim();
-      const codeVal = regEmployeeCode.value.trim();
-      const emailVal = regEmail.value.trim();
-      const roleVal = regUserRole.value;
-      const deptVal = regDepartment.value;
-      const pwdVal = regPassword.value;
-
-      if (!nameVal || !codeVal || !emailVal || !pwdVal) {
-        showAuthAlert('Please fill in all required fields.', 'error');
+      if (!empVal || !nameVal) {
+        showAuthAlert('Please enter both your Employee ID and your Official Full Name.', 'error');
         return;
       }
 
-      if (pwdVal.length < 4) {
-        showAuthAlert('Password must be at least 4 characters long.', 'error');
-        return;
-      }
-
-      submitRegisterBtn.disabled = true;
-      submitRegisterBtn.innerHTML = `
-        <svg class="spin-icon" style="width:18px;height:18px;animation:spin 1s linear infinite;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      btnVerifyFaculty.disabled = true;
+      btnVerifyFaculty.innerHTML = `
+        <svg class="spin-icon" style="width:16px;height:16px;animation:spin 1s linear infinite;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:0.25;"></circle>
           <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
         </svg>
-        <span>Registering in MongoDB Atlas...</span>
+        <span>Checking DEO Registry...</span>
       `;
 
       try {
-        const res = await fetch(API_BASE + '/api/auth/register', {
+        const res = await fetch(API_BASE + '/api/auth/faculty/verify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: nameVal,
-            employee_code: codeVal,
-            email: emailVal,
-            role: roleVal,
-            department: deptVal,
-            password: pwdVal
+            employee_code: empVal,
+            name: nameVal
           })
         });
 
         const data = await res.json();
 
         if (res.ok && data.success) {
-          showAuthAlert(`✓ ${data.message} Switching to Sign In...`, 'success');
+          showAuthAlert(`✓ Record verified! Welcome, ${data.name}. Please create your portal password below.`, 'success');
+          if (activatePasswordArea) activatePasswordArea.style.display = 'block';
+          if (verifiedFacultyDetails) {
+            verifiedFacultyDetails.innerHTML = `<strong>Identity Confirmed:</strong> ${escapeHtml(data.name)} (ID: <code>${escapeHtml(data.emp_id)}</code>) &bull; ${escapeHtml(data.designation || 'Faculty')} &bull; ${escapeHtml(data.department)}`;
+          }
+          if (activateNewPassword) activateNewPassword.focus();
+        } else {
+          const errMsg = data.detail || data.message || 'Verification failed. Employee ID or Name not found in official registry.';
+          showAuthAlert(errMsg, 'error');
+          if (activatePasswordArea) activatePasswordArea.style.display = 'none';
+        }
+      } catch (err) {
+        showAuthAlert(`Network error during faculty verification: ${err.message}`, 'error');
+      } finally {
+        btnVerifyFaculty.disabled = false;
+        btnVerifyFaculty.innerHTML = `
+          <span>Verify University Records</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        `;
+      }
+    });
+  }
+
+  // C. Faculty Password Setup & Activation (Step 2)
+  if (facultyActivateForm) {
+    facultyActivateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAuthAlert();
+
+      const empVal = activateEmpCode.value.trim();
+      const nameVal = activateFullName.value.trim();
+      const newPwdVal = activateNewPassword.value;
+      const confirmPwdVal = activateConfirmPassword.value;
+
+      if (!newPwdVal || newPwdVal.length < 4) {
+        showAuthAlert('Password must be at least 4 characters long.', 'error');
+        return;
+      }
+
+      if (newPwdVal !== confirmPwdVal) {
+        showAuthAlert('Passwords do not match. Please re-enter both passwords.', 'error');
+        return;
+      }
+
+      btnSubmitActivation.disabled = true;
+      btnSubmitActivation.innerHTML = `
+        <svg class="spin-icon" style="width:18px;height:18px;animation:spin 1s linear infinite;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:0.25;"></circle>
+          <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span>Activating Faculty Account...</span>
+      `;
+
+      try {
+        const res = await fetch(API_BASE + '/api/auth/faculty/activate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            employee_code: empVal,
+            name: nameVal,
+            password: newPwdVal
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showAuthAlert(`✓ ${data.message} Logging in...`, 'success');
           setTimeout(() => {
-            switchAuthTab('signin');
-            loginEmployeeCode.value = codeVal;
-            loginPassword.value = pwdVal;
-            showAuthAlert('Account created! Click "Access University Intelligence" to sign in.', 'success');
-            submitRegisterBtn.disabled = false;
-            submitRegisterBtn.innerHTML = `
-              <span>Register Faculty Account</span>
+            completeLoginTransition(data.user);
+            btnSubmitActivation.disabled = false;
+            btnSubmitActivation.innerHTML = `<span>Complete Activation & Enter Portal</span>`;
+          }, 400);
+        } else {
+          const errMsg = data.detail || data.message || 'Activation failed.';
+          showAuthAlert(errMsg, 'error');
+          btnSubmitActivation.disabled = false;
+          btnSubmitActivation.innerHTML = `<span>Complete Activation & Enter Portal</span>`;
+        }
+      } catch (err) {
+        showAuthAlert(`Network error: ${err.message}`, 'error');
+        btnSubmitActivation.disabled = false;
+        btnSubmitActivation.innerHTML = `<span>Complete Activation & Enter Portal</span>`;
+      }
+    });
+  }
+
+  // D. DEO Operator Login
+  if (deoLoginForm) {
+    deoLoginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAuthAlert();
+
+      const opCode = deoOperatorCode.value.trim();
+      const opPwd = deoOperatorPassword.value;
+
+      if (!opCode || !opPwd) {
+        showAuthAlert('Please enter both DEO Operator ID and Password.', 'error');
+        return;
+      }
+
+      submitDeoBtn.disabled = true;
+      submitDeoBtn.innerHTML = `
+        <svg class="spin-icon" style="width:18px;height:18px;animation:spin 1s linear infinite;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:0.25;"></circle>
+          <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span>Authenticating DEO Operator...</span>
+      `;
+
+      try {
+        const res = await fetch(API_BASE + '/api/auth/deo/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            employee_code: opCode,
+            password: opPwd
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showAuthAlert('✓ DEO verified! Opening administrative console...', 'success');
+          setTimeout(() => {
+            completeLoginTransition(data.user);
+            submitDeoBtn.disabled = false;
+            submitDeoBtn.innerHTML = `
+              <span>Access DEO Management Console</span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:20px;height:20px;">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             `;
-          }, 1200);
+          }, 350);
         } else {
-          const errMsg = data.detail || data.message || 'Registration failed. Employee code or email may already exist.';
+          const errMsg = data.detail || data.message || 'Invalid DEO credentials.';
           showAuthAlert(errMsg, 'error');
-          submitRegisterBtn.disabled = false;
-          submitRegisterBtn.innerHTML = `
-            <span>Register Faculty Account</span>
+          submitDeoBtn.disabled = false;
+          submitDeoBtn.innerHTML = `
+            <span>Access DEO Management Console</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:20px;height:20px;">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
@@ -592,14 +758,251 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (err) {
         showAuthAlert(`Network error: ${err.message}`, 'error');
-        submitRegisterBtn.disabled = false;
-        submitRegisterBtn.innerHTML = `
-          <span>Register Faculty Account</span>
+        submitDeoBtn.disabled = false;
+        submitDeoBtn.innerHTML = `
+          <span>Access DEO Management Console</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:20px;height:20px;">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         `;
       }
+    });
+  }
+
+  // =========================================================================
+  // DEO Faculty Management Console Operations
+  // =========================================================================
+  let deoCachedFaculties = [];
+
+  async function loadDeoFaculties(searchQuery = '') {
+    if (!deoFacultyTableBody) return;
+    deoFacultyTableBody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center;padding:2rem;color:#64748B;">
+          <svg class="spin-icon" style="width:24px;height:24px;animation:spin 1s linear infinite;margin-bottom:0.5rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:0.25;"></circle>
+            <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <div>Loading official CSE faculty roster...</div>
+        </td>
+      </tr>
+    `;
+
+    try {
+      const url = API_BASE + '/api/deo/faculties' + (searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : '');
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (deoStatTotal) deoStatTotal.textContent = data.total_faculty || 0;
+      if (deoStatActivated) deoStatActivated.textContent = data.activated_count || 0;
+      if (deoStatPending) deoStatPending.textContent = data.pending_count || 0;
+
+      deoCachedFaculties = data.faculties || [];
+      renderDeoTableRows();
+    } catch (err) {
+      console.error('Error loading faculties for DEO:', err);
+      deoFacultyTableBody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align:center;padding:2rem;color:#DC2626;">
+            Failed to load faculty roster: ${escapeHtml(err.message)}
+          </td>
+        </tr>
+      `;
+    }
+  }
+
+  function renderDeoTableRows() {
+    if (!deoFacultyTableBody) return;
+    const filterStatus = deoStatusFilter ? deoStatusFilter.value : 'all';
+
+    let list = deoCachedFaculties;
+    if (filterStatus !== 'all') {
+      list = list.filter(f => f.status === filterStatus);
+    }
+
+    if (list.length === 0) {
+      deoFacultyTableBody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align:center;padding:2rem;color:#64748B;">
+            No faculty members match your filter criteria.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    deoFacultyTableBody.innerHTML = list.map(f => {
+      const isAct = f.status === 'activated';
+      const statusBadge = isAct
+        ? `<span class="deo-status-badge activated">✓ Activated</span>`
+        : `<span class="deo-status-badge pending">⏳ Pending Setup</span>`;
+
+      const safeEmp = escapeHtml(String(f.emp_id || ''));
+      const safeName = escapeHtml(String(f.name || ''));
+      const safeDesig = escapeHtml(String(f.designation || 'Faculty'));
+      const safeEmail = escapeHtml(String(f.email || '—'));
+      const safePhone = escapeHtml(String(f.phone || '—'));
+
+      return `
+        <tr>
+          <td><span class="deo-code-badge">${safeEmp}</span></td>
+          <td><strong>${safeName}</strong></td>
+          <td>${safeDesig}</td>
+          <td>
+            <div style="font-size:0.8rem;color:#1E293B;">${safeEmail}</div>
+            <div style="font-size:0.75rem;color:#64748B;">${safePhone}</div>
+          </td>
+          <td>${statusBadge}</td>
+          <td>
+            <button type="button" class="btn-deo-remove-fac" onclick="window.removeFacultyAsDeo('${safeEmp}', '${safeName.replace(/'/g, "\\'")}')" title="Remove faculty from registry">
+              🗑️ Remove
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Global Remove Action callable from table row
+  window.removeFacultyAsDeo = async function(empId, name) {
+    const confirmDel = confirm(`Are you sure you want to remove Faculty member:\n${name} (Employee ID: ${empId})\n\nThis will remove them from the official university registry.`);
+    if (!confirmDel) return;
+
+    try {
+      const res = await fetch(API_BASE + `/api/deo/faculty/${encodeURIComponent(empId)}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        showToast(`Faculty ${name} (ID: ${empId}) removed successfully.`, 'success');
+        loadDeoFaculties(deoFacultySearch ? deoFacultySearch.value.trim() : '');
+      } else {
+        showToast(data.message || data.detail || 'Could not remove faculty member.', 'error');
+      }
+    } catch (err) {
+      showToast(`Error removing faculty: ${err.message}`, 'error');
+    }
+  };
+
+  // DEO Search Debounce
+  if (deoFacultySearch) {
+    let searchTimeout = null;
+    deoFacultySearch.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        loadDeoFaculties(deoFacultySearch.value.trim());
+      }, 250);
+    });
+  }
+
+  // DEO Status Filter
+  if (deoStatusFilter) {
+    deoStatusFilter.addEventListener('change', () => {
+      renderDeoTableRows();
+    });
+  }
+
+  // Modal Open / Close
+  if (btnOpenAddFacultyModal) {
+    btnOpenAddFacultyModal.addEventListener('click', () => {
+      if (deoAddFacultyModal) {
+        deoAddFacultyModal.style.display = 'flex';
+        if (newFacEmpId) newFacEmpId.focus();
+      }
+    });
+  }
+
+  if (btnCloseAddFacultyModal) {
+    btnCloseAddFacultyModal.addEventListener('click', () => {
+      if (deoAddFacultyModal) deoAddFacultyModal.style.display = 'none';
+    });
+  }
+
+  if (btnCancelAddFacultyModal) {
+    btnCancelAddFacultyModal.addEventListener('click', () => {
+      if (deoAddFacultyModal) deoAddFacultyModal.style.display = 'none';
+    });
+  }
+
+  // Add Faculty Form Submission
+  if (deoAddFacultyForm) {
+    deoAddFacultyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const empId = newFacEmpId.value.trim();
+      const desig = newFacDesignation.value;
+      const name = newFacName.value.trim();
+      const email = newFacEmail.value.trim();
+      const phone = newFacPhone.value.trim();
+
+      if (!empId || !name) {
+        alert('Please enter both Employee ID and Full Faculty Name.');
+        return;
+      }
+
+      const saveBtn = document.getElementById('btnSaveFaculty');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Enrolling...';
+      }
+
+      try {
+        const res = await fetch(API_BASE + '/api/deo/faculty', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            emp_id: empId,
+            name: name,
+            designation: desig,
+            email: email || undefined,
+            phone: phone || undefined,
+            department: 'Computer Science & Engineering'
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showToast(`Faculty '${name}' (ID: ${empId}) enrolled successfully!`, 'success');
+          if (deoAddFacultyModal) deoAddFacultyModal.style.display = 'none';
+          deoAddFacultyForm.reset();
+          loadDeoFaculties(deoFacultySearch ? deoFacultySearch.value.trim() : '');
+        } else {
+          alert(data.message || data.detail || 'Could not enroll faculty.');
+        }
+      } catch (err) {
+        alert(`Network error enrolling faculty: ${err.message}`);
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Enroll Faculty Member ➜';
+        }
+      }
+    });
+  }
+
+  // DEO Navigation Switches
+  if (btnDeoToChambers) {
+    btnDeoToChambers.addEventListener('click', () => {
+      if (deoSection) deoSection.style.display = 'none';
+      if (chamberSection) chamberSection.style.display = 'block';
+    });
+  }
+
+  if (btnChamberReturnDeo) {
+    btnChamberReturnDeo.addEventListener('click', () => {
+      if (chamberSection) chamberSection.style.display = 'none';
+      if (deoSection) deoSection.style.display = 'block';
+      loadDeoFaculties(deoFacultySearch ? deoFacultySearch.value.trim() : '');
+    });
+  }
+
+  if (btnDeoLogout) {
+    btnDeoLogout.addEventListener('click', () => {
+      sessionStorage.removeItem('vignan_user');
+      if (deoSection) deoSection.style.display = 'none';
+      if (loginSection) loginSection.style.display = 'flex';
+      switchAuthTab('deo');
+      showToast('DEO signed out securely.', 'info');
     });
   }
 

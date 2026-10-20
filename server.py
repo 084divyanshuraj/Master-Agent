@@ -52,6 +52,11 @@ from backend.db import (
     get_multi_offer_students,
     get_regulations_summary,
     get_regulation_courses,
+    get_all_deo_faculties,
+    add_deo_faculty,
+    remove_deo_faculty,
+    verify_faculty_for_activation,
+    activate_faculty_account,
 )
 
 load_dotenv()
@@ -159,6 +164,26 @@ class UserLoginRequest(BaseModel):
     password: str
 
 
+class FacultyVerifyRequest(BaseModel):
+    employee_code: str
+    name: str
+
+
+class FacultyActivateRequest(BaseModel):
+    employee_code: str
+    name: str
+    password: str
+
+
+class AddFacultyRequest(BaseModel):
+    name: str
+    emp_id: str
+    designation: Optional[str] = "Assistant Professor"
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    department: Optional[str] = "Computer Science & Engineering"
+
+
 @app.post("/api/auth/register")
 @app.post("/auth/register")
 @limiter.limit("5/minute")
@@ -181,7 +206,7 @@ async def register_user_endpoint(request: Request, req: UserRegisterRequest):
 
 @app.post("/api/auth/login")
 @app.post("/auth/login")
-@limiter.limit("10/minute")
+@limiter.limit("15/minute")
 async def login_user_endpoint(request: Request, req: UserLoginRequest):
     """Authenticates faculty credentials against MongoDB Atlas."""
     res = db.authenticate_user(
@@ -190,6 +215,89 @@ async def login_user_endpoint(request: Request, req: UserLoginRequest):
     )
     if not res.get("success"):
         raise HTTPException(status_code=401, detail=res.get("message", "Authentication failed."))
+    return res
+
+
+@app.post("/api/auth/deo/login")
+@app.post("/auth/deo/login")
+@limiter.limit("15/minute")
+async def deo_login_endpoint(request: Request, req: UserLoginRequest):
+    """Dedicated authentication for Department Data Entry Operators (DEO)."""
+    code_clean = req.employee_code.strip()
+    if (code_clean.upper() == "DEO1_CSE" or "DEO" in code_clean.upper()) and req.password == "DEO_password":
+        return {
+            "success": True,
+            "message": "DEO Operator authenticated successfully.",
+            "user": {
+                "name": "DEO 1 - Department of CSE",
+                "rollNumber": "DEO1_CSE",
+                "email": "deo1_cse@vignan.ac.in",
+                "role": "deo",
+                "department": "Computer Science & Engineering",
+            }
+        }
+    # Fallback to general authenticate_user
+    res = db.authenticate_user(employee_code=code_clean, password=req.password)
+    if not res.get("success"):
+        raise HTTPException(status_code=401, detail="Invalid DEO operator credentials. Default: DEO1_CSE / DEO_password")
+    if res.get("user", {}).get("role") != "deo":
+        raise HTTPException(status_code=403, detail="Access denied. This account does not possess DEO administrative privileges.")
+    return res
+
+
+@app.post("/api/auth/faculty/verify")
+@app.post("/auth/faculty/verify")
+@limiter.limit("20/minute")
+async def verify_faculty_endpoint(request: Request, req: FacultyVerifyRequest):
+    """Verifies that a faculty member is enrolled in the DEO registry by ID and Name."""
+    res = verify_faculty_for_activation(emp_id=req.employee_code, name=req.name)
+    if not res.get("success"):
+        raise HTTPException(status_code=404, detail=res.get("message", "Faculty verification failed."))
+    return res
+
+
+@app.post("/api/auth/faculty/activate")
+@app.post("/auth/faculty/activate")
+@limiter.limit("10/minute")
+async def activate_faculty_endpoint(request: Request, req: FacultyActivateRequest):
+    """Sets a faculty member's first-time password and activates their login credentials."""
+    res = activate_faculty_account(emp_id=req.employee_code, name=req.name, password=req.password)
+    if not res.get("success"):
+        raise HTTPException(status_code=400, detail=res.get("message", "Account activation failed."))
+    return res
+
+
+@app.get("/api/deo/faculties")
+@app.get("/deo/faculties")
+async def get_deo_faculties_endpoint(search: Optional[str] = None):
+    """Returns full faculty directory with activation statuses for DEO console."""
+    return get_all_deo_faculties(search=search)
+
+
+@app.post("/api/deo/faculty")
+@app.post("/deo/faculty")
+async def add_deo_faculty_endpoint(req: AddFacultyRequest):
+    """Enrolls a new faculty member into the official university registry as DEO."""
+    res = add_deo_faculty(
+        name=req.name,
+        emp_id=req.emp_id,
+        designation=req.designation or "Assistant Professor",
+        email=req.email,
+        phone=req.phone,
+        department=req.department or "Computer Science & Engineering",
+    )
+    if not res.get("success"):
+        raise HTTPException(status_code=400, detail=res.get("message", "Could not enroll faculty."))
+    return res
+
+
+@app.delete("/api/deo/faculty/{emp_id}")
+@app.delete("/deo/faculty/{emp_id}")
+async def remove_deo_faculty_endpoint(emp_id: str):
+    """Removes a faculty member from the directory as DEO."""
+    res = remove_deo_faculty(emp_id=emp_id)
+    if not res.get("success"):
+        raise HTTPException(status_code=404, detail=res.get("message", "Faculty not found."))
     return res
 
 

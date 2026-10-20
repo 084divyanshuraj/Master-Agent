@@ -6,9 +6,9 @@
   <title>Vignan's University — Master Agent Enterprise Portal</title>
   <meta name="description" content="Official Master Agent Orchestration Portal for Vignan's Foundation for Science, Technology & Research — Unified Intelligence & Departmental Data Access.">
   
-  <link rel="stylesheet" href="styles/theme.css?v=12">
-  <link rel="stylesheet" href="styles/login.css?v=12">
-  <link rel="stylesheet" href="styles/chat.css?v=12">
+  <link rel="stylesheet" href="styles/theme.css?v=13">
+  <link rel="stylesheet" href="styles/login.css?v=13">
+  <link rel="stylesheet" href="styles/chat.css?v=13">
   
   <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="assets/vignan university logo.jiff">
@@ -64,16 +64,16 @@
           <p class="auth-desc">Authorized access for University Deans, HoDs, Faculty, and Departmental Administration.</p>
         </div>
 
-        <!-- Mode Toggle Tabs (Sign In vs Register) -->
+        <!-- Mode Toggle Tabs (Faculty vs DEO Admin) -->
         <div class="auth-mode-tabs">
-          <button type="button" class="auth-tab-btn active" id="tabBtnSignIn">Staff Sign In</button>
-          <button type="button" class="auth-tab-btn" id="tabBtnRegister">Register New Staff</button>
+          <button type="button" class="auth-tab-btn active" id="tabBtnFaculty">👨‍🏫 Faculty / Staff Sign In</button>
+          <button type="button" class="auth-tab-btn" id="tabBtnDeo">🛠️ DEO Admin Portal</button>
         </div>
 
         <!-- Live Status / Feedback Alert Banner -->
         <div id="authAlert" class="auth-alert-banner" style="display: none;"></div>
 
-        <!-- 1. Staff Sign In Form -->
+        <!-- 1. Faculty / Staff Sign In Form -->
         <form id="signInForm" class="auth-form" autocomplete="off">
           <!-- Employee ID / Faculty ID or Email -->
           <div class="form-group">
@@ -84,7 +84,7 @@
               <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
               </svg>
-              <input type="text" id="loginEmployeeCode" class="form-input" placeholder="e.g., VFSTR-HOD-CSE-01 or kvrao@vignan.ac.in" required>
+              <input type="text" id="loginEmployeeCode" class="form-input" placeholder="e.g., 675, 163, or VFSTR-HOD-CSE-01" required>
             </div>
           </div>
 
@@ -113,122 +113,296 @@
           </button>
 
           <div class="auth-switch-text">
-            <span>New faculty or department staff?</span>
-            <button type="button" class="auth-switch-link" id="linkToRegister">Register New Account</button>
+            <span>Enrolled in department records by DEO?</span>
+            <button type="button" class="auth-switch-link" id="linkToActivate">✨ First Time? Activate Account &amp; Set Password</button>
           </div>
         </form>
 
-        <!-- 2. Register New Staff Form (Initially Hidden) -->
-        <form id="registerForm" class="auth-form" autocomplete="off" style="display: none;">
-          <!-- Full Name -->
-          <div class="form-group">
-            <label for="regFullName" class="form-label">
-              Faculty / Staff Name <span class="required-star">*</span>
-            </label>
-            <div class="input-wrapper">
-              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <input type="text" id="regFullName" class="form-input" placeholder="e.g., Dr. A. Sudhakar" required>
-            </div>
+        <!-- 2. Faculty First-Time Activation Form (Initially Hidden) -->
+        <form id="facultyActivateForm" class="auth-form" autocomplete="off" style="display: none;">
+          <div class="auth-form-subheading">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F2C59; margin-bottom: 0.2rem;">Faculty Account Activation</h3>
+            <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 0.9rem;">Verify your official DEO enrollment by entering your Employee ID and Full Name as registered.</p>
           </div>
 
-          <!-- Employee ID / Code -->
+          <!-- Step 1: Employee ID -->
           <div class="form-group">
-            <label for="regEmployeeCode" class="form-label">
-              Faculty / Employee Code <span class="required-star">*</span>
+            <label for="activateEmpCode" class="form-label">
+              Faculty / Employee ID <span class="required-star">*</span>
             </label>
             <div class="input-wrapper">
               <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
               </svg>
-              <input type="text" id="regEmployeeCode" class="form-input" placeholder="e.g., VFSTR-FAC-2041" required>
+              <input type="text" id="activateEmpCode" class="form-input" placeholder="e.g., 675, 163, 714, or 2345" required>
             </div>
           </div>
 
-          <!-- University Email -->
+          <!-- Step 1: Official Name -->
           <div class="form-group">
-            <label for="regEmail" class="form-label">
-              Official University Email <span class="required-star">*</span>
+            <label for="activateFullName" class="form-label">
+              Official Full Name <span class="required-star">*</span>
             </label>
             <div class="input-wrapper">
               <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-              <input type="email" id="regEmail" class="form-input" placeholder="e.g., asudhakar@vignan.ac.in" required>
+              <input type="text" id="activateFullName" class="form-input" placeholder="e.g., Dr. S V Phani Kumar" required>
             </div>
           </div>
 
-          <!-- Role & Department Row -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="regUserRole" class="form-label">Designation / Role</label>
+          <button type="button" class="btn-submit-portal" id="btnVerifyFaculty" style="background:#0284C7;margin-bottom:0.8rem;">
+            <span>Verify University Records</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+
+          <!-- Step 2: Unlocked upon Identity Verification -->
+          <div id="activatePasswordArea" style="display: none; border-top: 1px dashed #CBD5E1; padding-top: 1rem; margin-top: 0.5rem;">
+            <div class="verified-identity-box" id="verifiedIdentityBox">
+              <span class="badge-dot green"></span>
+              <span id="verifiedFacultyDetails"><strong>Identity Confirmed:</strong> Ready to set password</span>
+            </div>
+
+            <div class="form-group" style="margin-top: 0.8rem;">
+              <label for="activateNewPassword" class="form-label">
+                Create Portal Password (min 4 characters) <span class="required-star">*</span>
+              </label>
               <div class="input-wrapper">
-                <select id="regUserRole" class="form-select">
-                  <option value="faculty" selected>Professor / Faculty Member</option>
-                  <option value="hod">Head of Department (HoD)</option>
-                  <option value="dean">Dean / Directorate</option>
-                  <option value="admin">Administrative &amp; Operations Staff</option>
-                  <option value="exam">Examination &amp; Academic Cell</option>
-                </select>
+                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <input type="password" id="activateNewPassword" class="form-input" placeholder="Create your portal password" minlength="4">
               </div>
             </div>
 
             <div class="form-group">
-              <label for="regDepartment" class="form-label">Department</label>
+              <label for="activateConfirmPassword" class="form-label">
+                Confirm Password <span class="required-star">*</span>
+              </label>
               <div class="input-wrapper">
-                <select id="regDepartment" class="form-select">
-                  <option value="CSE">CSE Dept</option>
-                  <option value="AIML">AIML Dept</option>
-                  <option value="IT">IT Dept</option>
-                  <option value="ECE">ECE Dept</option>
-                  <option value="MECH">MECH Dept</option>
-                  <option value="BIOTECH">BIOTECH Dept</option>
-                  <option value="ACADEMICS">Dean Academics</option>
-                  <option value="RESEARCH">Dean R&amp;D</option>
-                  <option value="COE">Exam Cell (CoE)</option>
-                  <option value="CENTRAL">Central Admin</option>
-                </select>
+                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <input type="password" id="activateConfirmPassword" class="form-input" placeholder="Re-enter your password">
               </div>
             </div>
+
+            <button type="submit" class="btn-submit-portal" id="btnSubmitActivation">
+              <span>Complete Activation &amp; Enter Portal</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
           </div>
 
-          <!-- Password -->
+          <div class="auth-switch-text">
+            <span>Already activated your account?</span>
+            <button type="button" class="auth-switch-link" id="linkBackToSignIn">← Return to Faculty Sign In</button>
+          </div>
+        </form>
+
+        <!-- 3. DEO Admin Portal Form (Initially Hidden) -->
+        <form id="deoLoginForm" class="auth-form" autocomplete="off" style="display: none;">
+          <div class="auth-form-subheading">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F2C59; margin-bottom: 0.2rem;">Department Data Entry Operator (DEO)</h3>
+            <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 0.9rem;">Administrative credential provisioning &amp; faculty roster management for CSE Department.</p>
+          </div>
+
+          <!-- Operator Code -->
           <div class="form-group">
-            <label for="regPassword" class="form-label">
-              Create Password (min 4 chars) <span class="required-star">*</span>
+            <label for="deoOperatorCode" class="form-label">
+              DEO Operator ID <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <input type="text" id="deoOperatorCode" class="form-input" value="DEO1_CSE" placeholder="e.g., DEO1_CSE" required>
+            </div>
+          </div>
+
+          <!-- Operator Password -->
+          <div class="form-group">
+            <label for="deoOperatorPassword" class="form-label">
+              DEO Security Password <span class="required-star">*</span>
             </label>
             <div class="input-wrapper">
               <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
-              <input type="password" id="regPassword" class="form-input" placeholder="Create a secure password" minlength="4" required>
-              <button type="button" class="btn-toggle-pwd" id="toggleRegPwd" title="Show / Hide Password">
+              <input type="password" id="deoOperatorPassword" class="form-input" value="DEO_password" placeholder="Enter DEO password" required>
+              <button type="button" class="btn-toggle-pwd" id="toggleDeoPwd" title="Show / Hide Password">
                 👁️
               </button>
             </div>
           </div>
 
           <!-- Submit CTA -->
-          <button type="submit" class="btn-submit-portal" id="submitRegisterBtn">
-            <span>Register Faculty Account</span>
+          <button type="submit" class="btn-submit-portal" id="submitDeoBtn" style="background:#4338CA;">
+            <span>Access DEO Management Console</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
 
-          <div class="auth-switch-text">
-            <span>Already have an account?</span>
-            <button type="button" class="auth-switch-link" id="linkToSignIn">Sign In with Credentials</button>
+          <div class="deo-demo-hint">
+            <span>🔐 Authorized Operator Credentials:</span>
+            <code>DEO1_CSE</code> &bull; <code>DEO_password</code>
           </div>
         </form>
 
         <!-- Quick Demo Chips for Faculty & Staff -->
         <div class="quick-demo-section" id="quickDemoSection">
           <span class="quick-demo-label">Quick Profile:</span>
-          <button type="button" class="demo-chip-btn" id="quickHodBtn">HOD: Dr. S. V. Phani Kumar (CSE)</button>
-          <button type="button" class="demo-chip-btn" id="quickDeanBtn">Dean: Prof. Dr. K. V. Krishna Kishore (SOCI)</button>
-          <button type="button" class="demo-chip-btn" id="quickExamBtn">Officer: Examination Cell</button>
+          <button type="button" class="demo-chip-btn" id="quickHodBtn">HOD: Dr. S. V. Phani Kumar</button>
+          <button type="button" class="demo-chip-btn" id="quickDeanBtn">Dean: Prof. Dr. K. V. Krishna Kishore</button>
+          <button type="button" class="demo-chip-btn" id="quickDeoBtn">🛠️ DEO Admin: DEO1_CSE</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         VIEW: DEO FACULTY MANAGEMENT CONSOLE
+         ======================================================================= -->
+    <section id="deoSection" class="deo-view-container" style="display: none;">
+      <!-- Top DEO Navigation Bar -->
+      <div class="deo-nav-bar">
+        <div class="deo-nav-left">
+          <div class="deo-brand-badge">
+            <span class="deo-brand-icon">🛡️</span>
+            <div>
+              <h2 class="deo-brand-title">DEO Roster &amp; Credential Administration</h2>
+              <p class="deo-brand-sub">Department of Computer Science &amp; Engineering &bull; VFSTR</p>
+            </div>
+          </div>
+        </div>
+        <div class="deo-nav-right">
+          <span class="deo-operator-pill">Operator: <strong id="deoOperatorDisplay">DEO1_CSE</strong></span>
+          <button type="button" class="btn-deo-switch-chambers" id="btnDeoToChambers">
+            💬 Open Master Agent Chambers ➜
+          </button>
+          <button type="button" class="btn-deo-logout" id="btnDeoLogout">
+            🚪 Sign Out
+          </button>
+        </div>
+      </div>
+
+      <!-- Metric Telemetry Cards -->
+      <div class="deo-stats-grid">
+        <div class="deo-stat-card">
+          <span class="deo-stat-label">Total Faculty in CSE Roster</span>
+          <span class="deo-stat-value" id="deoStatTotal">157</span>
+          <span class="deo-stat-sub">Official Department Directory</span>
+        </div>
+        <div class="deo-stat-card green">
+          <span class="deo-stat-label">Activated Accounts</span>
+          <span class="deo-stat-value" id="deoStatActivated">12</span>
+          <span class="deo-stat-sub">Password Set &bull; Ready to Login</span>
+        </div>
+        <div class="deo-stat-card amber">
+          <span class="deo-stat-label">Pending First-Time Activation</span>
+          <span class="deo-stat-value" id="deoStatPending">145</span>
+          <span class="deo-stat-sub">Enrolled by DEO &bull; Password Awaited</span>
+        </div>
+        <div class="deo-stat-card">
+          <span class="deo-stat-label">Department Governance</span>
+          <span class="deo-stat-value" style="font-size:1.1rem;margin-top:0.35rem;">NAAC A+ &bull; NBA Tier-1</span>
+          <span class="deo-stat-sub">Autonomous Verification Protocol</span>
+        </div>
+      </div>
+
+      <!-- Faculty Table Container -->
+      <div class="deo-roster-container">
+        <div class="deo-roster-toolbar">
+          <div class="deo-search-wrapper">
+            <input type="text" id="deoFacultySearch" class="deo-search-input" placeholder="🔍 Search faculty by name, employee ID, designation, email, or phone...">
+          </div>
+          <div class="deo-filter-actions">
+            <select id="deoStatusFilter" class="deo-filter-select">
+              <option value="all">All Faculty (All Statuses)</option>
+              <option value="pending_setup">⏳ Pending Activation Only</option>
+              <option value="activated">✅ Activated Only</option>
+            </select>
+            <button type="button" class="btn-deo-add-faculty" id="btnOpenAddFacultyModal">
+              ➕ Enroll New Faculty Member
+            </button>
+          </div>
+        </div>
+
+        <!-- Table View -->
+        <div class="deo-table-wrapper">
+          <table class="deo-faculty-table">
+            <thead>
+              <tr>
+                <th>Emp ID</th>
+                <th>Faculty Name</th>
+                <th>Designation</th>
+                <th>Official Email / Phone</th>
+                <th>Account Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="deoFacultyTableBody">
+              <!-- Populated dynamically via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal: Add New Faculty Member -->
+      <div id="deoAddFacultyModal" class="deo-modal-backdrop" style="display: none;">
+        <div class="deo-modal-card">
+          <div class="deo-modal-header">
+            <div>
+              <h3 class="deo-modal-title">Enroll New Faculty Member</h3>
+              <p class="deo-modal-sub">Add authorized faculty to the CSE department registry. Faculty will then self-activate their password.</p>
+            </div>
+            <button type="button" class="btn-deo-modal-close" id="btnCloseAddFacultyModal">✕</button>
+          </div>
+          <form id="deoAddFacultyForm" class="deo-modal-form" autocomplete="off">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="newFacEmpId" class="form-label">Employee ID / Code <span class="required-star">*</span></label>
+                <input type="text" id="newFacEmpId" class="form-input" placeholder="e.g., 2345 or VFSTR-CSE-158" required>
+              </div>
+              <div class="form-group">
+                <label for="newFacDesignation" class="form-label">Designation <span class="required-star">*</span></label>
+                <select id="newFacDesignation" class="form-select">
+                  <option value="Assistant Professor" selected>Assistant Professor</option>
+                  <option value="Associate Professor">Associate Professor</option>
+                  <option value="Professor">Professor</option>
+                  <option value="Senior Professor">Senior Professor</option>
+                  <option value="Head of Department (HoD)">Head of Department (HoD)</option>
+                  <option value="Deputy HoD">Deputy HoD</option>
+                  <option value="Lab Instructor / Technician">Lab Instructor / Technician</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newFacName" class="form-label">Full Faculty Name <span class="required-star">*</span></label>
+              <input type="text" id="newFacName" class="form-input" placeholder="e.g., Dr. A. Srinivas Rao" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="newFacEmail" class="form-label">Official Email</label>
+                <input type="email" id="newFacEmail" class="form-input" placeholder="e.g., asrao@vignan.ac.in">
+              </div>
+              <div class="form-group">
+                <label for="newFacPhone" class="form-label">Phone Number</label>
+                <input type="text" id="newFacPhone" class="form-input" placeholder="e.g., 9876543210">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newFacDept" class="form-label">Department</label>
+              <input type="text" id="newFacDept" class="form-input" value="Computer Science & Engineering" readonly>
+            </div>
+            <div class="deo-modal-actions">
+              <button type="button" class="btn-deo-cancel" id="btnCancelAddFacultyModal">Cancel</button>
+              <button type="submit" class="btn-deo-save" id="btnSaveFaculty">Enroll Faculty Member ➜</button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
@@ -238,7 +412,12 @@
          ======================================================================= -->
     <section id="chamberSection" class="chamber-view">
       <div class="chamber-header">
-        <div class="buji-tag" id="userWelcomeBadge">Welcome to Vignan Agent Network</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom: 0.5rem;">
+          <div class="buji-tag" id="userWelcomeBadge">Welcome to Vignan Agent Network</div>
+          <button type="button" id="btnChamberReturnDeo" class="btn-back-nav" style="display: none; padding: 0.35rem 0.8rem; font-size: 0.78rem;">
+            🛡️ Switch to DEO Console
+          </button>
+        </div>
         <h2 class="chamber-title">Select an Agent Chamber</h2>
         <p class="chamber-subtitle">Choose a category to enter a scoped chatbot or use the Master Agent for composite multi-agent queries.</p>
       </div>
@@ -622,6 +801,6 @@
     </div>
   </footer>
 
-  <script src="js/app.js?v=12"></script>
+  <script src="js/app.js?v=13"></script>
 </body>
 </html>

@@ -320,6 +320,15 @@ def seed_default_users():
             "department": "COE",
             "password": "vignan123",
         },
+        # Official Department Data Entry Operator (DEO 1 - CSE)
+        {
+            "name": "DEO 1 - Department of CSE",
+            "rollNumber": "DEO1_CSE",
+            "email": "deo1_cse@vignan.ac.in",
+            "role": "deo",
+            "department": "CSE",
+            "password": "DEO_password",
+        },
     ]
 
     for u in demo_users:
@@ -612,9 +621,22 @@ class AuditDB:
             user_doc = IN_MEMORY_USERS.get(identifier.upper())
 
         if not user_doc:
+            # Check if this ID is in the official faculty registry enrolled by DEO
+            clean_id = identifier.upper()
+            found_faculty = None
+            for f in IN_MEMORY_FACULTIES:
+                if str(f.get("emp_id", "")).strip().upper() == clean_id or str(f.get("email", "")).lower() == identifier.lower():
+                    found_faculty = f
+                    break
+            if found_faculty:
+                return {
+                    "success": False,
+                    "needs_activation": True,
+                    "message": f"Faculty profile '{found_faculty.get('name')}' is enrolled by DEO, but password has not been created yet. Please click '✨ First Time? Activate Account' below to set up your password."
+                }
             return {
                 "success": False,
-                "message": f"No account found for '{identifier}'. Please register an account first."
+                "message": f"No account found for '{identifier}'. You must be enrolled by the Department DEO before signing in."
             }
 
         stored_hash = user_doc.get("password_hash", "")
@@ -1149,6 +1171,280 @@ def search_faculties(query: str, limit: int = 30) -> List[Dict[str, Any]]:
             if len(res) >= limit:
                 break
     return res
+
+
+def get_all_deo_faculties(search: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Returns full list of faculty members for the DEO Management Console,
+    enriched with activation status and login account state.
+    """
+    faculties = []
+    activated_count = 0
+    pending_count = 0
+
+    s_clean = search.strip().upper() if search else ""
+
+    for f in IN_MEMORY_FACULTIES:
+        emp_id = str(f.get("emp_id", "")).strip().upper()
+        # Check if this faculty has an activated user login in IN_MEMORY_USERS
+        has_account = emp_id in IN_MEMORY_USERS or any(
+            u.get("rollNumber") == emp_id or u.get("email", "").lower() == str(f.get("email", "")).lower()
+            for u in IN_MEMORY_USERS.values()
+        )
+        status = "activated" if has_account else "pending_setup"
+        if status == "activated":
+            activated_count += 1
+        else:
+            pending_count += 1
+
+        if s_clean:
+            matches = (
+                s_clean in emp_id
+                or s_clean in f.get("name", "").upper()
+                or s_clean in f.get("designation", "").upper()
+                or s_clean in f.get("email", "").upper()
+                or s_clean in f.get("phone", "")
+            )
+            if not matches:
+                continue
+
+        faculties.append({
+            "emp_id": f.get("emp_id"),
+            "name": f.get("name"),
+            "designation": f.get("designation", "Faculty"),
+            "department": f.get("department", "Computer Science & Engineering"),
+            "email": f.get("email", ""),
+            "phone": f.get("phone", ""),
+            "status": status,
+            "courses_count": len(f.get("courses", [])),
+            "mentees_count": f.get("mentees_count", 0),
+        })
+
+    return {
+        "total_faculty": len(IN_MEMORY_FACULTIES),
+        "displayed_count": len(faculties),
+        "activated_count": activated_count,
+        "pending_count": pending_count,
+        "faculties": faculties,
+    }
+
+
+def add_deo_faculty(
+    name: str,
+    emp_id: str,
+    designation: str = "Assistant Professor",
+    email: Optional[str] = None,
+    phone: Optional[str] = None,
+    department: str = "Computer Science & Engineering",
+) -> Dict[str, Any]:
+    """Adds a new faculty member into the official directory as DEO."""
+    clean_emp = str(emp_id).strip().upper()
+    clean_name = name.strip()
+
+    # Check for duplicate
+    for f in IN_MEMORY_FACULTIES:
+        if str(f.get("emp_id", "")).strip().upper() == clean_emp:
+            return {
+                "success": False,
+                "message": f"Faculty with Employee ID '{clean_emp}' is already enrolled ({f.get('name')})."
+            }
+
+    clean_email = email.strip().lower() if email else f"{clean_emp.lower()}@vignan.ac.in"
+    new_faculty = {
+        "sl_no": len(IN_MEMORY_FACULTIES) + 1,
+        "emp_id": clean_emp,
+        "name": clean_name,
+        "designation": designation.strip(),
+        "gender": "U",
+        "phone": (phone or "").strip(),
+        "email": clean_email,
+        "department": department,
+        "is_leadership": "HOD" in designation.upper() or "DEAN" in designation.upper(),
+        "is_official_cse": True,
+        "class_teacher_of": [],
+        "courses": [],
+        "courses_count": 0,
+        "mentees_count": 0,
+        "mentee_rolls": [],
+        "status": "pending_setup",
+        "enrolled_by": "DEO1_CSE",
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+
+    IN_MEMORY_FACULTIES.insert(0, new_faculty)
+
+    # Persist to MongoDB if connected
+    if is_mongo_connected and mongo_db is not None:
+        try:
+            mongo_db["faculties"].insert_one(dict(new_faculty))
+        except Exception as e:
+            logger.error(f"Error persisting added faculty to MongoDB: {e}")
+
+    return {
+        "success": True,
+        "message": f"Faculty '{clean_name}' (ID: {clean_emp}) enrolled successfully! Faculty may now activate their account.",
+        "faculty": new_faculty,
+    }
+
+
+def remove_deo_faculty(emp_id: str) -> Dict[str, Any]:
+    """Removes a faculty member from the directory as DEO."""
+    clean_emp = str(emp_id).strip().upper()
+    found_idx = None
+    target_name = clean_emp
+
+    for idx, f in enumerate(IN_MEMORY_FACULTIES):
+        if str(f.get("emp_id", "")).strip().upper() == clean_emp:
+            found_idx = idx
+            target_name = f.get("name", clean_emp)
+            break
+
+    if found_idx is None:
+        return {"success": False, "message": f"Faculty with Employee ID '{clean_emp}' not found."}
+
+    IN_MEMORY_FACULTIES.pop(found_idx)
+
+    # Also remove login user from IN_MEMORY_USERS if present
+    if clean_emp in IN_MEMORY_USERS:
+        del IN_MEMORY_USERS[clean_emp]
+
+    if is_mongo_connected and mongo_db is not None:
+        try:
+            mongo_db["faculties"].delete_one({"emp_id": clean_emp})
+            mongo_db["users"].delete_one({"rollNumber": clean_emp})
+        except Exception as e:
+            logger.error(f"Error deleting faculty from MongoDB: {e}")
+
+    return {
+        "success": True,
+        "message": f"Faculty '{target_name}' (ID: {clean_emp}) successfully removed from university records.",
+    }
+
+
+def verify_faculty_for_activation(emp_id: str, name: str) -> Dict[str, Any]:
+    """
+    Verifies that a faculty member exists in the DEO-approved list
+    and that their provided name matches official department records.
+    """
+    clean_emp = str(emp_id).strip().upper()
+    clean_input_name = name.strip().lower()
+
+    # Find faculty record
+    target_faculty = None
+    for f in IN_MEMORY_FACULTIES:
+        if str(f.get("emp_id", "")).strip().upper() == clean_emp:
+            target_faculty = f
+            break
+
+    if not target_faculty:
+        return {
+            "success": False,
+            "message": f"Employee ID '{emp_id}' is not enrolled in the official VFSTR Department registry. Please contact your Department DEO to add your profile."
+        }
+
+    # Normalize official name & input name to match reliably (ignoring Dr., Prof., punctuation, spaces)
+    def normalize_name(n: str) -> str:
+        no_titles = re.sub(r"^(dr\.|prof\.|mr\.|mrs\.|ms\.)\s*", "", n, flags=re.IGNORECASE).strip().lower()
+        return re.sub(r"[\.\,\s\-_]+", "", no_titles)
+
+    norm_official = normalize_name(target_faculty.get("name", ""))
+    norm_input = normalize_name(clean_input_name)
+
+    # Check if input matches or is substring or tokens overlap
+    input_tokens = set(re.findall(r"[a-z0-9]+", clean_input_name)) - {"dr", "prof", "mr", "mrs", "ms"}
+    official_tokens = set(re.findall(r"[a-z0-9]+", target_faculty.get("name", "").lower())) - {"dr", "prof", "mr", "mrs", "ms"}
+
+    is_name_match = (
+        norm_official == norm_input
+        or norm_input in norm_official
+        or norm_official in norm_input
+        or len(input_tokens & official_tokens) > 0
+    )
+
+    if not is_name_match:
+        return {
+            "success": False,
+            "message": f"Name mismatch for Employee ID '{emp_id}'. The name entered does not match official department records. Please check spelling or contact your DEO."
+        }
+
+    # Check if already activated
+    already_activated = clean_emp in IN_MEMORY_USERS or any(
+        u.get("rollNumber") == clean_emp for u in IN_MEMORY_USERS.values()
+    )
+
+    return {
+        "success": True,
+        "message": "Faculty record verified successfully!",
+        "emp_id": target_faculty.get("emp_id"),
+        "name": target_faculty.get("name"),
+        "designation": target_faculty.get("designation"),
+        "department": target_faculty.get("department", "Computer Science & Engineering"),
+        "email": target_faculty.get("email"),
+        "already_activated": already_activated,
+    }
+
+
+def activate_faculty_account(emp_id: str, name: str, password: str) -> Dict[str, Any]:
+    """
+    Sets the faculty member's password and activates their login credentials.
+    """
+    verify_res = verify_faculty_for_activation(emp_id, name)
+    if not verify_res.get("success"):
+        return verify_res
+
+    if len(password.strip()) < 4:
+        return {"success": False, "message": "Password must be at least 4 characters long."}
+
+    clean_emp = str(verify_res["emp_id"]).strip().upper()
+    fac_name = verify_res["name"]
+    fac_email = verify_res.get("email") or f"{clean_emp.lower()}@vignan.ac.in"
+    fac_desig = verify_res.get("designation", "")
+
+    role = "faculty"
+    if "HOD" in fac_desig.upper() and "DEPUTY" not in fac_desig.upper():
+        role = "hod"
+    elif "DEAN" in fac_desig.upper():
+        role = "dean"
+    elif "DEPUTY HOD" in fac_desig.upper():
+        role = "deputy_hod"
+
+    hashed = _hash_password(password)
+    user_doc = {
+        "name": fac_name,
+        "rollNumber": clean_emp,
+        "email": fac_email,
+        "role": role,
+        "department": verify_res.get("department", "CSE"),
+        "designation": fac_desig,
+        "password_hash": hashed,
+        "status": "activated",
+        "activated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+
+    IN_MEMORY_USERS[clean_emp] = user_doc
+
+    if is_mongo_connected and mongo_db is not None:
+        try:
+            mongo_db["users"].update_one(
+                {"rollNumber": clean_emp},
+                {"$set": user_doc},
+                upsert=True
+            )
+        except Exception as e:
+            logger.error(f"Error persisting activated user to MongoDB: {e}")
+
+    return {
+        "success": True,
+        "message": f"Welcome, {fac_name}! Your faculty portal account has been activated successfully.",
+        "user": {
+            "name": fac_name,
+            "rollNumber": clean_emp,
+            "email": fac_email,
+            "role": role,
+            "department": verify_res.get("department", "CSE"),
+            "designation": fac_desig,
+        }
+    }
 
 
 def get_timetables_summary() -> Dict[str, Any]:
