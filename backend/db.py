@@ -1173,6 +1173,12 @@ def search_faculties(query: str, limit: int = 30) -> List[Dict[str, Any]]:
     return res
 
 
+def _generate_token_for_emp(emp_id: str) -> str:
+    """Generates a stable 6-digit security token for a faculty member."""
+    h = hashlib.sha256(f"vignan_token_seed_{emp_id}".encode()).hexdigest()
+    return str(int(h[:8], 16) % 900000 + 100000)
+
+
 def get_all_deo_faculties(search: Optional[str] = None) -> Dict[str, Any]:
     """
     Returns full list of faculty members for the DEO Management Console,
@@ -1184,7 +1190,13 @@ def get_all_deo_faculties(search: Optional[str] = None) -> Dict[str, Any]:
 
     s_clean = search.strip().upper() if search else ""
 
-    for f in IN_MEMORY_FACULTIES:
+    # Filter strictly to official CSE Department members (plus newly enrolled by DEO)
+    cse_faculties = [
+        f for f in IN_MEMORY_FACULTIES
+        if f.get("is_official_cse") is True or f.get("department") == "Computer Science & Engineering"
+    ]
+
+    for f in cse_faculties:
         emp_id = str(f.get("emp_id", "")).strip().upper()
         # Check if this faculty has an activated user login in IN_MEMORY_USERS
         has_account = emp_id in IN_MEMORY_USERS or any(
@@ -1197,6 +1209,11 @@ def get_all_deo_faculties(search: Optional[str] = None) -> Dict[str, Any]:
         else:
             pending_count += 1
 
+        token = f.get("activation_token")
+        if not token:
+            token = _generate_token_for_emp(emp_id)
+            f["activation_token"] = token
+
         if s_clean:
             matches = (
                 s_clean in emp_id
@@ -1204,6 +1221,7 @@ def get_all_deo_faculties(search: Optional[str] = None) -> Dict[str, Any]:
                 or s_clean in f.get("designation", "").upper()
                 or s_clean in f.get("email", "").upper()
                 or s_clean in f.get("phone", "")
+                or s_clean in str(token)
             )
             if not matches:
                 continue
@@ -1216,12 +1234,13 @@ def get_all_deo_faculties(search: Optional[str] = None) -> Dict[str, Any]:
             "email": f.get("email", ""),
             "phone": f.get("phone", ""),
             "status": status,
+            "activation_token": token,
             "courses_count": len(f.get("courses", [])),
             "mentees_count": f.get("mentees_count", 0),
         })
 
     return {
-        "total_faculty": len(IN_MEMORY_FACULTIES),
+        "total_faculty": len(cse_faculties),
         "displayed_count": len(faculties),
         "activated_count": activated_count,
         "pending_count": pending_count,
@@ -1237,7 +1256,7 @@ def add_deo_faculty(
     phone: Optional[str] = None,
     department: str = "Computer Science & Engineering",
 ) -> Dict[str, Any]:
-    """Adds a new faculty member into the official directory as DEO."""
+    """Adds a new faculty member into the official directory as DEO with an activation token."""
     clean_emp = str(emp_id).strip().upper()
     clean_name = name.strip()
 
@@ -1250,6 +1269,7 @@ def add_deo_faculty(
             }
 
     clean_email = email.strip().lower() if email else f"{clean_emp.lower()}@vignan.ac.in"
+    token = str(secrets.randbelow(900000) + 100000)
     new_faculty = {
         "sl_no": len(IN_MEMORY_FACULTIES) + 1,
         "emp_id": clean_emp,
@@ -1267,6 +1287,7 @@ def add_deo_faculty(
         "mentees_count": 0,
         "mentee_rolls": [],
         "status": "pending_setup",
+        "activation_token": token,
         "enrolled_by": "DEO1_CSE",
         "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
@@ -1282,8 +1303,53 @@ def add_deo_faculty(
 
     return {
         "success": True,
-        "message": f"Faculty '{clean_name}' (ID: {clean_emp}) enrolled successfully! Faculty may now activate their account.",
+        "message": f"Faculty '{clean_name}' (ID: {clean_emp}) enrolled successfully! Security Token: {token}",
         "faculty": new_faculty,
+        "activation_token": token,
+    }
+
+
+def regenerate_deo_token(emp_id: str) -> Dict[str, Any]:
+    """
+    Generates a fresh 6-digit security token for a faculty member.
+    If the faculty was already activated, resets their existing password so they must re-verify.
+    """
+    clean_emp = str(emp_id).strip().upper()
+    target_faculty = None
+    for f in IN_MEMORY_FACULTIES:
+        if str(f.get("emp_id", "")).strip().upper() == clean_emp:
+            target_faculty = f
+            break
+
+    if not target_faculty:
+        return {"success": False, "message": f"Faculty with ID '{clean_emp}' not found."}
+
+    # Generate new random 6-digit token
+    new_token = str(secrets.randbelow(900000) + 100000)
+    target_faculty["activation_token"] = new_token
+    target_faculty["status"] = "pending_setup"
+
+    # Invalidate existing password session in IN_MEMORY_USERS
+    if clean_emp in IN_MEMORY_USERS:
+        del IN_MEMORY_USERS[clean_emp]
+
+    if is_mongo_connected and mongo_db is not None:
+        try:
+            mongo_db["users"].delete_one({"rollNumber": clean_emp})
+            mongo_db["faculties"].update_one(
+                {"emp_id": clean_emp},
+                {"$set": {"activation_token": new_token, "status": "pending_setup"}}
+            )
+        except Exception as e:
+            logger.error(f"Error updating MongoDB on token regeneration: {e}")
+
+    fac_name = target_faculty.get("name", "Faculty Member")
+    return {
+        "success": True,
+        "emp_id": clean_emp,
+        "name": fac_name,
+        "activation_token": new_token,
+        "message": f"New security token '{new_token}' generated for {fac_name} (ID: {clean_emp})."
     }
 
 
@@ -1321,10 +1387,11 @@ def remove_deo_faculty(emp_id: str) -> Dict[str, Any]:
     }
 
 
-def verify_faculty_for_activation(emp_id: str, name: str) -> Dict[str, Any]:
+def verify_faculty_for_activation(emp_id: str, name: str, token: Optional[str] = None) -> Dict[str, Any]:
     """
-    Verifies that a faculty member exists in the DEO-approved list
-    and that their provided name matches official department records.
+    Verifies that a faculty member exists in the DEO-approved list,
+    that their provided name matches official records,
+    AND that their DEO Security Token matches.
     """
     clean_emp = str(emp_id).strip().upper()
     clean_input_name = name.strip().lower()
@@ -1340,6 +1407,12 @@ def verify_faculty_for_activation(emp_id: str, name: str) -> Dict[str, Any]:
         return {
             "success": False,
             "message": f"Employee ID '{emp_id}' is not enrolled in the official VFSTR Department registry. Please contact your Department DEO to add your profile."
+        }
+
+    if not (target_faculty.get("is_official_cse") is True or target_faculty.get("department") == "Computer Science & Engineering"):
+        return {
+            "success": False,
+            "message": f"Employee ID '{emp_id}' is an allied/inter-departmental instructor. The current portal activation is for Computer Science & Engineering faculty."
         }
 
     # Normalize official name & input name to match reliably (ignoring Dr., Prof., punctuation, spaces)
@@ -1367,6 +1440,25 @@ def verify_faculty_for_activation(emp_id: str, name: str) -> Dict[str, Any]:
             "message": f"Name mismatch for Employee ID '{emp_id}'. The name entered does not match official department records. Please check spelling or contact your DEO."
         }
 
+    # Verify DEO Security Token
+    expected_token = target_faculty.get("activation_token")
+    if not expected_token:
+        expected_token = _generate_token_for_emp(clean_emp)
+        target_faculty["activation_token"] = expected_token
+
+    if not token or not str(token).strip():
+        return {
+            "success": False,
+            "message": "DEO Security Token is required. Please enter the 6-digit token provided by your Department DEO."
+        }
+
+    clean_token = str(token).strip().upper()
+    if clean_token != str(expected_token).strip().upper():
+        return {
+            "success": False,
+            "message": f"Invalid DEO Security Token for Employee ID '{emp_id}'. Please check with your Department DEO for your authorized 6-digit token."
+        }
+
     # Check if already activated
     already_activated = clean_emp in IN_MEMORY_USERS or any(
         u.get("rollNumber") == clean_emp for u in IN_MEMORY_USERS.values()
@@ -1374,7 +1466,7 @@ def verify_faculty_for_activation(emp_id: str, name: str) -> Dict[str, Any]:
 
     return {
         "success": True,
-        "message": "Faculty record verified successfully!",
+        "message": "Identity and DEO Security Token verified successfully!",
         "emp_id": target_faculty.get("emp_id"),
         "name": target_faculty.get("name"),
         "designation": target_faculty.get("designation"),
@@ -1384,11 +1476,12 @@ def verify_faculty_for_activation(emp_id: str, name: str) -> Dict[str, Any]:
     }
 
 
-def activate_faculty_account(emp_id: str, name: str, password: str) -> Dict[str, Any]:
+def activate_faculty_account(emp_id: str, name: str, password: str, token: Optional[str] = None) -> Dict[str, Any]:
     """
     Sets the faculty member's password and activates their login credentials.
+    Consumes the DEO token upon successful password setup.
     """
-    verify_res = verify_faculty_for_activation(emp_id, name)
+    verify_res = verify_faculty_for_activation(emp_id, name, token=token)
     if not verify_res.get("success"):
         return verify_res
 
@@ -1423,6 +1516,13 @@ def activate_faculty_account(emp_id: str, name: str, password: str) -> Dict[str,
 
     IN_MEMORY_USERS[clean_emp] = user_doc
 
+    # Mark token consumed in faculty roster
+    for f in IN_MEMORY_FACULTIES:
+        if str(f.get("emp_id", "")).strip().upper() == clean_emp:
+            f["status"] = "activated"
+            f["activation_token"] = None
+            break
+
     if is_mongo_connected and mongo_db is not None:
         try:
             mongo_db["users"].update_one(
@@ -1430,12 +1530,16 @@ def activate_faculty_account(emp_id: str, name: str, password: str) -> Dict[str,
                 {"$set": user_doc},
                 upsert=True
             )
+            mongo_db["faculties"].update_one(
+                {"emp_id": clean_emp},
+                {"$set": {"status": "activated", "activation_token": None}}
+            )
         except Exception as e:
             logger.error(f"Error persisting activated user to MongoDB: {e}")
 
     return {
         "success": True,
-        "message": f"Welcome, {fac_name}! Your faculty portal account has been activated successfully.",
+        "message": f"Welcome, {fac_name}! Your faculty portal password has been set and your account is active.",
         "user": {
             "name": fac_name,
             "rollNumber": clean_emp,

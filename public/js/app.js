@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const facultyActivateForm = document.getElementById('facultyActivateForm');
   const activateEmpCode = document.getElementById('activateEmpCode');
   const activateFullName = document.getElementById('activateFullName');
+  const activateDeoToken = document.getElementById('activateDeoToken');
   const btnVerifyFaculty = document.getElementById('btnVerifyFaculty');
   const activatePasswordArea = document.getElementById('activatePasswordArea');
   const verifiedIdentityBox = document.getElementById('verifiedIdentityBox');
@@ -45,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitDeoBtn = document.getElementById('submitDeoBtn');
 
   // Mascot & Demo Buttons
+  const bujiAvatar = document.getElementById('bujiAvatar');
+  const bujiGreetingText = document.getElementById('bujiGreetingText');
   const quickDemoSection = document.getElementById('quickDemoSection');
   const quickHodBtn = document.getElementById('quickHodBtn');
   const quickDeanBtn = document.getElementById('quickDeanBtn');
@@ -77,6 +80,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const newFacName = document.getElementById('newFacName');
   const newFacEmail = document.getElementById('newFacEmail');
   const newFacPhone = document.getElementById('newFacPhone');
+  
+  // DEO Token Confirmation & Success Modals
+  const deoTokenConfirmModal = document.getElementById('deoTokenConfirmModal');
+  const btnCloseTokenConfirmModal = document.getElementById('btnCloseTokenConfirmModal');
+  const btnCancelRegenToken = document.getElementById('btnCancelRegenToken');
+  const btnConfirmRegenToken = document.getElementById('btnConfirmRegenToken');
+  const confirmEmpId = document.getElementById('confirmEmpId');
+  const confirmFacultyName = document.getElementById('confirmFacultyName');
+  const confirmStatusText = document.getElementById('confirmStatusText');
+
+  const deoTokenSuccessModal = document.getElementById('deoTokenSuccessModal');
+  const btnCloseSuccessTokenModal = document.getElementById('btnCloseSuccessTokenModal');
+  const btnCopySuccessToken = document.getElementById('btnCopySuccessToken');
+  const tokenSuccessFaculty = document.getElementById('tokenSuccessFaculty');
+  const tokenSuccessCode = document.getElementById('tokenSuccessCode');
+  let currentRegenTarget = null;
   
   const userWelcomeBadge = document.getElementById('userWelcomeBadge');
   const btnBackToLogin = document.getElementById('btnBackToLogin');
@@ -316,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (loginEmployeeCode) {
     loginEmployeeCode.addEventListener('input', (e) => {
       const val = e.target.value.trim();
+      if (!bujiGreetingText) return;
       if (val.length > 3) {
         bujiGreetingText.innerHTML = `Verifying credentials for <strong>${escapeHtml(val)}</strong>. Enter your portal password to access institutional intelligence.`;
       } else {
@@ -324,11 +344,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (regFullName) {
-    regFullName.addEventListener('input', (e) => {
+  if (activateFullName) {
+    activateFullName.addEventListener('input', (e) => {
       const val = e.target.value.trim();
+      if (!bujiGreetingText) return;
       if (val.length > 2) {
-        bujiGreetingText.innerHTML = `Welcome to the faculty portal, <strong>${escapeHtml(val)}</strong>! Please complete your department registration.`;
+        bujiGreetingText.innerHTML = `Verifying university enrollment for <strong>${escapeHtml(val)}</strong>. Ensure your name matches DEO records.`;
       } else {
         bujiGreetingText.innerHTML = originalGreeting;
       }
@@ -341,7 +362,9 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         bujiAvatar.style.transform = '';
       }, 400);
-      bujiGreetingText.innerHTML = `*Beep boop!* I'm <strong>Buji</strong>, your university intelligence assistant connected to all 72 specialized departmental endpoints!`;
+      if (bujiGreetingText) {
+        bujiGreetingText.innerHTML = `*Beep boop!* I'm <strong>Buji</strong>, your university intelligence assistant connected to all 72 specialized departmental endpoints!`;
+      }
     });
   }
 
@@ -581,9 +604,10 @@ document.addEventListener('DOMContentLoaded', () => {
       hideAuthAlert();
       const empVal = activateEmpCode.value.trim();
       const nameVal = activateFullName.value.trim();
+      const tokenVal = activateDeoToken ? activateDeoToken.value.trim() : '';
 
-      if (!empVal || !nameVal) {
-        showAuthAlert('Please enter both your Employee ID and your Official Full Name.', 'error');
+      if (!empVal || !nameVal || !tokenVal) {
+        showAuthAlert('Please enter your Employee ID, Official Full Name, and 6-digit DEO Security Token.', 'error');
         return;
       }
 
@@ -593,7 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:0.25;"></circle>
           <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
         </svg>
-        <span>Checking DEO Registry...</span>
+        <span>Checking Token &amp; DEO Registry...</span>
       `;
 
       try {
@@ -602,21 +626,22 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             employee_code: empVal,
-            name: nameVal
+            name: nameVal,
+            token: tokenVal
           })
         });
 
         const data = await res.json();
 
         if (res.ok && data.success) {
-          showAuthAlert(`✓ Record verified! Welcome, ${data.name}. Please create your portal password below.`, 'success');
+          showAuthAlert(`✓ Record & Security Token verified! Welcome, ${data.name}. Please set your password below.`, 'success');
           if (activatePasswordArea) activatePasswordArea.style.display = 'block';
           if (verifiedFacultyDetails) {
-            verifiedFacultyDetails.innerHTML = `<strong>Identity Confirmed:</strong> ${escapeHtml(data.name)} (ID: <code>${escapeHtml(data.emp_id)}</code>) &bull; ${escapeHtml(data.designation || 'Faculty')} &bull; ${escapeHtml(data.department)}`;
+            verifiedFacultyDetails.innerHTML = `<strong>Identity &amp; Token Confirmed:</strong> ${escapeHtml(data.name)} (ID: <code>${escapeHtml(data.emp_id)}</code>) &bull; ${escapeHtml(data.designation || 'Faculty')} &bull; ${escapeHtml(data.department)}`;
           }
           if (activateNewPassword) activateNewPassword.focus();
         } else {
-          const errMsg = data.detail || data.message || 'Verification failed. Employee ID or Name not found in official registry.';
+          const errMsg = data.detail || data.message || 'Verification failed. Please verify your Employee ID, Name, and DEO Token.';
           showAuthAlert(errMsg, 'error');
           if (activatePasswordArea) activatePasswordArea.style.display = 'none';
         }
@@ -625,7 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } finally {
         btnVerifyFaculty.disabled = false;
         btnVerifyFaculty.innerHTML = `
-          <span>Verify University Records</span>
+          <span>Verify Identity &amp; DEO Token</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -642,6 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const empVal = activateEmpCode.value.trim();
       const nameVal = activateFullName.value.trim();
+      const tokenVal = activateDeoToken ? activateDeoToken.value.trim() : '';
       const newPwdVal = activateNewPassword.value;
       const confirmPwdVal = activateConfirmPassword.value;
 
@@ -671,7 +697,8 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify({
             employee_code: empVal,
             name: nameVal,
-            password: newPwdVal
+            password: newPwdVal,
+            token: tokenVal
           })
         });
 
@@ -694,6 +721,14 @@ document.addEventListener('DOMContentLoaded', () => {
         showAuthAlert(`Network error: ${err.message}`, 'error');
         btnSubmitActivation.disabled = false;
         btnSubmitActivation.innerHTML = `<span>Complete Activation & Enter Portal</span>`;
+      }
+    });
+  }
+
+  if (btnSubmitActivation && facultyActivateForm) {
+    btnSubmitActivation.addEventListener('click', () => {
+      if (typeof facultyActivateForm.requestSubmit === 'function') {
+        facultyActivateForm.requestSubmit();
       }
     });
   }
@@ -842,6 +877,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const safeDesig = escapeHtml(String(f.designation || 'Faculty'));
       const safeEmail = escapeHtml(String(f.email || '—'));
       const safePhone = escapeHtml(String(f.phone || '—'));
+      const tokenVal = f.activation_token || '';
+
+      const tokenHtml = isAct
+        ? `<span class="deo-token-pill used" title="Account already activated">✓ Consumed</span>`
+        : `<span class="deo-token-pill" onclick="window.copyTokenToClipboard('${escapeHtml(tokenVal)}')" title="Click to copy security token">🔑 <strong>${escapeHtml(tokenVal || '------')}</strong> <button type="button" class="btn-deo-copy-inline" title="Copy Token">📋</button></span>`;
+
+      const actionBtnHtml = isAct
+        ? `<button type="button" class="btn-deo-reset-pwd" onclick="window.promptRegenToken('${safeEmp}', '${safeName.replace(/'/g, "\\'")}', true)" title="Reset password and re-issue fresh token">
+             🔄 Reset Password
+           </button>`
+        : `<button type="button" class="btn-deo-regen-pwd" onclick="window.promptRegenToken('${safeEmp}', '${safeName.replace(/'/g, "\\'")}', false)" title="Re-issue a fresh activation token">
+             🔄 Re-issue Token
+           </button>`;
 
       return `
         <tr>
@@ -852,15 +900,125 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="font-size:0.8rem;color:#1E293B;">${safeEmail}</div>
             <div style="font-size:0.75rem;color:#64748B;">${safePhone}</div>
           </td>
+          <td>${tokenHtml}</td>
           <td>${statusBadge}</td>
           <td>
-            <button type="button" class="btn-deo-remove-fac" onclick="window.removeFacultyAsDeo('${safeEmp}', '${safeName.replace(/'/g, "\\'")}')" title="Remove faculty from registry">
-              🗑️ Remove
-            </button>
+            <div class="deo-actions-cell">
+              ${actionBtnHtml}
+              <button type="button" class="btn-deo-remove-fac" onclick="window.removeFacultyAsDeo('${safeEmp}', '${safeName.replace(/'/g, "\\'")}')" title="Remove faculty from registry">
+                🗑️
+              </button>
+            </div>
           </td>
         </tr>
       `;
     }).join('');
+  }
+
+  // Global Helper: Copy Token to Clipboard
+  window.copyTokenToClipboard = function(token) {
+    if (!token || token === '------') return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(token).catch(() => {});
+    }
+    showToast(`Security Token '${token}' copied to clipboard!`, 'info');
+  };
+
+  // Global Helper: Open Token Re-issue Confirmation Modal
+  window.promptRegenToken = function(empId, name, isActivated) {
+    currentRegenTarget = { empId, name, isActivated };
+    if (confirmEmpId) confirmEmpId.textContent = empId;
+    if (confirmFacultyName) confirmFacultyName.textContent = name;
+    if (confirmStatusText) {
+      confirmStatusText.textContent = isActivated
+        ? 'Status: Currently Activated (Password Set)'
+        : 'Status: Pending First-Time Setup';
+      confirmStatusText.style.color = isActivated ? '#059669' : '#D97706';
+    }
+    if (deoTokenConfirmModal) deoTokenConfirmModal.style.display = 'flex';
+  };
+
+  // Close / Cancel Token Confirmation Modal
+  if (btnCloseTokenConfirmModal) {
+    btnCloseTokenConfirmModal.addEventListener('click', () => {
+      if (deoTokenConfirmModal) deoTokenConfirmModal.style.display = 'none';
+      currentRegenTarget = null;
+    });
+  }
+
+  if (btnCancelRegenToken) {
+    btnCancelRegenToken.addEventListener('click', () => {
+      if (deoTokenConfirmModal) deoTokenConfirmModal.style.display = 'none';
+      currentRegenTarget = null;
+    });
+  }
+
+  // Confirm Token Regeneration & Password Reset
+  if (btnConfirmRegenToken) {
+    btnConfirmRegenToken.addEventListener('click', async () => {
+      if (!currentRegenTarget || !currentRegenTarget.empId) return;
+
+      btnConfirmRegenToken.disabled = true;
+      btnConfirmRegenToken.textContent = 'Generating...';
+
+      try {
+        const res = await fetch(API_BASE + `/api/deo/faculty/${encodeURIComponent(currentRegenTarget.empId)}/regenerate-token`, {
+          method: 'POST'
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          if (deoTokenConfirmModal) deoTokenConfirmModal.style.display = 'none';
+          
+          // Show Success Modal with copyable token
+          if (tokenSuccessFaculty) {
+            tokenSuccessFaculty.textContent = `${currentRegenTarget.name} (Employee ID: ${currentRegenTarget.empId})`;
+          }
+          if (tokenSuccessCode) {
+            tokenSuccessCode.textContent = data.activation_token;
+          }
+          if (deoTokenSuccessModal) {
+            deoTokenSuccessModal.style.display = 'flex';
+          }
+
+          // Automatically copy to clipboard
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(data.activation_token).catch(() => {});
+          }
+
+          showToast(`New Token: ${data.activation_token} (Copied to clipboard)`, 'success');
+          loadDeoFaculties(deoFacultySearch ? deoFacultySearch.value.trim() : '');
+        } else {
+          alert(data.message || data.detail || 'Could not regenerate token.');
+        }
+      } catch (err) {
+        alert(`Network error regenerating token: ${err.message}`);
+      } finally {
+        btnConfirmRegenToken.disabled = false;
+        btnConfirmRegenToken.textContent = 'Yes, Re-issue New Token';
+      }
+    });
+  }
+
+  // Success Modal Buttons
+  if (btnCloseSuccessTokenModal) {
+    btnCloseSuccessTokenModal.addEventListener('click', () => {
+      if (deoTokenSuccessModal) deoTokenSuccessModal.style.display = 'none';
+      currentRegenTarget = null;
+    });
+  }
+
+  if (btnCopySuccessToken) {
+    btnCopySuccessToken.addEventListener('click', () => {
+      const code = tokenSuccessCode ? tokenSuccessCode.textContent.trim() : '';
+      if (code && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code);
+        btnCopySuccessToken.textContent = '✓ Copied!';
+        setTimeout(() => {
+          btnCopySuccessToken.textContent = '📋 Copy Token';
+        }, 2000);
+      }
+    });
   }
 
   // Global Remove Action callable from table row
@@ -1006,36 +1164,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  btnBackToLogin.addEventListener('click', () => {
-    chamberSection.style.display = 'none';
-    chatSection.style.display = 'none';
-    loginSection.style.display = 'flex';
-    const submitBtn = document.getElementById('submitLoginBtn');
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = `
-      <span>Access University Intelligence</span>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:20px;height:20px;">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-      </svg>
-    `;
-    bujiGreetingText.innerHTML = originalGreeting;
-  });
+  if (btnBackToLogin) {
+    btnBackToLogin.addEventListener('click', () => {
+      if (chamberSection) chamberSection.style.display = 'none';
+      if (chatSection) chatSection.style.display = 'none';
+      if (loginSection) loginSection.style.display = 'flex';
+      const submitBtn = document.getElementById('submitLoginBtn');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <span>Access University Intelligence</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:20px;height:20px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        `;
+      }
+      if (bujiGreetingText) bujiGreetingText.innerHTML = originalGreeting;
+    });
+  }
 
   // =========================================================================
   // 5. Category Chamber Selection & Agent Drawer Interactivity
   // =========================================================================
   
   // Launch Global Master Agent Chatbot
-  cardGlobalMaster.addEventListener('click', () => {
-    launchChatSession({
-      mode: 'global',
-      scopeTitle: 'Unified Master Agent (All 72 Hackathon Endpoints)',
-      scopeDesc: 'Orchestrating across 72 specialized agents in 14 sub-categories across 4 divisions',
-      modeLabel: 'Global Master',
-      modeClass: 'global',
-      heroSubtitle: 'Ask any cross-departmental university query. The master agent will decompose your request, query the appropriate specialized endpoints in parallel using the Groq key pool, and synthesize a single comprehensive answer.'
+  if (cardGlobalMaster) {
+    cardGlobalMaster.addEventListener('click', () => {
+      launchChatSession({
+        mode: 'global',
+        scopeTitle: 'Unified Master Agent (All 72 Hackathon Endpoints)',
+        scopeDesc: 'Orchestrating across 72 specialized agents in 14 sub-categories across 4 divisions',
+        modeLabel: 'Global Master',
+        modeClass: 'global',
+        heroSubtitle: 'Ask any cross-departmental university query. The master agent will decompose your request, query the appropriate specialized endpoints in parallel using the Groq key pool, and synthesize a single comprehensive answer.'
+      });
     });
-  });
+  }
 
   // Open Category Drawer for the 4 Main Category Cards
   chamberCards.forEach((card) => {
@@ -1211,10 +1375,12 @@ document.addEventListener('DOMContentLoaded', () => {
     agentDrawerModal.style.display = 'none';
   }
 
-  btnCloseDrawer.addEventListener('click', closeAgentDrawer);
-  agentDrawerModal.addEventListener('click', (e) => {
-    if (e.target === agentDrawerModal) closeAgentDrawer();
-  });
+  if (btnCloseDrawer) btnCloseDrawer.addEventListener('click', closeAgentDrawer);
+  if (agentDrawerModal) {
+    agentDrawerModal.addEventListener('click', (e) => {
+      if (e.target === agentDrawerModal) closeAgentDrawer();
+    });
+  }
 
   // =========================================================================
   // 6. Launching & Managing the Chat Session (View 3)
@@ -1295,11 +1461,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  btnBackToChambers.addEventListener('click', () => {
-    chatSection.style.display = 'none';
-    chamberSection.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  if (btnBackToChambers) {
+    btnBackToChambers.addEventListener('click', () => {
+      if (chatSection) chatSection.style.display = 'none';
+      if (chamberSection) chamberSection.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   // Tab Toggles for Chat vs Live App Webview
   if (tabBtnChat) tabBtnChat.addEventListener('click', () => switchChatView('chat'));
@@ -1529,10 +1697,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   // 7. Chat Messaging & Simulated Master Agent Pipeline Execution
   // =========================================================================
-  btnSendChat.addEventListener('click', handleUserSendMessage);
-  chatPromptInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') handleUserSendMessage();
-  });
+  if (btnSendChat) btnSendChat.addEventListener('click', handleUserSendMessage);
+  if (chatPromptInput) {
+    chatPromptInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleUserSendMessage();
+    });
+  }
 
   quickPromptChips.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -2459,19 +2629,21 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
     // Dropdown toggle
     const dropdownWrap = bar.querySelector('.report-download-dropdown');
     const toggleBtn = bar.querySelector('.btn-download-report');
-    toggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      document.querySelectorAll('.report-download-dropdown.open').forEach(d => {
-        if (d !== dropdownWrap) d.classList.remove('open');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.report-download-dropdown.open').forEach(d => {
+          if (d !== dropdownWrap) d.classList.remove('open');
+        });
+        if (dropdownWrap) dropdownWrap.classList.toggle('open');
       });
-      dropdownWrap.classList.toggle('open');
-    });
+    }
 
     // Format choices
     bar.querySelectorAll('.dropdown-item').forEach(item => {
       item.addEventListener('click', (e) => {
         e.stopPropagation();
-        dropdownWrap.classList.remove('open');
+        if (dropdownWrap) dropdownWrap.classList.remove('open');
         const action = item.getAttribute('data-action');
         if (action === 'pdf') openPrintableReport(reportItem, false);
         else if (action === 'md') downloadReportAsMarkdown(reportItem, false);
@@ -2482,11 +2654,13 @@ ${(rep.citations || []).map(c => `  * ${c.name} (${c.url})`).join('\n') || '  * 
 
     // Copy text action
     const copyBtn = bar.querySelector('.btn-copy-report');
-    copyBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const plainText = generateReportText(reportItem, false);
-      copyTextToClipboard(plainText, 'Report copied to clipboard!');
-    });
+    if (copyBtn) {
+      copyBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const plainText = generateReportText(reportItem, false);
+        copyTextToClipboard(plainText, 'Report copied to clipboard!');
+      });
+    }
 
     // Speak / Read Aloud action
     const speakBtn = bar.querySelector('.btn-speak-report');

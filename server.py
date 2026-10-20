@@ -57,6 +57,7 @@ from backend.db import (
     remove_deo_faculty,
     verify_faculty_for_activation,
     activate_faculty_account,
+    regenerate_deo_token,
 )
 
 load_dotenv()
@@ -167,12 +168,14 @@ class UserLoginRequest(BaseModel):
 class FacultyVerifyRequest(BaseModel):
     employee_code: str
     name: str
+    token: Optional[str] = None
 
 
 class FacultyActivateRequest(BaseModel):
     employee_code: str
     name: str
     password: str
+    token: Optional[str] = None
 
 
 class AddFacultyRequest(BaseModel):
@@ -249,10 +252,10 @@ async def deo_login_endpoint(request: Request, req: UserLoginRequest):
 @app.post("/auth/faculty/verify")
 @limiter.limit("20/minute")
 async def verify_faculty_endpoint(request: Request, req: FacultyVerifyRequest):
-    """Verifies that a faculty member is enrolled in the DEO registry by ID and Name."""
-    res = verify_faculty_for_activation(emp_id=req.employee_code, name=req.name)
+    """Verifies that a faculty member is enrolled in the DEO registry by ID, Name, and DEO Security Token."""
+    res = verify_faculty_for_activation(emp_id=req.employee_code, name=req.name, token=req.token)
     if not res.get("success"):
-        raise HTTPException(status_code=404, detail=res.get("message", "Faculty verification failed."))
+        raise HTTPException(status_code=400, detail=res.get("message", "Faculty verification failed."))
     return res
 
 
@@ -260,8 +263,8 @@ async def verify_faculty_endpoint(request: Request, req: FacultyVerifyRequest):
 @app.post("/auth/faculty/activate")
 @limiter.limit("10/minute")
 async def activate_faculty_endpoint(request: Request, req: FacultyActivateRequest):
-    """Sets a faculty member's first-time password and activates their login credentials."""
-    res = activate_faculty_account(emp_id=req.employee_code, name=req.name, password=req.password)
+    """Sets a faculty member's password and activates their login credentials using verified DEO token."""
+    res = activate_faculty_account(emp_id=req.employee_code, name=req.name, password=req.password, token=req.token)
     if not res.get("success"):
         raise HTTPException(status_code=400, detail=res.get("message", "Account activation failed."))
     return res
@@ -296,6 +299,16 @@ async def add_deo_faculty_endpoint(req: AddFacultyRequest):
 async def remove_deo_faculty_endpoint(emp_id: str):
     """Removes a faculty member from the directory as DEO."""
     res = remove_deo_faculty(emp_id=emp_id)
+    if not res.get("success"):
+        raise HTTPException(status_code=404, detail=res.get("message", "Faculty not found."))
+    return res
+
+
+@app.post("/api/deo/faculty/{emp_id}/regenerate-token")
+@app.post("/deo/faculty/{emp_id}/regenerate-token")
+async def regenerate_deo_token_endpoint(emp_id: str):
+    """Generates a fresh 6-digit DEO activation/reset token for a faculty member."""
+    res = regenerate_deo_token(emp_id=emp_id)
     if not res.get("success"):
         raise HTTPException(status_code=404, detail=res.get("message", "Faculty not found."))
     return res

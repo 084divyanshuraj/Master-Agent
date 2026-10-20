@@ -6,9 +6,9 @@
   <title>Vignan's University — Master Agent Enterprise Portal</title>
   <meta name="description" content="Official Master Agent Orchestration Portal for Vignan's Foundation for Science, Technology & Research — Unified Intelligence & Departmental Data Access.">
   
-  <link rel="stylesheet" href="styles/theme.css?v=13">
-  <link rel="stylesheet" href="styles/login.css?v=13">
-  <link rel="stylesheet" href="styles/chat.css?v=13">
+  <link rel="stylesheet" href="styles/theme.css?v=15">
+  <link rel="stylesheet" href="styles/login.css?v=15">
+  <link rel="stylesheet" href="styles/chat.css?v=15">
   
   <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="assets/vignan university logo.jiff">
@@ -114,15 +114,15 @@
 
           <div class="auth-switch-text">
             <span>Enrolled in department records by DEO?</span>
-            <button type="button" class="auth-switch-link" id="linkToActivate">✨ First Time? Activate Account &amp; Set Password</button>
+            <button type="button" class="auth-switch-link" id="linkToActivate">✨ First Time or Forgot Password? Activate / Reset</button>
           </div>
         </form>
 
-        <!-- 2. Faculty First-Time Activation Form (Initially Hidden) -->
+        <!-- 2. Faculty First-Time Activation & Password Reset Form (Initially Hidden) -->
         <form id="facultyActivateForm" class="auth-form" autocomplete="off" style="display: none;">
           <div class="auth-form-subheading">
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F2C59; margin-bottom: 0.2rem;">Faculty Account Activation</h3>
-            <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 0.9rem;">Verify your official DEO enrollment by entering your Employee ID and Full Name as registered.</p>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F2C59; margin-bottom: 0.2rem;">Faculty Activation &amp; Password Reset</h3>
+            <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 0.9rem;">Verify your official DEO enrollment and 6-digit DEO Security Token to create or reset your password.</p>
           </div>
 
           <!-- Step 1: Employee ID -->
@@ -151,8 +151,22 @@
             </div>
           </div>
 
+          <!-- Step 1: DEO Security Token -->
+          <div class="form-group">
+            <label for="activateDeoToken" class="form-label">
+              DEO Security Token <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+              <input type="text" id="activateDeoToken" class="form-input" placeholder="6-digit token from DEO, e.g., 804113" maxlength="10" required>
+            </div>
+            <small style="color: #64748B; font-size: 0.75rem; margin-top: 0.25rem; display: block;">Issued by Department DEO for identity verification &amp; password reset.</small>
+          </div>
+
           <button type="button" class="btn-submit-portal" id="btnVerifyFaculty" style="background:#0284C7;margin-bottom:0.8rem;">
-            <span>Verify University Records</span>
+            <span>Verify Identity &amp; DEO Token</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -340,6 +354,7 @@
                 <th>Faculty Name</th>
                 <th>Designation</th>
                 <th>Official Email / Phone</th>
+                <th>Security Token</th>
                 <th>Account Status</th>
                 <th>Actions</th>
               </tr>
@@ -403,6 +418,63 @@
               <button type="submit" class="btn-deo-save" id="btnSaveFaculty">Enroll Faculty Member ➜</button>
             </div>
           </form>
+        </div>
+      </div>
+
+      <!-- Modal: Confirm Password Reset & Regenerate Token -->
+      <div id="deoTokenConfirmModal" class="deo-modal-backdrop" style="display: none;">
+        <div class="deo-modal-card" style="max-width: 480px;">
+          <div class="deo-modal-header" style="border-bottom: 1px solid #FEE2E2;">
+            <div>
+              <h3 class="deo-modal-title" style="color: #B91C1C;">⚠️ Confirm Password Reset &amp; Token Re-issue</h3>
+              <p class="deo-modal-sub">Security verification for faculty credential reset.</p>
+            </div>
+            <button type="button" class="btn-deo-modal-close" id="btnCloseTokenConfirmModal">✕</button>
+          </div>
+          <div style="padding: 1.25rem 1.5rem;">
+            <p style="font-size: 0.88rem; color: #334155; margin-bottom: 1rem; line-height: 1.5;">
+              Are you sure you want to re-issue a security token for this faculty member?
+            </p>
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1rem;">
+              <div style="font-size: 0.85rem; color: #64748B; margin-bottom: 0.25rem;">Employee ID: <strong id="confirmEmpId" style="color: #0F172A; font-family: monospace;">-</strong></div>
+              <div style="font-size: 0.95rem; color: #0F2C59; font-weight: 700;" id="confirmFacultyName">-</div>
+              <div style="font-size: 0.8rem; color: #059669; margin-top: 0.25rem;" id="confirmStatusText">Status: Currently Activated</div>
+            </div>
+            <div style="background: #FEF2F2; border-left: 3px solid #EF4444; padding: 0.65rem 0.85rem; border-radius: 4px; font-size: 0.8rem; color: #991B1B; margin-bottom: 1.25rem;">
+              <strong>Notice:</strong> If this faculty member already has an active password, it will be reset. They will need to use this new 6-digit token to set a fresh password.
+            </div>
+            <div class="deo-modal-actions" style="justify-content: flex-end; gap: 0.75rem;">
+              <button type="button" class="btn-deo-cancel" id="btnCancelRegenToken">Keep Current Password</button>
+              <button type="button" class="btn-deo-save" id="btnConfirmRegenToken" style="background: #DC2626;">Yes, Re-issue New Token</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Token Display & Copy Modal -->
+      <div id="deoTokenSuccessModal" class="deo-modal-backdrop" style="display: none;">
+        <div class="deo-modal-card" style="max-width: 440px; text-align: center;">
+          <div style="padding: 1.5rem;">
+            <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🔑</div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: #0F2C59; margin-bottom: 0.35rem;">Security Token Ready</h3>
+            <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 1rem;" id="tokenSuccessFaculty">-</p>
+            
+            <div style="background: #EFF6FF; border: 2px dashed #3B82F6; border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #2563EB; font-weight: 700; display: block; margin-bottom: 0.25rem;">Official 6-Digit DEO Token</span>
+              <div style="font-size: 1.9rem; font-weight: 800; color: #1E3A8A; letter-spacing: 0.15em; font-family: monospace;" id="tokenSuccessCode">000000</div>
+            </div>
+
+            <p style="font-size: 0.78rem; color: #64748B; margin-bottom: 1.25rem;">Share this 6-digit token with the faculty member to activate or reset their portal password.</p>
+
+            <div style="display: flex; gap: 0.6rem; justify-content: center;">
+              <button type="button" class="btn-submit-portal" id="btnCopySuccessToken" style="background: #0284C7; padding: 0.55rem 1.2rem; font-size: 0.85rem;">
+                📋 Copy Token
+              </button>
+              <button type="button" class="btn-deo-cancel" id="btnCloseSuccessTokenModal">
+                Done
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -801,6 +873,6 @@
     </div>
   </footer>
 
-  <script src="js/app.js?v=13"></script>
+  <script src="js/app.js?v=15"></script>
 </body>
 </html>

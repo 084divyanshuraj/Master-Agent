@@ -1023,6 +1023,102 @@
   color: #BE123C;
 }
 
+.deo-token-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #F0FDF4;
+  border: 1px dashed #22C55E;
+  color: #166534;
+  padding: 0.25rem 0.55rem;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  user-select: all;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.deo-token-pill:hover {
+  background: #DCFCE7;
+  border-color: #16A34A;
+}
+
+.deo-token-pill.used {
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #64748B;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.74rem;
+  cursor: default;
+}
+
+.btn-deo-copy-inline {
+  background: transparent;
+  border: none;
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 0 0.15rem;
+  opacity: 0.75;
+  transition: opacity var(--transition-fast);
+}
+
+.btn-deo-copy-inline:hover {
+  opacity: 1;
+}
+
+.deo-actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.btn-deo-reset-pwd {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+  padding: 0.32rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all var(--transition-fast);
+}
+
+.btn-deo-reset-pwd:hover {
+  background: #FEE2E2;
+  border-color: #F87171;
+  color: #B91C1C;
+}
+
+.btn-deo-regen-pwd {
+  background: #F0F9FF;
+  color: #0284C7;
+  border: 1px solid #BAE6FD;
+  padding: 0.32rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all var(--transition-fast);
+}
+
+.btn-deo-regen-pwd:hover {
+  background: #E0F2FE;
+  border-color: #7DD3FC;
+  color: #0369A1;
+}
+
 /* DEO Modal Backdrop & Card */
 .deo-modal-backdrop {
   position: fixed;
