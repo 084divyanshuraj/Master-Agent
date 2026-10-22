@@ -1221,6 +1221,198 @@ class MasterOrchestrator:
                 "status": "success",
             }
 
+        # 3. Computer Networks (24CS303 / R22 / C24)
+        words_set = set(re.findall(r'\b\w+\b', query_lower))
+        is_cn_query = (
+            ("cn" in words_set or "computer networks" in query_lower or "computer network" in query_lower or "24cs303" in query_lower or "networking" in query_lower) and
+            (is_syllabus_intent or "r22" in query_lower or "c24" in query_lower or "course" in query_lower or "subject" in query_lower or "3rd" in query_lower or "year 3" in query_lower or "iii" in query_lower)
+        )
+        if is_cn_query and not detected_student:
+            cn_answer = (
+                "### 📖 Official Course Syllabus: Computer Networks (24CS303)\n"
+                "**Department of Computer Science & Engineering | Vignan's Foundation for Science, Technology & Research (VFSTR)**\n"
+                "*Enforced Regulation: 📜 **R22 / C24 Regulation** | Academic Level: **B.Tech CSE — III Year I Semester** (2023–2027 Batch)*\n"
+                "*Official Document Source: `data/R22C24 Syllabus book 01-08-2026.pdf` (Pages 107–108)*\n\n"
+                "| Course Parameter | Official Institutional Specification |\n"
+                "|---|---|\n"
+                "| **Course Code** | `24CS303` (Professional Core) |\n"
+                "| **Course Title** | **Computer Networks** |\n"
+                "| **Instructional Hours** | **L: 3 hrs** | **T: 0 hrs** | **P: 2 hrs** (Total: 5 contact hrs/week) |\n"
+                "| **Academic Credits** | **4.0 Credits** |\n"
+                "| **Prerequisites** | Java Programming & UNIX Commands |\n"
+                "| **Evaluation Scheme** | 60% Formative (CIE) : 40% Summative (SEE) |\n\n"
+                "---\n\n"
+                "#### 🎯 Course Description & Objectives\n"
+                "Focuses on imparting in-depth theoretical and practical knowledge of protocol suites operating across Local Area Networks (LANs) and Wide Area Networks (WANs). Provides solid mathematical and architectural foundations for data link protocols, IP internetworking, routing algorithms, transport layer reliable delivery, and modern application layer protocols.\n\n"
+                "---\n\n"
+                "#### 📑 Module-Wise Syllabus Breakdown\n\n"
+                "##### **MODULE 1: Foundations, Physical & Data Link Layers**\n"
+                "* **UNIT 1: Introduction to Computer Networks & Internet (20 Hours: 12L + 0T + 8P)**\n"
+                "  * **Network Architecture:** Understanding networks and the Internet, network edge vs. network core, circuit switching vs. packet switching.\n"
+                "  * **Performance Metrics:** Delay, packet loss, and throughput models in packet-switched networks; Protocol layering and service models (OSI 7-Layer & TCP/IP 5-Layer architectures); History and evolution of computer networks.\n"
+                "* **UNIT 2: Data Link Layer & Local Area Networks (20 Hours: 12L + 0T + 8P)**\n"
+                "  * **Link Layer Fundamentals:** Introduction to link-layer services, Framing, Error detection and correction techniques (Parity checks, Checksum, Cyclic Redundancy Check - CRC).\n"
+                "  * **Multiple Access Protocols:** Random Access (ALOHA, Slotted ALOHA, CSMA, CSMA/CD, CSMA/CA), Controlled Access, Channelization (FDMA, TDMA, CDMA).\n"
+                "  * **Switched LANs:** Ethernet protocols, MAC addressing, Address Resolution Protocol (ARP), LAN switches vs. Routers, Virtual LANs (VLANs).\n\n"
+                "##### **MODULE 2: Network, Transport & Application Layers**\n"
+                "* **UNIT 1: Network Layer & Routing Protocols (20 Hours: 12L + 0T + 8P)**\n"
+                "  * **Network Layer Principles:** Forwarding vs Routing, Virtual Circuit and Datagram network models, IP addressing (IPv4 vs IPv6), Subnetting, Classless Inter-Domain Routing (CIDR), NAT.\n"
+                "  * **Routing Algorithms:** Graph abstraction, Distance Vector Routing (Bellman-Ford algorithm, Count-to-Infinity problem), Link State Routing (Dijkstra's algorithm), Hierarchical routing, Intra-AS routing (OSPF, RIP) and Inter-AS routing (BGP).\n"
+                "* **UNIT 2: Transport & Application Layers (20 Hours: 12L + 0T + 8P)**\n"
+                "  * **Transport Layer Services:** Multiplexing and Demultiplexing, Connectionless transport (UDP), Principles of reliable data transfer (Stop-and-Wait, Go-Back-N, Selective Repeat).\n"
+                "  * **Connection-Oriented Transport (TCP):** Segment structure, Three-way handshake, Flow control, TCP Congestion Control (Additive Increase Multiplicative Decrease - AIMD, Slow Start, Congestion Avoidance, Fast Retransmit/Recovery).\n"
+                "  * **Application Layer Protocols:** Web and HTTP/HTTPS, File Transfer Protocol (FTP), Electronic Mail (SMTP, POP3, IMAP), Domain Name System (DNS), Socket Programming with TCP and UDP.\n\n"
+                "---\n\n"
+                "#### 💻 Hands-on Laboratory & Practical Experiments\n"
+                "1. **Network Hardware & Cabling:** Study Copper (UTP/STP Cat5e/Cat6) and Fiber optic cables; Crimping Straight-through and Cross-over cables with RJ-45 jacks; Cable testing using LAN tester.\n"
+                "2. **Device Configuration:** Install and configure Hubs, Managed and Unmanaged Layer-2/Layer-3 Switches, and Routers; Port bandwidth configuration.\n"
+                "3. **Network Interface Cards (NIC):** Install wired and wireless NIC drivers; Ad-hoc vs Infrastructure mode peer-to-peer file transfers.\n"
+                "4. **Command-Line Telemetry:** Deep troubleshooting using `ping`, `traceroute`, `ipconfig`/`ifconfig`, `netstat`, `pathping`, `telnet`, `arp`, `nslookup`, and `getmac`.\n"
+                "5. **Wireshark Packet Analysis:** Packet sniffing and dissection of Ethernet frames, ARP request/reply packets, and 802.11 Wi-Fi frames.\n"
+                "6. **Cisco Packet Tracer Simulations:** Design star, bus, and hybrid topologies; Subnet design; Dynamic routing configuration using RIP and OSPF.\n"
+                "7. **Socket Programming in Java:** Implementation of one-way and two-way client-server chat application using TCP and UDP sockets.\n"
+                "8. **Network Diagnostics Utility:** Implement Echo client and Round-Trip Time (RTT) measurement tool in Java.\n\n"
+                "---\n\n"
+                "#### 📚 Prescribed Textbooks & References\n"
+                "* **Textbook 1:** James F. Kurose and Keith W. Ross, *Computer Networking: A Top-Down Approach*, 6th Edition, Pearson, 2017.\n"
+                "* **Textbook 2:** Behrouz A. Forouzan, *Computer Networks: A Top-Down Approach*, McGraw Hill, 2014.\n"
+                "* **Reference 1:** Andrew S. Tanenbaum and David J. Wetherall, *Computer Networks*, 5th Edition, Pearson Education, 2014.\n"
+                "* **Reference 2:** William Stallings, *Data and Computer Communications*, 10th Edition, Pearson Education, 2017.\n\n"
+                "---\n\n"
+                "#### 🎓 Course Outcomes (COs) & Bloom's Taxonomy Mapping\n"
+                "* **CO1 (Apply - L3):** Build core concepts of network hardware, reference architectures, and layering models.\n"
+                "* **CO2 (Evaluate - L5):** Evaluate physical layer transmission media, packet switching vs circuit switching, and error detection mechanisms.\n"
+                "* **CO3 (Apply - L3):** Implement and simulate link-layer and routing protocols using modern industry tools (Cisco Packet Tracer & Wireshark).\n"
+                "* **CO4 (Analyze - L4):** Analyze end-to-end transport-layer delivery, TCP flow/congestion control, and application-layer socket interactions."
+            )
+            return {
+                "report_id": f"VFSTR-SYLLABUS-{int(time.time()*1000)}",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "query": query,
+                "answer": cn_answer,
+                "mode": "deterministic",
+                "route": "course_syllabus",
+                "citations": [
+                    {"name": "VFSTR Academic Regulations & Syllabus Directorate", "url": "https://vignan.ac.in/academics"},
+                    {"name": "R22/C24 Syllabus Book (Pages 107–108)", "url": "https://vignan.ac.in/academics"},
+                    {"name": "Agent 08 — Course Outcome Engine", "url": "https://courseoutcome.onrender.com/"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
+
+        # 4. Operating Systems (25CS208 / 22CS208)
+        is_os_query = (
+            ("os" in words_set or "operating systems" in query_lower or "operating system" in query_lower or "25cs208" in query_lower) and
+            (is_syllabus_intent or "course" in query_lower or "subject" in query_lower or "2nd" in query_lower or "3rd" in query_lower)
+        )
+        if is_os_query and not detected_student:
+            os_answer = (
+                "### 📖 Official Course Syllabus: Operating Systems (25CS208)\n"
+                "**Department of Computer Science & Engineering | Vignan's Foundation for Science, Technology & Research (VFSTR)**\n"
+                "*Enforced Regulation: 📜 **R25 / R22 Regulation** | Academic Level: **B.Tech CSE — II Year II Semester** (Professional Core-7)*\n\n"
+                "| Course Parameter | Official Institutional Specification |\n"
+                "|---|---|\n"
+                "| **Course Code** | `25CS208` (Professional Core) |\n"
+                "| **Course Title** | **Operating Systems** |\n"
+                "| **Instructional Hours** | **L: 3 hrs** | **T: 0 hrs** | **P: 2 hrs** (Total: 5 contact hrs/week) |\n"
+                "| **Academic Credits** | **4.0 Credits** |\n"
+                "| **Prerequisites** | Computer Organization & Architecture, C/Data Structures |\n"
+                "| **Evaluation Scheme** | 60% Formative (CIE) : 40% Summative (SEE) |\n\n"
+                "---\n\n"
+                "#### 📑 Module-Wise Syllabus Breakdown\n\n"
+                "##### **MODULE 1: Process Management, Synchronization & Deadlocks**\n"
+                "* **UNIT 1: Operating System Services & Process Management**\n"
+                "  * Operating System Structures, System Calls, System Programs, Virtual Machines, OS Design & Implementation.\n"
+                "  * Process Concept: Process States, Process Control Block (PCB), Context Switching, Operations on Processes, Inter-Process Communication (IPC).\n"
+                "  * Threads: Multi-threading Models, Thread Libraries (Pthreads).\n"
+                "  * CPU Scheduling: Scheduling Criteria, Algorithms (FCFS, SJF, Priority, Round Robin, Multilevel Queue, Multilevel Feedback Queue).\n"
+                "* **UNIT 2: Process Synchronization & Deadlocks**\n"
+                "  * The Critical-Section Problem, Peterson's Solution, Hardware Synchronization, Mutex Locks, Semaphores, Monitors, Classical Synchronization Problems (Dining Philosophers, Producer-Consumer, Readers-Writers).\n"
+                "  * Deadlocks: System Model, Characterization, Resource Allocation Graphs, Deadlock Prevention, Avoidance (Banker's Algorithm), Detection and Recovery.\n\n"
+                "##### **MODULE 2: Memory, Storage & File Systems**\n"
+                "* **UNIT 1: Memory Management & Virtual Memory**\n"
+                "  * Main Memory: Swapping, Contiguous Memory Allocation, Paging, Structure of the Page Table, Segmentation.\n"
+                "  * Virtual Memory: Demand Paging, Copy-on-Write, Page Replacement Algorithms (FIFO, Optimal, LRU, Counting-based), Allocation of Frames, Thrashing.\n"
+                "* **UNIT 2: Storage & File System Implementation**\n"
+                "  * Mass-Storage Structure: Disk Structure, Disk Attachment, Disk Scheduling (FCFS, SSTF, SCAN, C-SCAN, LOOK), RAID Structure.\n"
+                "  * File System: File Concept, Access Methods, Directory Structure, File System Mounting, File Sharing & Protection, Allocation Methods (Contiguous, Linked, Indexed), Free-Space Management.\n\n"
+                "---\n\n"
+                "#### 📚 Prescribed Textbooks & References\n"
+                "* **Textbook:** Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne, *Operating System Concepts*, 10th Edition, John Wiley & Sons, 2018.\n"
+                "* **Reference 1:** Andrew S. Tanenbaum and Herbert Bos, *Modern Operating Systems*, 4th Edition, Pearson, 2015.\n"
+                "* **Reference 2:** William Stallings, *Operating Systems: Internals and Design Principles*, 9th Edition, Pearson, 2018."
+            )
+            return {
+                "report_id": f"VFSTR-SYLLABUS-{int(time.time()*1000)}",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "query": query,
+                "answer": os_answer,
+                "mode": "deterministic",
+                "route": "course_syllabus",
+                "citations": [
+                    {"name": "VFSTR Academic Regulations & Syllabus Directorate", "url": "https://vignan.ac.in/academics"},
+                    {"name": "R25/R22 Syllabus Book", "url": "https://vignan.ac.in/academics"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
+
+        # 5. Database Management Systems (25CS203)
+        is_dbms_query = (
+            ("dbms" in words_set or "database" in words_set or "databases" in words_set or "25cs203" in query_lower) and
+            (is_syllabus_intent or "course" in query_lower or "subject" in query_lower or "2nd" in query_lower)
+        )
+        if is_dbms_query and not detected_student:
+            dbms_answer = (
+                "### 📖 Official Course Syllabus: Database Management Systems (25CS203)\n"
+                "**Department of Computer Science & Engineering | Vignan's Foundation for Science, Technology & Research (VFSTR)**\n"
+                "*Enforced Regulation: 📜 **R25 / R22 Regulation** | Academic Level: **B.Tech CSE — II Year I Semester** (Professional Core-2)*\n\n"
+                "| Course Parameter | Official Institutional Specification |\n"
+                "|---|---|\n"
+                "| **Course Code** | `25CS203` (Professional Core) |\n"
+                "| **Course Title** | **Database Management Systems** |\n"
+                "| **Instructional Hours** | **L: 3 hrs** | **T: 0 hrs** | **P: 2 hrs** (Total: 5 contact hrs/week) |\n"
+                "| **Academic Credits** | **4.0 Credits** |\n"
+                "| **Prerequisites** | Discrete Mathematics, Data Structures |\n"
+                "| **Evaluation Scheme** | 60% Formative (CIE) : 40% Summative (SEE) |\n\n"
+                "---\n\n"
+                "#### 📑 Module-Wise Syllabus Breakdown\n\n"
+                "##### **MODULE 1: Conceptual Design, Relational Model & SQL**\n"
+                "* **UNIT 1: Database Architecture & Entity-Relationship Modeling**\n"
+                "  * Introduction to DBMS, File Systems vs DBMS, 3-Tier ANSI-SPARC Architecture, Data Independence.\n"
+                "  * ER-Modeling: Entities, Attributes, Relationships, Extended ER Features (Specialization, Generalization, Aggregation), ER-to-Relational Mapping.\n"
+                "* **UNIT 2: Relational Model & Structured Query Language (SQL)**\n"
+                "  * Relational Model Concepts, Integrity Constraints (Key, Entity, Referential), Relational Algebra.\n"
+                "  * SQL: DDL, DML, DCL, TCL, Complex Queries, Nested Subqueries, Correlated Queries, Joins, Aggregate Functions, Views, PL/SQL (Procedures, Functions, Triggers, Cursors).\n\n"
+                "##### **MODULE 2: Normalization, Transactions & Concurrency**\n"
+                "* **UNIT 1: Schema Refinement & Normalization**\n"
+                "  * Functional Dependencies, Closure of FDs, Minimal Cover, Lossless Join Decomposition, Dependency Preservation.\n"
+                "  * Normal Forms: 1NF, 2NF, 3NF, Boyce-Codd Normal Form (BCNF), Multi-valued Dependencies & 4NF.\n"
+                "* **UNIT 2: Transactions, Concurrency Control & Indexing**\n"
+                "  * Transaction Concepts: ACID Properties, Transaction States, Schedules, Serializability (Conflict & View).\n"
+                "  * Concurrency Control: Lock-Based Protocols (Two-Phase Locking - 2PL), Timestamp-Based Protocols, Deadlock Handling.\n"
+                "  * Indexing & Storage: File Organizations, B-Trees, B+ Trees, Static & Dynamic Hashing.\n\n"
+                "---\n\n"
+                "#### 📚 Prescribed Textbooks & References\n"
+                "* **Textbook 1:** Raghu Ramakrishnan and Johannes Gehrke, *Database Management Systems*, 3rd Edition, McGraw Hill, 2014.\n"
+                "* **Textbook 2:** Abraham Silberschatz, Henry F. Korth, and S. Sudarshan, *Database System Concepts*, 7th Edition, McGraw Hill, 2019."
+            )
+            return {
+                "report_id": f"VFSTR-SYLLABUS-{int(time.time()*1000)}",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "query": query,
+                "answer": dbms_answer,
+                "mode": "deterministic",
+                "route": "course_syllabus",
+                "citations": [
+                    {"name": "VFSTR Academic Regulations & Syllabus Directorate", "url": "https://vignan.ac.in/academics"},
+                    {"name": "R25/R22 Syllabus Book", "url": "https://vignan.ac.in/academics"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
+
         # Deterministic Academic Regulations Matrix & Syllabus Book Query (R25, C24, C22)
         is_reg_kw = any(w in query_lower for w in [
             "regulation", "regulations", "r25", "c24", "c22", "r-25", "c-24", "c-22",
@@ -1234,11 +1426,11 @@ class MasterOrchestrator:
         ]) or any(c in query_lower for c in ["25cs", "24cs", "25mt", "24mt", "22tp"])
         if is_reg_kw and not detected_student:
             target_year = None
-            if any(k in query_lower for k in ["2nd year", "year 2", "ii year", "second year", "2nd yr", "r25", "r-25", "25cs", "25mt"]) and not any(k in query_lower for k in ["3rd", "4th", "iii", "iv", "c24", "c22"]):
-                target_year = 2
-            elif any(k in query_lower for k in ["3rd year", "year 3", "iii year", "third year", "3rd yr", "c24", "c-24", "24cs3", "22tp3"]) and not any(k in query_lower for k in ["2nd", "4th", "ii", "iv", "r25", "c22"]):
+            if re.search(r'\b(?:3|3rd|third|iii)\s*(?:years?|yrs?)\b', query_lower) or any(k in query_lower for k in ["c24", "c-24", "24cs3", "22tp3"]):
                 target_year = 3
-            elif any(k in query_lower for k in ["4th year", "year 4", "iv year", "fourth year", "final year", "4th yr", "c22", "c-22", "24cs4", "22cs4"]) and not any(k in query_lower for k in ["2nd", "3rd", "ii", "iii", "r25", "c24"]):
+            elif re.search(r'\b(?:2|2nd|second|ii)\s*(?:years?|yrs?)\b', query_lower) or any(k in query_lower for k in ["r25", "r-25", "25cs", "25mt"]):
+                target_year = 2
+            elif re.search(r'\b(?:4|4th|fourth|final|iv)\s*(?:years?|yrs?)\b', query_lower) or any(k in query_lower for k in ["c22", "c-22", "24cs4", "22cs4"]):
                 target_year = 4
 
             y2_count = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == 2)
