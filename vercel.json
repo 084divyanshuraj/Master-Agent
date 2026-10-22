@@ -1,14 +1,13 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.py?__path=$1"
+      "destination": "https://vignan-master-agent.onrender.com/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/$1"
     }
-  ],
-  "functions": {
-    "api/index.py": {
-      "maxDuration": 60,
-      "includeFiles": "public/data/**"
-    }
-  }
+  ]
 }
