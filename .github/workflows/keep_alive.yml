@@ -1,0 +1,23 @@
+name: Render Backend 24/7 Keep-Alive
+
+on:
+  schedule:
+    # Ping every 10 minutes to prevent Render free-tier idle sleep (15-minute timeout)
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allows manual testing from GitHub Actions tab
+
+jobs:
+  ping-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Health Endpoint
+        run: |
+          echo "Checking Vignan Master Agent Backend Health..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" "https://vignan-master-agent.onrender.com/healthz")
+          echo "$RESPONSE"
+          STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS" | cut -d':' -f2)
+          if [ "$STATUS" -eq 200 ]; then
+            echo "SUCCESS: Backend is active and running."
+          else
+            echo "WARNING: Backend returned status $STATUS"
+          fi
