@@ -339,6 +339,7 @@ async def save_session_endpoint(req: Dict[str, Any]):
 
 @app.get("/api/health")
 @app.get("/health")
+@app.get("/healthz")
 async def health_check():
     return {
         "status": "online",
