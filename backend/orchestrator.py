@@ -1807,27 +1807,62 @@ Synthesize a single, coherent, professional university operational report answer
                     f"• Mentor Advisory Loop: Advisory memo logged and dispatched to faculty counsellor **{s_counsel}**."
                 )
 
-            # Check if query mentions a specific section (e.g. Sec 6, Section 14)
+            # Check if query mentions a specific section (e.g. Sec 3, Section 14, 3rd-Year Section 3)
+            query_lower = query.lower()
             sec_match = re.search(r'\b(?:sec|section)[\s\-:]*(\d+)\b', query, re.I)
-            yr_match = re.search(r'\b(?:year|yr)[\s\-:]*([2-4])\b', query, re.I)
+            
+            target_yr = None
+            yr_match = re.search(r'\b([2-4])(?:nd|rd|th)?[\s\-_]*(?:year|yr)\b|\b(?:year|yr)[\s\-_:]*([2-4])\b', query, re.I)
+            if yr_match:
+                target_yr = int(yr_match.group(1) or yr_match.group(2))
+            elif any(k in query_lower for k in ["3rd year", "third year", "3rd yr", "3rd-year", "iii year"]):
+                target_yr = 3
+            elif any(k in query_lower for k in ["4th year", "fourth year", "final year", "4th yr", "4th-year", "iv year"]):
+                target_yr = 4
+            elif any(k in query_lower for k in ["2nd year", "second year", "2nd yr", "2nd-year", "ii year"]):
+                target_yr = 2
+
             if sec_match:
                 target_sec = sec_match.group(1)
-                target_yr = int(yr_match.group(1)) if yr_match else 2
-                sec_students = get_students_by_section(target_yr, target_sec)
+                yr = target_yr or 3
+                sec_students = get_students_by_section(yr, target_sec)
                 if sec_students:
                     total_st = len(sec_students)
                     sec_det = [s for s in sec_students if s.get("attendance_pct", 100) < 65.0]
                     sec_cond = [s for s in sec_students if 65.0 <= s.get("attendance_pct", 100) < 75.0]
                     avg_p = round(sum(s.get("attendance_pct", 0) for s in sec_students) / total_st, 2) if total_st else 0
-                    det_samples = ", ".join([f"{s.get('name')} ({s.get('attendance_pct')}%)" for s in sec_det[:3]]) if sec_det else "None"
+                    
+                    if sec_det:
+                        det_info = f"🚨 **{len(sec_det)} Students** below 65% mandatory threshold:\n" + "\n".join([f"  • `{s.get('roll_number')}` — **{s.get('name')}**: **{s.get('attendance_pct')}%** (Counsellor: {s.get('counsellor')})" for s in sec_det[:5]])
+                    else:
+                        det_info = f"✅ **0 Students (<65%)** — 100% of students in Year {yr} Sec {target_sec} have maintained attendance above the severe detention cutoff."
+
+                    if sec_cond:
+                        cond_info = f"\n• Medical Condonation Window (65%–74.9%): **{len(sec_cond)} Students** (" + ", ".join([f"{s.get('name')} {s.get('attendance_pct')}%" for s in sec_cond[:3]]) + ")"
+                    else:
+                        cond_info = f"\n• Medical Condonation Window (65%–74.9%): **0 Students**."
+
                     return (
                         f"**[{name} — {group_name}]**\n"
-                        f"Live Section Attendance Telemetry: Year {target_yr} Section {target_sec} (July 10 – Oct 14, 2026)\n"
-                        f"• Enrolled Strength: **{total_st} Students** | Cohort Attendance Average: **{avg_p}%**.\n"
-                        f"• Severe Detention Shortage (<65%): **{len(sec_det)} Students** (Flagged: {det_samples}).\n"
-                        f"• Medical Condonation Window (65%–74.9%): **{len(sec_cond)} Students**.\n"
-                        f"• Regulatory Compliance: Automatic detention memos forwarded to HoD Office & Faculty Mentors."
+                        f"Live Section Attendance Telemetry: **Year {yr} Section {target_sec}** (Total: {total_st} Enrolled)\n"
+                        f"• Cohort Attendance Average: **{avg_p}%**\n"
+                        f"• {det_info}{cond_info}\n"
+                        f"• Status: Hall tickets clear for all satisfactory attendees (>=75%)."
                     )
+            elif target_yr:
+                # Whole year attendance query
+                yr_det = get_detained_students(year=target_yr)
+                yr_cond = get_condonation_students(year=target_yr)
+                yr_total = sum(1 for s in IN_MEMORY_STUDENTS.values() if s.get("current_year") == target_yr)
+                det_list = "\n".join([f"  • `{s.get('roll_number')}` | **{s.get('name')}** | Sec-{s.get('section')} | **{s.get('attendance_pct')}%**" for s in yr_det[:8]])
+                return (
+                    f"**[{name} — {group_name}]**\n"
+                    f"Live Year-Wide Attendance Audit: **CSE Year {target_yr}** ({yr_total} Total Enrolled)\n"
+                    f"• Severe Detention Shortage (<65%): **{len(yr_det)} Students** flagged.\n"
+                    f"• Top Detention Shortages (Sample):\n{det_list}\n"
+                    f"• Medical Condonation Window (65%–74.9%): **{len(yr_cond)} Students** eligible for condonation.\n"
+                    f"• Satisfactory Standing (>=75%): **{yr_total - len(yr_det) - len(yr_cond)} Students** ({round((yr_total - len(yr_det) - len(yr_cond)) / yr_total * 100, 1)}%)."
+                )
 
             stats = get_student_cohort_stats()
             det_cnt = stats.get("detained_attendance_count", 94)
