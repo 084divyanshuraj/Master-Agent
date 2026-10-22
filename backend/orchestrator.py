@@ -12,6 +12,7 @@ import math
 import asyncio
 import logging
 import httpx
+from datetime import datetime
 from typing import Dict, Any, List, Optional
 from backend.groq_pool import groq_pool
 from backend.db import (
@@ -1076,6 +1077,145 @@ class MasterOrchestrator:
                 "citations": [
                     {"name": "VFSTR Department Placement Cell", "url": "https://vignan.ac.in/placements"},
                     {"name": "Agent 50 — Job Matching & Placement Engine", "url": "https://jobmatchingagent.onrender.com/"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
+
+        # -------------------------------------------------------------------------
+        # Dedicated Course Syllabus Engine (Machine Learning, AI, Networks, etc.)
+        # -------------------------------------------------------------------------
+        is_syllabus_intent = any(w in query_lower for w in ["syllabus", "units", "topics", "modules", "course outline", "course content", "course description", "curriculum of", "what is taught in"])
+        
+        # 1. Machine Learning (24CS306 / R22 / C24)
+        is_ml_query = (
+            ("ml" in query_lower.split() or "machine learning" in query_lower or "24cs306" in query_lower) and
+            (is_syllabus_intent or "r22" in query_lower or "c24" in query_lower or "course" in query_lower or "subject" in query_lower)
+        )
+        if is_ml_query and not detected_student:
+            ml_answer = (
+                "### 📖 Official Course Syllabus: Machine Learning (24CS306)\n"
+                "**Department of Computer Science & Engineering | Vignan's Foundation for Science, Technology & Research (VFSTR)**\n"
+                "*Enforced Regulation: 📜 **R22 / C24 Regulation** | Academic Level: **B.Tech CSE — III Year II Semester** (2023–2027 Batch)*\n"
+                "*Official Document Source: `data/R22C24 Syllabus book 01-08-2026.pdf` (Pages 118–120)*\n\n"
+                "| Course Parameter | Official Institutional Specification |\n"
+                "|---|---|\n"
+                "| **Course Code** | `24CS306` (Professional Core) |\n"
+                "| **Course Title** | **Machine Learning** |\n"
+                "| **Instructional Hours** | **L: 2 hrs** | **T: 2 hrs** | **P: 2 hrs** (Total: 6 contact hrs/week) |\n"
+                "| **Academic Credits** | **4.0 Credits** |\n"
+                "| **Prerequisites** | Probability & Linear Algebra, Python Programming |\n"
+                "| **Evaluation Scheme** | 60% Formative (CIE) : 40% Summative (SEE) |\n\n"
+                "---\n\n"
+                "#### 🎯 Course Description & Objectives\n"
+                "Provides a rigorous introduction to supervised and unsupervised learning algorithms, model complexity analysis, regularization, and practical deployment. Students gain deep hands-on expertise with advanced Python ML libraries including Scikit-Learn, NumPy, Matplotlib, and Pandas across computer vision, tabular data, and NLP case studies.\n\n"
+                "---\n\n"
+                "#### 📑 Module-Wise Syllabus Breakdown\n\n"
+                "##### **MODULE 1: Foundations, Regression & Dimensionality Reduction**\n"
+                "* **UNIT 1: Introduction & Regression Analysis (24 Hours: 8L + 8T + 8P)**\n"
+                "  * **Core Paradigms:** Supervised, Unsupervised, and Reinforcement Learning; Real-world ML application domains; Statistical & probabilistic foundations.\n"
+                "  * **Model Training Essentials:** Bias-Variance Trade-off; Hypothesis Testing & Variable Selection; Resampling techniques (Sub-sampling, Up-sampling, SMOTE); Validation strategies (Validation Set, Leave-One-Out (LOO), k-fold cross-validation, Bootstrap); Evaluation metrics (Confusion Matrix, Error Functions, Accuracy, Precision, Recall, F1-Score).\n"
+                "  * **Regression Analysis:** Simple & Multiple Linear Regression; Polynomial Regression; Logistic Regression (Binary & Multinomial); Ordinary Least Squares (OLS); Model Regularization and Shrinkage (Ridge and LASSO Regression).\n"
+                "* **UNIT 2: Feature Selection & Dimensionality Reduction (24 Hours: 8L + 8T + 8P)**\n"
+                "  * **Feature Selection Strategies:** Filter methods, Wrapper methods, Embedded methods; Branch & Bound algorithm; Sequential Forward/Backward Selection (SFS/SBS).\n"
+                "  * **Dimensionality Reduction:** Singular Value Decomposition (SVD); Matrix Factorization; Linear Discriminant Analysis (LDA); Principal Component Analysis (PCA).\n\n"
+                "##### **MODULE 2: Classification, Ensembles & Clustering**\n"
+                "* **UNIT 1: Classification & Ensemble Methods (24 Hours: 8L + 8T + 8P)**\n"
+                "  * **Classification Models:** Binary, Multi-class, and Multi-label Classification; k-Nearest Neighbours (k-NN); Support Vector Machines (SVM with Linear, Polynomial, and RBF Kernels); Decision Trees (ID3 Algorithm); Naive Bayes Classifier; Perceptron Artificial Neural Network (ANN).\n"
+                "  * **Ensemble Techniques:** Model Combination Schemes; Voting Classifiers; Error-Correcting Output Codes (ECOC); Bagging (Random Forest); Boosting (AdaBoost, Stacking).\n"
+                "* **UNIT 2: Clustering & Unsupervised Learning (24 Hours: 8L + 8T + 8P)**\n"
+                "  * **Clustering Fundamentals:** Distance functions & similarity metrics; k-Means Clustering (Elbow Method & Silhouette Analysis); k-Medoids.\n"
+                "  * **Advanced Clustering:** Hierarchical Clustering (Single & Complete Linkage); Graph-based Clustering (Minimum Spanning Tree); Density-Based Spatial Clustering (DBSCAN); Spectral Clustering.\n\n"
+                "---\n\n"
+                "#### 💻 Hands-on Laboratory & Practical Experiments\n"
+                "1. **House Price Prediction:** Univariate and multivariate OLS models, Variance Inflation Factor (VIF), Ridge and LASSO shrinkage.\n"
+                "2. **Heart Disease Diagnostics:** Logistic regression with stratified k-fold cross-validation and ROC-AUC curve analysis.\n"
+                "3. **Imbalanced Data Handling:** Synthetic Minority Over-sampling Technique (SMOTE) with KNN benchmarking.\n"
+                "4. **Targeted Concept Learning:** FIND-S algorithm implementation with CSV feature ingestion.\n"
+                "5. **Naive Bayes Classification:** Probabilistic spam filtering and text categorization.\n"
+                "6. **Support Vector Machines:** Non-linear decision boundary classification using kernel tricks.\n"
+                "7. **Ensemble Architecture:** Comparative benchmark of Bagging vs AdaBoost on noisy datasets.\n"
+                "8. **High-Dimensional Clustering:** PCA-reduced clustering with k-Means, DBSCAN, and Hierarchical clustering.\n\n"
+                "---\n\n"
+                "#### 📚 Prescribed Textbooks & References\n"
+                "* **Textbook 1:** Ethem Alpaydin, *Introduction to Machine Learning*, 3rd Edition, The MIT Press, 2014.\n"
+                "* **Textbook 2:** Peter Flach, *Machine Learning: The Art and Science of Algorithms that Make Sense of Data*, Cambridge University Press, 2012.\n"
+                "* **Reference 1:** Kevin P. Murphy, *Machine Learning: A Probabilistic Perspective*, MIT Press, 2012.\n"
+                "* **Reference 2:** Aurélien Géron, *Hands-on Machine Learning with Scikit-Learn, Keras, and TensorFlow*, 2nd Edition, O'Reilly Media, 2019.\n"
+                "* **Reference 3:** Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani, *An Introduction to Statistical Learning (ISLR)*, Springer, 2013.\n\n"
+                "---\n\n"
+                "#### 🎓 Course Outcomes (COs) & Bloom's Taxonomy Mapping\n"
+                "* **CO1 (Apply - L3):** Apply probabilistic, discriminative, and generative algorithms to diverse data domains.\n"
+                "* **CO2 (Apply - L3):** Design end-to-end machine learning pipelines for complex real-world engineering challenges.\n"
+                "* **CO3 (Create - L6):** Implement and tune advanced machine learning models using modern Python frameworks (Scikit-Learn).\n"
+                "* **CO4 (Analyze - L4):** Evaluate and benchmark the comparative performance, bias-variance trade-offs, and generalization limits of various ML architectures."
+            )
+            return {
+                "report_id": f"VFSTR-SYLLABUS-{int(time.time()*1000)}",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "query": query,
+                "answer": ml_answer,
+                "mode": "deterministic",
+                "route": "course_syllabus",
+                "citations": [
+                    {"name": "VFSTR Academic Regulations & Syllabus Directorate", "url": "https://vignan.ac.in/academics"},
+                    {"name": "R22/C24 Syllabus Book (Pages 118–120)", "url": "https://vignan.ac.in/academics"},
+                    {"name": "Agent 08 — Course Outcome Engine", "url": "https://courseoutcome.onrender.com/"}
+                ],
+                "trace": trace_data,
+                "status": "success",
+            }
+
+        # 2. Artificial Intelligence (24CS302 / R22 / C24)
+        is_ai_query = (
+            ("ai" in query_lower.split() or "artificial intelligence" in query_lower or "24cs302" in query_lower) and
+            (is_syllabus_intent or "r22" in query_lower or "c24" in query_lower or "course" in query_lower)
+        )
+        if is_ai_query and not detected_student:
+            ai_answer = (
+                "### 📖 Official Course Syllabus: Artificial Intelligence (24CS302)\n"
+                "**Department of Computer Science & Engineering | Vignan's Foundation for Science, Technology & Research (VFSTR)**\n"
+                "*Enforced Regulation: 📜 **R22 / C24 Regulation** | Academic Level: **B.Tech CSE — III Year I Semester** (2023–2027 Batch)*\n"
+                "*Official Document Source: `data/R22C24 Syllabus book 01-08-2026.pdf` (Pages 104–106)*\n\n"
+                "| Course Parameter | Official Institutional Specification |\n"
+                "|---|---|\n"
+                "| **Course Code** | `24CS302` (Professional Core) |\n"
+                "| **Course Title** | **Artificial Intelligence** |\n"
+                "| **Instructional Hours** | **L: 2 hrs** | **T: 0 hrs** | **P: 2 hrs** (Total: 4 contact hrs/week) |\n"
+                "| **Academic Credits** | **3.0 Credits** |\n"
+                "| **Prerequisites** | Discrete Mathematics, Data Structures, Python/C++ Programming |\n"
+                "| **Evaluation Scheme** | 60% Formative (CIE) : 40% Summative (SEE) |\n\n"
+                "---\n\n"
+                "#### 📑 Module-Wise Syllabus Breakdown\n\n"
+                "##### **MODULE 1: Search Strategies & Problem Solving**\n"
+                "* **UNIT 1: Problem Formulation & Uninformed Search**\n"
+                "  * Definition of AI, Foundations & History of AI, Turing Test, Intelligent Agents, Environments & Agent Architectures.\n"
+                "  * Problem solving by searching: State spaces, Uninformed Search (BFS, DFS, Uniform Cost Search, Depth-Limited, Iterative Deepening).\n"
+                "* **UNIT 2: Informed Search & Game Playing**\n"
+                "  * Heuristic Search: Greedy Best-First Search, A* Algorithm (Admissibility & Consistency), Memory Bounded Heuristics (SMA*).\n"
+                "  * Adversarial Search: Game Playing, Minimax Algorithm, Alpha-Beta Pruning, Evaluation Functions.\n\n"
+                "##### **MODULE 2: Knowledge Representation, Logic & Reasoning**\n"
+                "* **UNIT 1: Logical Agents & Classical Planning**\n"
+                "  * Propositional Logic, First-Order Logic (FOL), Syntax and Semantics, Forward and Backward Chaining, Resolution.\n"
+                "  * Classical Planning: State Space Planning, Planning Graphs, Partial Order Planning.\n"
+                "* **UNIT 2: Uncertain Knowledge & Probabilistic Reasoning**\n"
+                "  * Acting under Uncertainty, Probabilistic Reasoning, Bayesian Networks, Exact and Approximate Inference in Bayesian Networks, Markov Decision Processes (MDPs).\n\n"
+                "---\n\n"
+                "#### 📚 Prescribed Textbooks & References\n"
+                "* **Textbook:** Stuart Russell and Peter Norvig, *Artificial Intelligence: A Modern Approach*, 4th Edition, Pearson Education, 2020.\n"
+                "* **Reference 1:** Dan W. Patterson, *Introduction to Artificial Intelligence and Expert Systems*, PHI, 2015.\n"
+                "* **Reference 2:** Elaine Rich, Kevin Knight, Shivashankar B. Nair, *Artificial Intelligence*, 3rd Edition, McGraw Hill, 2017."
+            )
+            return {
+                "report_id": f"VFSTR-SYLLABUS-{int(time.time()*1000)}",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "query": query,
+                "answer": ai_answer,
+                "mode": "deterministic",
+                "route": "course_syllabus",
+                "citations": [
+                    {"name": "VFSTR Academic Regulations & Syllabus Directorate", "url": "https://vignan.ac.in/academics"},
+                    {"name": "R22/C24 Syllabus Book (Pages 104–106)", "url": "https://vignan.ac.in/academics"}
                 ],
                 "trace": trace_data,
                 "status": "success",
