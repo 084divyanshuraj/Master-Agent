@@ -81,6 +81,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const newFacEmail = document.getElementById('newFacEmail');
   const newFacPhone = document.getElementById('newFacPhone');
   
+  // DEO Bulk Excel Import Elements
+  const btnOpenExcelModal = document.getElementById('btnOpenExcelModal');
+  const deoExcelImportModal = document.getElementById('deoExcelImportModal');
+  const btnCloseExcelModal = document.getElementById('btnCloseExcelModal');
+  const btnCancelExcelModal = document.getElementById('btnCancelExcelModal');
+  const btnDownloadExcelTemplate = document.getElementById('btnDownloadExcelTemplate');
+  const deoExcelDropZone = document.getElementById('deoExcelDropZone');
+  const deoExcelFileInput = document.getElementById('deoExcelFileInput');
+  const deoExcelPreviewContainer = document.getElementById('deoExcelPreviewContainer');
+  const deoPreviewFileName = document.getElementById('deoPreviewFileName');
+  const deoPreviewSummary = document.getElementById('deoPreviewSummary');
+  const deoExcelPreviewBody = document.getElementById('deoExcelPreviewBody');
+  const btnProcessExcelImport = document.getElementById('btnProcessExcelImport');
+  let parsedExcelFaculties = [];
+  
   // DEO Token Confirmation & Success Modals
   const deoTokenConfirmModal = document.getElementById('deoTokenConfirmModal');
   const btnCloseTokenConfirmModal = document.getElementById('btnCloseTokenConfirmModal');
@@ -1134,6 +1149,316 @@ document.addEventListener('DOMContentLoaded', () => {
           saveBtn.disabled = false;
           saveBtn.textContent = 'Enroll Faculty Member ➜';
         }
+      }
+    });
+  }
+
+  // Bulk Excel Import Modal Handlers
+  function openDeoExcelModal() {
+    parsedExcelFaculties = [];
+    if (deoExcelFileInput) deoExcelFileInput.value = '';
+    if (deoExcelPreviewContainer) deoExcelPreviewContainer.style.display = 'none';
+    if (deoExcelPreviewBody) deoExcelPreviewBody.innerHTML = '';
+    if (btnProcessExcelImport) {
+      btnProcessExcelImport.disabled = true;
+      btnProcessExcelImport.textContent = 'Enroll Faculty Members ➜';
+    }
+    if (deoExcelImportModal) deoExcelImportModal.style.display = 'flex';
+  }
+
+  function closeDeoExcelModal() {
+    if (deoExcelImportModal) deoExcelImportModal.style.display = 'none';
+    parsedExcelFaculties = [];
+    if (deoExcelFileInput) deoExcelFileInput.value = '';
+  }
+
+  if (btnOpenExcelModal) {
+    btnOpenExcelModal.addEventListener('click', openDeoExcelModal);
+  }
+
+  if (btnCloseExcelModal) {
+    btnCloseExcelModal.addEventListener('click', closeDeoExcelModal);
+  }
+
+  if (btnCancelExcelModal) {
+    btnCancelExcelModal.addEventListener('click', closeDeoExcelModal);
+  }
+
+  if (deoExcelImportModal) {
+    deoExcelImportModal.addEventListener('click', (e) => {
+      if (e.target === deoExcelImportModal) {
+        closeDeoExcelModal();
+      }
+    });
+  }
+
+  // Download Sample Excel Template
+  if (btnDownloadExcelTemplate) {
+    btnDownloadExcelTemplate.addEventListener('click', () => {
+      if (typeof XLSX === 'undefined') {
+        showToast('Spreadsheet engine is loading. Please try again in a moment...', 'warning');
+        return;
+      }
+      try {
+        const sampleRows = [
+          ['VFSTR DEEMED TO BE UNIVERSITY', '', '', '', '', '', ''],
+          ['Department of Computer Science & Engineering — Faculty Roster Import Template', '', '', '', '', '', ''],
+          ['Sl.No', 'Emp ID', 'Name of the Faculty', 'Designation', 'M/F', 'Mobile', 'Official Email'],
+          [1, '163', 'Prof. Dr. K.V.Krishna Kishore', 'Professor & Dean SOCI', 'M', '9490647678', 'krishnakishore_kv@vignan.ac.in'],
+          [2, '675', 'Dr. S V Phani Kumar', 'Professor & HOD', 'M', '9912514034', 'phanikumar_sv@vignan.ac.in'],
+          [3, '02342', 'Dr. M. Umadevi', 'Assoc. Prof.& Deputy HoD', 'F', '9603329592', 'umadevi_m@vignan.ac.in'],
+          [4, '5189', 'Mr. Ch. Rama Rao', 'Assistant Professor', 'M', '9988776655', 'ramarao_ch@vignan.ac.in']
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(sampleRows);
+        ws['!cols'] = [
+          { wch: 8 },
+          { wch: 12 },
+          { wch: 32 },
+          { wch: 28 },
+          { wch: 6 },
+          { wch: 16 },
+          { wch: 32 }
+        ];
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'CSE Faculty');
+        XLSX.writeFile(wb, 'VFSTR_CSE_Faculty_Template.xlsx');
+        showToast('Sample Excel template downloaded!', 'success');
+      } catch (err) {
+        console.error('Error generating Excel template:', err);
+        showToast('Failed to generate template: ' + err.message, 'error');
+      }
+    });
+  }
+
+  // Parse Excel / CSV File and populate live preview
+  function handleExcelFile(file) {
+    if (!file) return;
+    const name = file.name.toLowerCase();
+    if (!name.endsWith('.xlsx') && !name.endsWith('.xls') && !name.endsWith('.csv')) {
+      alert('Unsupported file format. Please upload an Excel (.xlsx, .xls) or CSV (.csv) spreadsheet.');
+      return;
+    }
+
+    if (typeof XLSX === 'undefined') {
+      alert('Spreadsheet engine not ready. Please refresh the page.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        if (!rows || rows.length === 0) {
+          alert('The uploaded spreadsheet contains no data.');
+          return;
+        }
+
+        // Header column auto-detection
+        let headerRowIdx = -1;
+        let empIdCol = -1, nameCol = -1, desigCol = -1, phoneCol = -1, emailCol = -1;
+
+        for (let r = 0; r < Math.min(15, rows.length); r++) {
+          const row = rows[r];
+          if (!Array.isArray(row)) continue;
+          for (let c = 0; c < row.length; c++) {
+            const val = String(row[c] || '').trim().toLowerCase();
+            if (/emp\s*id|employee\s*id|emp_id|faculty\s*id|^id$/.test(val)) empIdCol = c;
+            if (/name\s*of\s*the\s*faculty|faculty\s*name|^name$|faculty_name/.test(val)) nameCol = c;
+            if (/designation|cadre|role|post/.test(val)) desigCol = c;
+            if (/mobile|phone|contact/.test(val)) phoneCol = c;
+            if (/email|official\s*email|mail/.test(val)) emailCol = c;
+          }
+          if (empIdCol !== -1 && nameCol !== -1) {
+            headerRowIdx = r;
+            break;
+          }
+        }
+
+        // Fallback to row 0 if detection missed
+        if (headerRowIdx === -1) {
+          if (rows[0] && rows[0].length >= 2) {
+            headerRowIdx = 0;
+            empIdCol = 0;
+            nameCol = 1;
+            desigCol = rows[0].length > 2 ? 2 : -1;
+            phoneCol = rows[0].length > 3 ? 3 : -1;
+            emailCol = rows[0].length > 4 ? 4 : -1;
+          } else {
+            alert('Could not detect "Emp ID" and "Name of the Faculty" columns. Please verify headers.');
+            return;
+          }
+        }
+
+        // Match against existing roster
+        const existingEmpSet = new Set((deoCachedFaculties || []).map(f => String(f.emp_id || '').trim().toUpperCase()));
+        const seenInFile = new Set();
+        parsedExcelFaculties = [];
+        let validCount = 0;
+        let dupCount = 0;
+
+        for (let r = headerRowIdx + 1; r < rows.length; r++) {
+          const row = rows[r];
+          if (!Array.isArray(row)) continue;
+
+          let rawEmp = String(row[empIdCol] !== undefined ? row[empIdCol] : '').trim();
+          if (rawEmp.endsWith('.0')) rawEmp = rawEmp.slice(0, -2);
+          const cleanEmp = rawEmp.toUpperCase();
+
+          let cleanName = String(row[nameCol] !== undefined ? row[nameCol] : '').trim();
+          if (!cleanEmp || !cleanName) continue;
+
+          // Skip repeated title or header text
+          if (/emp\s*id|faculty/i.test(cleanEmp) && /name/i.test(cleanName)) continue;
+
+          let desig = desigCol !== -1 && row[desigCol] ? String(row[desigCol]).trim() : 'Assistant Professor';
+          let phone = phoneCol !== -1 && row[phoneCol] ? String(row[phoneCol]).trim() : '';
+          if (phone.endsWith('.0')) phone = phone.slice(0, -2);
+
+          let email = emailCol !== -1 && row[emailCol] ? String(row[emailCol]).trim().toLowerCase() : '';
+          if (!email) email = `${cleanEmp.toLowerCase()}@vignan.ac.in`;
+
+          const isDuplicate = existingEmpSet.has(cleanEmp) || seenInFile.has(cleanEmp);
+          seenInFile.add(cleanEmp);
+
+          if (isDuplicate) {
+            dupCount++;
+          } else {
+            validCount++;
+          }
+
+          parsedExcelFaculties.push({
+            emp_id: cleanEmp,
+            name: cleanName,
+            designation: desig,
+            phone: phone,
+            email: email,
+            department: 'Computer Science & Engineering',
+            isDuplicate: isDuplicate
+          });
+        }
+
+        if (parsedExcelFaculties.length === 0) {
+          alert('No faculty records found after header row. Please check file contents.');
+          return;
+        }
+
+        // Render preview table
+        if (deoPreviewFileName) deoPreviewFileName.textContent = `📄 ${file.name}`;
+        if (deoPreviewSummary) {
+          deoPreviewSummary.innerHTML = `<strong>${parsedExcelFaculties.length}</strong> Found &nbsp;|&nbsp; <span style="color:#059669;font-weight:700;">${validCount} Ready to Enroll</span> &nbsp;|&nbsp; <span style="color:#D97706;font-weight:700;">${dupCount} Existing (Skip)</span>`;
+        }
+
+        if (deoExcelPreviewBody) {
+          deoExcelPreviewBody.innerHTML = parsedExcelFaculties.map((f, i) => {
+            const statusHtml = f.isDuplicate
+              ? `<span class="deo-status-badge pending" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A;">⚠️ Already Enrolled</span>`
+              : `<span class="deo-status-badge activated" style="background:#DCFCE7;color:#166534;border-color:#BBF7D0;">✓ Ready</span>`;
+
+            return `
+              <tr style="${f.isDuplicate ? 'opacity: 0.65; background:#F8FAFC;' : ''}">
+                <td style="color:#64748B;font-size:0.75rem;">${i + 1}</td>
+                <td><span class="deo-code-badge">${escapeHtml(f.emp_id)}</span></td>
+                <td><strong>${escapeHtml(f.name)}</strong></td>
+                <td style="color:#4B5563;font-size:0.78rem;">${escapeHtml(f.designation)}</td>
+                <td style="color:#4B5563;font-size:0.78rem;">${escapeHtml(f.phone || '—')}</td>
+                <td>${statusHtml}</td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        if (deoExcelPreviewContainer) deoExcelPreviewContainer.style.display = 'block';
+
+        if (btnProcessExcelImport) {
+          if (validCount > 0) {
+            btnProcessExcelImport.disabled = false;
+            btnProcessExcelImport.textContent = `Enroll ${validCount} Faculty Member${validCount > 1 ? 's' : ''} ➜`;
+          } else {
+            btnProcessExcelImport.disabled = true;
+            btnProcessExcelImport.textContent = 'All Records Already Enrolled';
+          }
+        }
+      } catch (err) {
+        console.error('Error reading spreadsheet:', err);
+        alert('Failed to parse spreadsheet file: ' + err.message);
+      }
+    };
+
+    reader.readAsArrayBuffer(file);
+  }
+
+  // Dropzone drag-drop & click events
+  if (deoExcelDropZone) {
+    deoExcelDropZone.addEventListener('click', (e) => {
+      if (e.target !== deoExcelFileInput && deoExcelFileInput) {
+        deoExcelFileInput.click();
+      }
+    });
+
+    deoExcelDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      deoExcelDropZone.classList.add('dragover');
+    });
+
+    deoExcelDropZone.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      deoExcelDropZone.classList.remove('dragover');
+    });
+
+    deoExcelDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      deoExcelDropZone.classList.remove('dragover');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleExcelFile(e.dataTransfer.files[0]);
+      }
+    });
+  }
+
+  if (deoExcelFileInput) {
+    deoExcelFileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleExcelFile(e.target.files[0]);
+      }
+    });
+  }
+
+  // Process Import Submission
+  if (btnProcessExcelImport) {
+    btnProcessExcelImport.addEventListener('click', async () => {
+      const validFaculties = parsedExcelFaculties.filter(f => !f.isDuplicate);
+      if (validFaculties.length === 0) {
+        alert('No new valid faculty members to enroll.');
+        return;
+      }
+
+      btnProcessExcelImport.disabled = true;
+      btnProcessExcelImport.textContent = `Enrolling ${validFaculties.length} members...`;
+
+      try {
+        const res = await fetch(API_BASE + '/api/deo/faculty/bulk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ faculties: validFaculties })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showToast(`Successfully enrolled ${data.enrolled_count} faculty members into CSE roster!`, 'success');
+          closeDeoExcelModal();
+          loadDeoFaculties(deoFacultySearch ? deoFacultySearch.value.trim() : '');
+        } else {
+          alert(data.message || data.detail || 'Could not process bulk enrollment.');
+        }
+      } catch (err) {
+        alert(`Network error processing bulk enrollment: ${err.message}`);
+      } finally {
+        btnProcessExcelImport.disabled = false;
+        btnProcessExcelImport.textContent = 'Enroll Faculty Members ➜';
       }
     });
   }

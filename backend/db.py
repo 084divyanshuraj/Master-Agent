@@ -1331,6 +1331,97 @@ def add_deo_faculty(
     }
 
 
+def bulk_add_deo_faculties(faculties_list: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Bulk enrolls faculty members from an Excel/CSV import.
+    Skips duplicates, assigns unique 6-digit DEO activation tokens,
+    and returns a comprehensive summary report.
+    """
+    global IN_MEMORY_FACULTIES
+    if not IN_MEMORY_FACULTIES:
+        load_timetables_cache()
+
+    added = []
+    skipped_duplicates = []
+
+    for item in faculties_list:
+        raw_emp = str(item.get("emp_id") or item.get("employee_id") or item.get("Emp ID") or item.get("Employee ID") or "").strip()
+        if raw_emp.endswith(".0"):
+            raw_emp = raw_emp[:-2]
+        clean_emp = raw_emp.upper()
+
+        clean_name = str(item.get("name") or item.get("name_of_the_faculty") or item.get("Name of the Faculty") or item.get("Faculty Name") or "").strip()
+        if not clean_emp or not clean_name:
+            continue
+
+        # Check duplicate against in-memory roster
+        exists = any(str(f.get("emp_id", "")).strip().upper() == clean_emp for f in IN_MEMORY_FACULTIES)
+        if exists:
+            skipped_duplicates.append({"emp_id": clean_emp, "name": clean_name})
+            continue
+
+        desig = str(item.get("designation") or item.get("Designation") or "Assistant Professor").strip()
+        phone_raw = str(item.get("phone") or item.get("mobile") or item.get("Mobile") or item.get("Phone Number") or "").strip()
+        if phone_raw.endswith(".0"):
+            phone_raw = phone_raw[:-2]
+
+        email_val = str(item.get("email") or item.get("Official Email") or item.get("Email") or "").strip()
+        clean_email = email_val.lower() if email_val else f"{clean_emp.lower()}@vignan.ac.in"
+        dept_val = str(item.get("department") or item.get("Department") or "Computer Science & Engineering").strip()
+
+        token = str(secrets.randbelow(900000) + 100000)
+        new_faculty = {
+            "sl_no": len(IN_MEMORY_FACULTIES) + 1,
+            "emp_id": clean_emp,
+            "name": clean_name,
+            "designation": desig,
+            "gender": str(item.get("gender") or item.get("M/F") or "U").strip()[:1].upper(),
+            "phone": phone_raw,
+            "email": clean_email,
+            "department": dept_val,
+            "is_leadership": "HOD" in desig.upper() or "DEAN" in desig.upper(),
+            "is_official_cse": True,
+            "class_teacher_of": [],
+            "courses": [],
+            "courses_count": 0,
+            "mentees_count": 0,
+            "mentee_rolls": [],
+            "status": "pending_setup",
+            "activation_token": token,
+            "enrolled_by": "DEO1_CSE",
+            "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        }
+
+        IN_MEMORY_FACULTIES.insert(0, new_faculty)
+        added.append({
+            "emp_id": clean_emp,
+            "name": clean_name,
+            "designation": desig,
+            "activation_token": token
+        })
+
+    # Persist bulk records to MongoDB if connected
+    if added and is_mongo_connected and mongo_db is not None:
+        try:
+            from pymongo import InsertOne
+            ops = [InsertOne(dict(f)) for f in IN_MEMORY_FACULTIES[:len(added)]]
+            mongo_db["faculties"].bulk_write(ops, ordered=False)
+        except Exception as e:
+            logger.error(f"Error persisting bulk added faculties to MongoDB: {e}")
+
+    return {
+        "success": True,
+        "total_added": len(added),
+        "enrolled_count": len(added),
+        "total_skipped": len(skipped_duplicates),
+        "skipped_count": len(skipped_duplicates),
+        "added": added,
+        "enrolled_faculties": added,
+        "skipped_duplicates": skipped_duplicates,
+        "message": f"Successfully enrolled {len(added)} new faculty members! ({len(skipped_duplicates)} existing profiles skipped)."
+    }
+
+
 def regenerate_deo_token(emp_id: str) -> Dict[str, Any]:
     """
     Generates a fresh 6-digit security token for a faculty member.

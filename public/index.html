@@ -6,10 +6,18 @@
   <title>Vignan's University — Master Agent Enterprise Portal</title>
   <meta name="description" content="Official Master Agent Orchestration Portal for Vignan's Foundation for Science, Technology & Research — Unified Intelligence & Departmental Data Access.">
   
-  <link rel="stylesheet" href="styles/theme.css?v=15">
-  <link rel="stylesheet" href="styles/login.css?v=15">
-  <link rel="stylesheet" href="styles/chat.css?v=15">
+  <link rel="stylesheet" href="styles/theme.css?v=16">
+  <link rel="stylesheet" href="styles/login.css?v=16">
+  <link rel="stylesheet" href="styles/chat.css?v=16">
   
+  <!-- SheetJS Library for Client-Side Excel / CSV Parsing (Local with CDN Fallback) -->
+  <script src="js/xlsx.full.min.js"></script>
+  <script>
+    if (typeof XLSX === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"><\\/script>');
+    }
+  </script>
+
   <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="assets/vignan university logo.jiff">
 </head>
@@ -340,7 +348,10 @@
               <option value="activated">✅ Activated Only</option>
             </select>
             <button type="button" class="btn-deo-add-faculty" id="btnOpenAddFacultyModal">
-              ➕ Enroll New Faculty Member
+              ➕ Enroll Faculty
+            </button>
+            <button type="button" class="btn-deo-excel-import" id="btnOpenExcelModal">
+              📁 Bulk Excel Import
             </button>
           </div>
         </div>
@@ -472,6 +483,73 @@
               </button>
               <button type="button" class="btn-deo-cancel" id="btnCloseSuccessTokenModal">
                 Done
+              </button>
+            </div>
+          </div>
+      <!-- Modal: Bulk Faculty Import via Excel / CSV -->
+      <div id="deoExcelImportModal" class="deo-modal-backdrop" style="display: none;">
+        <div class="deo-modal-card" style="max-width: 680px;">
+          <div class="deo-modal-header" style="border-bottom: 1px solid #E2E8F0;">
+            <div>
+              <h3 class="deo-modal-title" style="color: #065F46;">📁 Bulk Faculty Import (Excel / CSV)</h3>
+              <p class="deo-modal-sub">Upload department spreadsheet to enroll multiple faculty members in batch.</p>
+            </div>
+            <button type="button" class="btn-deo-modal-close" id="btnCloseExcelModal">✕</button>
+          </div>
+
+          <div style="padding: 1.25rem 1.5rem;">
+            <!-- Helper Header: Template & Format -->
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#F0FDF4; border:1px solid #BBF7D0; padding:0.75rem 1rem; border-radius:8px; margin-bottom:1.25rem;">
+              <div>
+                <strong style="font-size:0.82rem; color:#166534; display:block;">Supported Formats: .xlsx, .xls, .csv</strong>
+                <span style="font-size:0.75rem; color:#4B5563;">Recognizes official columns: Emp ID, Faculty Name, Designation, Mobile</span>
+              </div>
+              <button type="button" class="btn-download-template" id="btnDownloadExcelTemplate" title="Download sample template spreadsheet">
+                📥 Sample Template
+              </button>
+            </div>
+
+            <!-- Drag & Drop Zone -->
+            <div class="deo-excel-dropzone" id="deoExcelDropZone">
+              <input type="file" id="deoExcelFileInput" accept=".xlsx, .xls, .csv" />
+              <div style="font-size: 2.2rem; margin-bottom: 0.35rem;">📊</div>
+              <p style="font-weight: 700; color: #1E293B; font-size: 0.92rem; margin-bottom: 0.25rem;">
+                Click to browse or drag &amp; drop your Excel / CSV file here
+              </p>
+              <span style="font-size: 0.78rem; color: #64748B;">Supports official VFSTR department faculty list format</span>
+            </div>
+
+            <!-- Live Parsing Preview -->
+            <div id="deoExcelPreviewContainer" style="display: none; margin-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span style="font-size: 0.84rem; font-weight: 700; color: #0F172A;" id="deoPreviewFileName">Sheet Preview</span>
+                <span style="font-size: 0.76rem; color: #059669; font-weight: 700;" id="deoPreviewSummary">0 Records</span>
+              </div>
+
+              <div class="deo-excel-preview-box">
+                <table class="deo-excel-preview-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Emp ID</th>
+                      <th>Faculty Name</th>
+                      <th>Designation</th>
+                      <th>Mobile</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="deoExcelPreviewBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Modal Action Footer -->
+            <div class="deo-modal-actions" style="margin-top: 1.25rem; justify-content: flex-end; gap: 0.75rem;">
+              <button type="button" class="btn-deo-cancel" id="btnCancelExcelModal">Cancel</button>
+              <button type="button" class="btn-deo-save" id="btnProcessExcelImport" style="background:#059669;" disabled>
+                Enroll Faculty Members ➜
               </button>
             </div>
           </div>
@@ -873,6 +951,6 @@
     </div>
   </footer>
 
-  <script src="js/app.js?v=15"></script>
+  <script src="js/app.js?v=16"></script>
 </body>
 </html>

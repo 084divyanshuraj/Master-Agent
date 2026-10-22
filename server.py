@@ -58,6 +58,7 @@ from backend.db import (
     verify_faculty_for_activation,
     activate_faculty_account,
     regenerate_deo_token,
+    bulk_add_deo_faculties,
 )
 
 load_dotenv()
@@ -187,6 +188,10 @@ class AddFacultyRequest(BaseModel):
     department: Optional[str] = "Computer Science & Engineering"
 
 
+class BulkFacultyImportRequest(BaseModel):
+    faculties: List[Dict[str, Any]]
+
+
 @app.post("/api/auth/register")
 @app.post("/auth/register")
 @limiter.limit("5/minute")
@@ -291,6 +296,16 @@ async def add_deo_faculty_endpoint(req: AddFacultyRequest):
     )
     if not res.get("success"):
         raise HTTPException(status_code=400, detail=res.get("message", "Could not enroll faculty."))
+    return res
+
+
+@app.post("/api/deo/faculty/bulk")
+@app.post("/deo/faculty/bulk")
+async def bulk_add_deo_faculty_endpoint(req: BulkFacultyImportRequest):
+    """Bulk enrolls faculty members from an Excel/CSV import as DEO."""
+    if not req.faculties:
+        raise HTTPException(status_code=400, detail="No faculty records provided in request.")
+    res = bulk_add_deo_faculties(faculties_list=req.faculties)
     return res
 
 

@@ -935,6 +935,125 @@
   transform: translateY(-1px);
 }
 
+.btn-deo-excel-import {
+  background: #059669;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.65rem 1.1rem;
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+}
+
+.btn-deo-excel-import:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+.deo-excel-dropzone {
+  border: 2px dashed #94A3B8;
+  border-radius: 12px;
+  padding: 1.75rem 1rem;
+  text-align: center;
+  background: #F8FAFC;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.deo-excel-dropzone:hover,
+.deo-excel-dropzone.dragover {
+  border-color: #059669;
+  background: #ECFDF5;
+}
+
+.deo-excel-dropzone input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.deo-excel-preview-box {
+  margin-top: 1rem;
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 0.78rem;
+}
+
+.deo-excel-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.deo-excel-preview-table th {
+  background: #F1F5F9;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.deo-excel-preview-table td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B;
+}
+
+.deo-badge-new {
+  background: #DCFCE7;
+  color: #166534;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.deo-badge-duplicate {
+  background: #FEE2E2;
+  color: #991B1B;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.btn-download-template {
+  background: #F0FDF4;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--transition-fast);
+}
+
+.btn-download-template:hover {
+  background: #DCFCE7;
+  border-color: #6EE7B7;
+}
+
 /* Faculty Table */
 .deo-table-wrapper {
   overflow-x: auto;
